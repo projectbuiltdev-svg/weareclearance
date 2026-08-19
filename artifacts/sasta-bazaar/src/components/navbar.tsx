@@ -118,7 +118,7 @@ export function Navbar() {
           />
         </Link>
 
-        <nav className="absolute right-3 top-3 z-10 flex items-center justify-end gap-1.5 sm:static sm:col-start-3 sm:row-start-1 sm:translate-y-0 sm:gap-2 sm:pl-2 lg:gap-4">
+        <nav className="absolute right-3 top-1/2 z-10 flex -translate-y-1/2 items-center justify-end gap-1.5 sm:static sm:col-start-3 sm:row-start-1 sm:translate-y-0 sm:gap-2 sm:pl-2 lg:gap-4">
           <div className="hidden items-center rounded-lg border border-white/15 bg-white/[0.06] p-0.5 sm:flex" aria-label="Currency">
             <button
               type="button"
