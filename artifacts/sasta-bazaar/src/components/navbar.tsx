@@ -108,13 +108,13 @@ export function Navbar() {
   const { currency, setCurrency } = useCurrency()
 
   return (
-    <header className="relative sticky top-0 z-40 grid min-h-36 w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center border-b-4 border-primary bg-black px-3 shadow-[0_14px_30px_rgba(0,0,0,0.32)] sm:min-h-20 lg:min-h-28 lg:px-4">
+    <header className="relative sticky top-0 z-40 grid min-h-36 w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center border-b-4 border-primary bg-black px-3 shadow-[0_14px_30px_rgba(0,0,0,0.32)] sm:min-h-20 lg:min-h-32 lg:px-4">
       <div className="contents">
         <Link href="/" className="col-start-1 row-start-1 flex items-center hover:opacity-90 transition-opacity">
           <img
             src={clearanceLogo}
             alt="We are Clearance"
-            className="h-36 w-auto max-w-[calc(100vw-100px)] rounded-md object-contain sm:h-20 sm:max-w-[300px] lg:h-24 lg:max-w-[380px]"
+            className="h-36 w-auto max-w-[calc(100vw-100px)] rounded-md object-contain sm:h-20 sm:max-w-[300px] lg:h-32 lg:max-w-[460px]"
           />
         </Link>
 

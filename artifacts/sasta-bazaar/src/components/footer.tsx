@@ -103,14 +103,15 @@ export function Footer() {
               <MapPin className="h-5 w-5 text-primary" />
               Dublin clearance location
             </div>
-            <img src={dublinMapPlaceholder} alt="Dublin map placeholder" className="mt-4 h-28 w-full rounded-xl border border-white/10 object-cover" />
+            <img src={dublinMapPlaceholder} alt="Dublin map placeholder" className="mt-4 aspect-[4/3] w-full rounded-xl border border-white/10 bg-white object-cover" />
           </div>
           <div className="rounded-2xl border border-dashed border-white/20 bg-white/[0.04] p-5">
             <div className="flex items-center gap-2 text-sm font-black text-white">
               <MapPin className="h-5 w-5 text-[#ffd166]" />
               Belfast clearance location
             </div>
-            <img src={belfastMapPlaceholder} alt="Belfast map placeholder" className="mt-4 h-28 w-full rounded-xl border border-white/10 object-cover" />
+            <img src={belfastMapPlaceholder} alt="Belfast map placeholder" className="mt-4 aspect-[4/3] w-full rounded-xl border border-white/10 bg-white object-cover" />
+            <p className="mt-2 text-xs text-white/55">Service area: Belfast, Northern Ireland — local coverage placeholder</p>
           </div>
         </div>
         <div className="container mx-auto flex flex-col gap-2 px-4 py-5 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
