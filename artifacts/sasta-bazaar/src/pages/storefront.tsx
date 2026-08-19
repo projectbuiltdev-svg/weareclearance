@@ -4,8 +4,43 @@ import { useCart } from "@/lib/cart"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Search, IndianRupee, Tag, ShoppingCart } from "lucide-react"
+import { Search, Euro, Tag, ShoppingCart } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+
+const categoryGroups = [
+  {
+    name: "Deals",
+    items: ["£5 & Under", "£10 & Under", "£20 & Under", "Multibuy", "Bulk Buys", "Last Chance Clearance"],
+  },
+  {
+    name: "Home & Living",
+    items: ["Bedroom", "Bathroom", "Storage", "Rugs"],
+  },
+  {
+    name: "Kitchen & Dining",
+    items: ["Cookware", "Appliances", "Food Storage", "Glassware", "Accessories"],
+  },
+  {
+    name: "Gifts",
+    items: ["For Her", "For Him", "For the Home"],
+  },
+  {
+    name: "Household",
+    items: ["Cleaning", "Paper Products", "Essentials"],
+  },
+  {
+    name: "Garden & Outdoor",
+    items: ["Furniture", "Accessories", "Camping"],
+  },
+  {
+    name: "Clothing & Accessories",
+    items: ["Socks", "Workwear", "Men's", "Women's"],
+  },
+  {
+    name: "Beauty & Electricals",
+    items: ["Fragrances", "Personal Care", "Audio", "Tools"],
+  },
+] as const
 
 export default function Storefront() {
   const [search, setSearch] = useState("")
@@ -40,6 +75,37 @@ export default function Storefront() {
         <p className="text-lg md:text-xl font-bold max-w-2xl z-10">
           Everyday low prices on all your daily needs. Loot lo before stock runs out!
         </p>
+      </section>
+
+      <section className="bg-card rounded-xl bazaar-border p-5 md:p-6">
+        <div className="flex items-end justify-between gap-4 mb-5">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-primary">Shop by department</p>
+            <h2 className="font-display font-black text-2xl md:text-3xl uppercase tracking-tight">Find your next bargain</h2>
+          </div>
+          <Button variant="outline" size="sm" onClick={() => setCategory("")}>View all</Button>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          {categoryGroups.map((group) => (
+            <div key={group.name} className="space-y-2">
+              <h3 className="font-display font-black uppercase text-sm text-foreground">{group.name}</h3>
+              <div className="flex flex-wrap gap-1.5">
+                {group.items.map((item) => (
+                  <button
+                    key={`${group.name}-${item}`}
+                    type="button"
+                    onClick={() => setCategory(item)}
+                    className={`text-left text-xs font-bold transition-colors hover:text-primary ${
+                      category === item ? "text-primary underline underline-offset-4" : "text-muted-foreground"
+                    }`}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Filters */}
@@ -118,12 +184,12 @@ export default function Storefront() {
                 
                 <div className="flex items-end gap-2 mb-4">
                   <span className="font-display font-black text-2xl text-primary flex items-center">
-                    <IndianRupee className="h-5 w-5 mr-0.5" />
+                    <Euro className="h-5 w-5 mr-0.5" />
                     {product.price.toFixed(2)}
                   </span>
                   {product.compareAtPrice && product.compareAtPrice > product.price && (
                     <span className="text-sm font-bold text-muted-foreground line-through flex items-center mb-1">
-                      ₹{product.compareAtPrice.toFixed(2)}
+                      €{product.compareAtPrice.toFixed(2)}
                     </span>
                   )}
                 </div>

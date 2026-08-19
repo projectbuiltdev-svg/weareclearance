@@ -20,7 +20,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Badge } from "@/components/ui/badge"
 import { 
   Package, LayoutGrid, AlertTriangle, Upload, 
-  Plus, Edit2, Trash2, IndianRupee, Loader2
+  Plus, Edit2, Trash2, Euro, Loader2
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
@@ -264,7 +264,7 @@ export default function Admin() {
                     </td>
                     <td className="p-4 font-medium text-muted-foreground">{p.category}</td>
                     <td className="p-4 font-bold text-primary flex items-center">
-                      <IndianRupee className="h-4 w-4" />{p.price.toFixed(2)}
+                      <Euro className="h-4 w-4" />{p.price.toFixed(2)}
                     </td>
                     <td className="p-4">
                       <Badge variant={p.inventory < 5 ? "destructive" : "outline"} className="font-mono">
@@ -307,11 +307,11 @@ export default function Admin() {
               </div>
               
               <div className="space-y-2">
-                <Label>Price (₹)</Label>
+                 <Label>Price (€)</Label>
                 <Input type="number" required min="0" step="0.01" value={form.price} onChange={e => setForm({...form, price: e.target.value})} />
               </div>
               <div className="space-y-2">
-                <Label>Compare At Price (₹)</Label>
+                 <Label>Compare At Price (€)</Label>
                 <Input type="number" min="0" step="0.01" value={form.compareAtPrice} onChange={e => setForm({...form, compareAtPrice: e.target.value})} placeholder="Optional" />
               </div>
 

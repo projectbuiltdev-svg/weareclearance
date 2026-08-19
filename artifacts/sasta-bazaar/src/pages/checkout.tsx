@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link, useLocation } from "wouter"
-import { Trash2, ShieldAlert, ArrowRight, IndianRupee } from "lucide-react"
+import { Trash2, ShieldAlert, ArrowRight, Euro } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
 export default function Checkout() {
@@ -63,7 +63,7 @@ export default function Checkout() {
                       <div className="flex-1 min-w-0">
                         <h4 className="font-bold truncate" title={item.name}>{item.name}</h4>
                         <div className="text-primary font-bold text-sm flex items-center">
-                          <IndianRupee className="h-3 w-3" />
+                          <Euro className="h-3 w-3" />
                           {item.price.toFixed(2)}
                         </div>
                       </div>
@@ -91,7 +91,7 @@ export default function Checkout() {
                 <div className="mt-6 pt-4 border-t-2 border-muted flex items-center justify-between">
                   <span className="font-bold text-lg">Total Amount:</span>
                   <span className="font-display font-black text-3xl text-primary flex items-center">
-                    <IndianRupee className="h-6 w-6 mr-1" />
+                    <Euro className="h-6 w-6 mr-1" />
                     {total.toFixed(2)}
                   </span>
                 </div>
