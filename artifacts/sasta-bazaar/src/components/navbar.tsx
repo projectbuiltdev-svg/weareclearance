@@ -9,19 +9,19 @@ export function Navbar() {
   const itemCount = items.reduce((acc, item) => acc + item.quantity, 0)
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b-4 border-primary bg-background shadow-sm">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full border-b-4 border-primary bg-black shadow-sm">
+      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
           <img
             src={clearanceLogo}
             alt="We are Clearance"
-            className="h-11 w-auto max-w-[190px] rounded-md object-contain"
+            className="h-14 w-auto max-w-[250px] rounded-md object-contain"
           />
         </Link>
         
         <nav className="flex items-center gap-4">
           <Link href="/admin">
-            <Button variant="ghost" size="sm" className="font-bold text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="sm" className="font-bold text-white/80 hover:bg-white/10 hover:text-white">
               <ShieldAlert className="h-4 w-4 mr-2" />
               Admin
             </Button>
