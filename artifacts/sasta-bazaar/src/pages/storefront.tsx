@@ -220,7 +220,7 @@ export default function Storefront() {
           </div>
           <Button variant="outline" size="sm" onClick={() => setCategory("")}>View all</Button>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
           {categoryGroups.map((group) => (
             <div key={group.name} className="space-y-2">
               <h3 className="font-bold text-sm text-foreground">{group.name}</h3>
@@ -244,8 +244,8 @@ export default function Storefront() {
       </section>
 
       {/* Filters */}
-      <section className="flex flex-col md:flex-row gap-4 items-center justify-between bg-card p-4 rounded-2xl border border-border">
-        <div className="relative w-full md:w-96">
+      <section className="flex flex-col lg:flex-row gap-4 items-center justify-between bg-card p-4 rounded-2xl border border-border">
+        <div className="relative w-full lg:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input 
             placeholder="Search for atta, dal, sabun..." 
@@ -254,7 +254,7 @@ export default function Storefront() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <div className="flex flex-wrap gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+        <div className="flex flex-wrap gap-2 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0">
           <Button 
             variant={category === "" ? "default" : "outline"} 
             size="sm"

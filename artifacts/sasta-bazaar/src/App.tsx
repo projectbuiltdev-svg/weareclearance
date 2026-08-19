@@ -4,6 +4,7 @@ import NotFound from '@/pages/not-found'
 import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter'
 import { CartProvider } from '@/lib/cart'
 import { Navbar } from '@/components/navbar'
+import { Footer } from '@/components/footer'
 import Storefront from '@/pages/storefront'
 import Checkout from '@/pages/checkout'
 import Admin from '@/pages/admin'
@@ -25,6 +26,7 @@ function Router() {
           </Switch>
         </RoutedErrorBoundary>
       </div>
+        <Footer />
     </div>
   )
 }

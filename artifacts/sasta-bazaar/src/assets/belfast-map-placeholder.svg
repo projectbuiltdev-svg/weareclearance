@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 280" role="img" aria-labelledby="title desc">
+  <title id="title">Belfast Google Maps style placeholder</title>
+  <desc id="desc">Light Google Maps style placeholder showing a Belfast clearance location.</desc>
+  <rect width="800" height="280" fill="#e9f1e6"/>
+  <path d="M600 0h200v280H615c22-54 5-94-18-132s-22-86 3-148z" fill="#c9e4ee"/>
+  <path d="M600 0c-25 62-26 110-3 148s40 78 18 132" fill="none" stroke="#a6cdd9" stroke-width="8"/>
+  <g stroke="#fff" stroke-width="7" opacity=".95">
+    <path d="M0 70L800 226M0 230L800 38M170-20l340 320M520-20L230 300M720-20L430 300"/>
+  </g>
+  <g stroke="#c8c8c8" stroke-width="2">
+    <path d="M0 47h800M0 112h800M0 178h800M0 242h800M95 0v280M250 0v280M410 0v280M570 0v280"/>
+  </g>
+  <path d="M45 190C164 215 225 71 355 119s171 87 299 14" fill="none" stroke="#f18b8b" stroke-width="6"/>
+  <path d="M45 190C164 215 225 71 355 119s171 87 299 14" fill="none" stroke="#fff" stroke-width="2"/>
+  <path d="M0 100C121 109 155 30 256 42s148 74 254 45" fill="none" stroke="#f7c957" stroke-width="5"/>
+  <g fill="#777" font-family="Arial,sans-serif" font-size="16">
+    <text x="630" y="48">Belfast Lough</text><text x="80" y="58">Shankill</text>
+    <text x="328" y="82">Belfast City</text><text x="465" y="236">Ormeau</text>
+    <text x="28" y="252">West Belfast</text>
+  </g>
+  <g transform="translate(390 126)">
+    <path d="M0 0c0-17 13-30 30-30s30 13 30 30c0 23-30 55-30 55S0 23 0 0z" fill="#e84444" stroke="#fff" stroke-width="4"/>
+    <circle cx="30" cy="0" r="10" fill="#fff"/>
+  </g>
+  <g transform="translate(735 18)">
+    <rect width="42" height="80" rx="4" fill="#fff" stroke="#ccc"/>
+    <text x="14" y="28" font-size="24" fill="#666">+</text><path d="M8 40h26" stroke="#ddd"/>
+    <text x="15" y="68" font-size="24" fill="#666">−</text>
+  </g>
+</svg>
