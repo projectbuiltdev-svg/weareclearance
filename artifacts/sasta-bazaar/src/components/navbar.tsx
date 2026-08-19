@@ -1,5 +1,4 @@
 import { Link } from "wouter"
-import { useState } from "react"
 import {
   Archive,
   Armchair,
@@ -177,6 +176,31 @@ export function Navbar() {
                 <p className="text-sm text-white/55">Great finds. Less spend.</p>
               </SheetHeader>
               <div className="space-y-5 px-4 py-5">
+                <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.05] px-3 py-2.5">
+                  <span className="text-xs font-black uppercase tracking-[0.16em] text-white/55">Display currency</span>
+                  <div className="flex rounded-lg border border-white/15 p-0.5">
+                    <button
+                      type="button"
+                      aria-pressed={currency === "£"}
+                      onClick={() => setCurrency("£")}
+                      className={`rounded-md px-3 py-1.5 text-sm font-black transition-colors ${
+                        currency === "£" ? "bg-white text-black" : "text-white/55 hover:text-white"
+                      }`}
+                    >
+                      £
+                    </button>
+                    <button
+                      type="button"
+                      aria-pressed={currency === "€"}
+                      onClick={() => setCurrency("€")}
+                      className={`rounded-md px-3 py-1.5 text-sm font-black transition-colors ${
+                        currency === "€" ? "bg-white text-black" : "text-white/55 hover:text-white"
+                      }`}
+                    >
+                      €
+                    </button>
+                  </div>
+                </div>
                 {mobileMenuSections.map(({ title, Icon, items: sectionItems }) => (
                   <section key={title}>
                     <h2 className="mb-2 flex items-center gap-2 px-2 text-xs font-black uppercase tracking-[0.18em] text-white/50">

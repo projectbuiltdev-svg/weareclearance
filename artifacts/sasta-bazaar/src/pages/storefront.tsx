@@ -281,7 +281,7 @@ export default function Storefront() {
         <div className="space-y-10">
           <ProductCarousel
             eyebrow="Deal of the day"
-            title="Everything Under €10"
+            title={`Everything Under ${formatPrice(10)}`}
             products={visibleProducts.filter((product) => product.price <= 10)}
             onAdd={handleAddToCart}
             onViewAll={() => document.getElementById("all-products")?.scrollIntoView({ behavior: "smooth" })}
