@@ -167,9 +167,12 @@ export function Navbar() {
             </SheetTrigger>
             <SheetContent side="left" className="w-[88vw] max-w-sm overflow-y-auto border-r-4 border-primary bg-black p-0 text-white">
               <SheetHeader className="border-b border-white/10 px-5 pb-5 pt-6 text-left">
-                <SheetTitle className="font-display text-2xl font-black text-white">
-                  Shop <span className="text-primary">Clearance</span>
-                </SheetTitle>
+                <img
+                  src={clearanceLogo}
+                  alt="We are Clearance"
+                  className="h-16 w-auto max-w-[240px] rounded-md object-contain"
+                />
+                <SheetTitle className="sr-only">Shop Clearance</SheetTitle>
                 <p className="text-sm text-white/55">Great finds. Less spend.</p>
               </SheetHeader>
               <div className="space-y-5 px-4 py-5">
