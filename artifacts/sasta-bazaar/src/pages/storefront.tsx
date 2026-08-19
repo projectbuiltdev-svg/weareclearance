@@ -4,7 +4,8 @@ import { useCart } from "@/lib/cart"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Search, Euro, Tag, ShoppingCart } from "lucide-react"
+import { Search, Tag, ShoppingCart } from "lucide-react"
+import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
 import {
   Carousel,
@@ -63,6 +64,7 @@ function ProductCarousel({
   onAdd: (product: any) => void
   onViewAll: () => void
 }) {
+  const { formatPrice } = useCurrency()
   if (products.length === 0) return null
 
   return (
@@ -101,13 +103,10 @@ function ProductCarousel({
                     </p>
                     <h3 className="line-clamp-2 flex-1 text-sm font-bold leading-snug">{product.name}</h3>
                     <div className="mt-3 flex items-center gap-2">
-                      <span className="flex items-center font-display text-xl font-black text-primary">
-                        <Euro className="mr-0.5 h-4 w-4" />
-                        {product.price.toFixed(2)}
-                      </span>
+                      <span className="font-display text-xl font-black text-primary">{formatPrice(product.price)}</span>
                       {product.compareAtPrice && product.compareAtPrice > product.price && (
                         <span className="text-xs font-bold text-muted-foreground line-through">
-                          €{product.compareAtPrice.toFixed(2)}
+                          {formatPrice(product.compareAtPrice)}
                         </span>
                       )}
                     </div>
@@ -140,6 +139,7 @@ export default function Storefront() {
   
   const { data: categories = [] } = useListCategories({ query: { queryKey: ["/api/categories"] } })
   const { addToCart } = useCart()
+  const { formatPrice } = useCurrency()
   const { toast } = useToast()
   const visibleProducts = products?.filter((product) => {
     if (!menuFilter) return true
@@ -349,12 +349,11 @@ export default function Storefront() {
                 
                 <div className="flex items-end gap-2 mb-4">
                   <span className="font-display font-black text-2xl text-primary flex items-center">
-                    <Euro className="h-5 w-5 mr-0.5" />
-                    {product.price.toFixed(2)}
+                    {formatPrice(product.price)}
                   </span>
                   {product.compareAtPrice && product.compareAtPrice > product.price && (
                     <span className="text-sm font-bold text-muted-foreground line-through flex items-center mb-1">
-                      €{product.compareAtPrice.toFixed(2)}
+                      {formatPrice(product.compareAtPrice)}
                     </span>
                   )}
                 </div>

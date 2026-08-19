@@ -3,6 +3,7 @@ import { Toaster } from '@/components/ui/toaster'
 import NotFound from '@/pages/not-found'
 import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter'
 import { CartProvider } from '@/lib/cart'
+import { CurrencyProvider } from '@/lib/currency'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import Storefront from '@/pages/storefront'
@@ -40,10 +41,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
+        <CurrencyProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </CurrencyProvider>
       </CartProvider>
     </QueryClientProvider>
   )

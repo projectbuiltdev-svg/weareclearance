@@ -32,6 +32,7 @@ import {
   Zap,
 } from "lucide-react"
 import { useCart } from "@/lib/cart"
+import { useCurrency } from "@/lib/currency"
 import { Button } from "./ui/button"
 import {
   DropdownMenu,
@@ -105,20 +106,20 @@ const dropdownItemClass =
 export function Navbar() {
   const { items } = useCart()
   const itemCount = items.reduce((acc, item) => acc + item.quantity, 0)
-  const [currency, setCurrency] = useState<"£" | "€">("€")
+  const { currency, setCurrency } = useCurrency()
 
   return (
-    <header className="sticky top-0 z-40 grid min-h-24 w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center border-b-4 border-primary bg-black px-3 shadow-[0_14px_30px_rgba(0,0,0,0.32)] sm:min-h-20 lg:min-h-28 lg:px-4">
+    <header className="relative sticky top-0 z-40 grid min-h-36 w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center border-b-4 border-primary bg-black px-3 shadow-[0_14px_30px_rgba(0,0,0,0.32)] sm:min-h-20 lg:min-h-28 lg:px-4">
       <div className="contents">
         <Link href="/" className="col-start-1 row-start-1 flex items-center hover:opacity-90 transition-opacity">
           <img
             src={clearanceLogo}
             alt="We are Clearance"
-            className="h-24 w-auto max-w-[320px] rounded-md object-contain sm:h-20 sm:max-w-[300px] lg:h-24 lg:max-w-[380px]"
+            className="h-36 w-auto max-w-[calc(100vw-100px)] rounded-md object-contain sm:h-20 sm:max-w-[300px] lg:h-24 lg:max-w-[380px]"
           />
         </Link>
 
-        <nav className="col-start-3 row-start-1 flex items-center justify-end gap-1.5 pl-2 sm:gap-2 lg:gap-4">
+        <nav className="absolute right-3 top-3 z-10 flex items-center justify-end gap-1.5 sm:static sm:col-start-3 sm:row-start-1 sm:translate-y-0 sm:gap-2 sm:pl-2 lg:gap-4">
           <div className="hidden items-center rounded-lg border border-white/15 bg-white/[0.06] p-0.5 sm:flex" aria-label="Currency">
             <button
               type="button"
