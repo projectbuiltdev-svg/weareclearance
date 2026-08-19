@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Sasta Bazaar Ecommerce"
+description = "A consumer ecommerce storefront inspired by Sasta Bazaar with a product catalogue, cart and checkout experience, plus an admin product manager for manual and CSV uploads."
+version = "1.0.0"
+id = "artifacts/sasta-bazaar"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22742
+
+[services.development]
+run = "pnpm --filter @workspace/sasta-bazaar run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/sasta-bazaar", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/sasta-bazaar/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22742"
+BASE_PATH = "/"
