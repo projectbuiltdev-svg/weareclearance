@@ -1,16 +1,24 @@
 import { Link } from "wouter"
-import { ShoppingBag, ShieldAlert } from "lucide-react"
+import { ChevronDown, ShoppingBag, ShieldAlert } from "lucide-react"
 import { useCart } from "@/lib/cart"
 import { Button } from "./ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
 import clearanceLogo from "@assets/_weareclearance.com_logo__1787141491881.jpg"
 
-const mainMenuItems = [
-  ["🔥", "Deals", "deals"],
+const dealMenuItems = [
   ["💷", "£5 & Under", "under-5"],
   ["💰", "£10 & Under", "under-10"],
   ["🏷️", "£20 & Under", "under-20"],
   ["🎉", "Multibuy Deals", "multibuy"],
   ["📦", "Bulk Buys", "bulk"],
+] as const
+
+const mainMenuItems = [
   ["🏠", "Home & Living", "home"],
   ["🍳", "Kitchen & Dining", "kitchen"],
   ["🎁", "Gifts", "gifts"],
@@ -56,6 +64,29 @@ export function Navbar() {
       </div>
       <nav aria-label="Main menu" className="border-t border-white/15">
         <div className="container mx-auto flex items-center gap-5 overflow-x-auto px-4 py-2.5 whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex items-center text-xs font-bold text-white/85 transition-colors hover:text-white"
+              >
+                <span className="mr-1.5" aria-hidden="true">🔥</span>
+                Deals
+                <ChevronDown className="ml-1 h-3.5 w-3.5" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-48">
+              {dealMenuItems.map(([icon, label, menu]) => (
+                <DropdownMenuItem key={label} asChild>
+                  <a href={`/?menu=${menu}#all-products`} className="font-bold">
+                    <span aria-hidden="true">{icon}</span>
+                    {label}
+                  </a>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           {mainMenuItems.map(([icon, label, menu]) => (
             <a
               key={label}
