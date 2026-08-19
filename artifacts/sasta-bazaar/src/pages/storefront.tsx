@@ -130,6 +130,7 @@ function ProductCarousel({
 export default function Storefront() {
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState<string>("")
+  const [menuFilter] = useState(() => new URLSearchParams(window.location.search).get("menu") ?? "")
   
   const { data: products, isLoading } = useListProducts(
     { search: search || undefined, category: category || undefined },
@@ -139,6 +140,26 @@ export default function Storefront() {
   const { data: categories = [] } = useListCategories({ query: { queryKey: ["/api/categories"] } })
   const { addToCart } = useCart()
   const { toast } = useToast()
+  const visibleProducts = products?.filter((product) => {
+    if (!menuFilter) return true
+    if (menuFilter === "under-5") return product.price <= 5
+    if (menuFilter === "under-10") return product.price <= 10
+    if (menuFilter === "under-20") return product.price <= 20
+    if (menuFilter === "deals" || menuFilter === "multibuy" || menuFilter === "bulk") {
+      return product.compareAtPrice != null && product.compareAtPrice > product.price
+    }
+    if (menuFilter === "last-chance") {
+      return product.badge === "Last Chance" || (product.compareAtPrice != null && product.compareAtPrice > product.price)
+    }
+    const departmentCategories: Record<string, string[]> = {
+      home: ["Bathroom", "Food Storage", "For the Home"],
+      kitchen: ["Accessories", "Food Storage"],
+      gifts: ["For the Home"],
+      household: ["Cleaning", "Paper Products", "Essentials"],
+      garden: ["Furniture", "Accessories", "Camping"],
+    }
+    return departmentCategories[menuFilter]?.includes(product.category) ?? true
+  })
 
   const handleAddToCart = (product: any) => {
     addToCart(product)
@@ -162,7 +183,7 @@ export default function Storefront() {
         </p>
       </section>
 
-      <section className="bg-card rounded-2xl border border-border p-5 md:p-6">
+      <section id="departments" className="bg-card rounded-2xl border border-border p-5 md:p-6 scroll-mt-32">
         <div className="flex items-end justify-between gap-4 mb-5">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Shop by department</p>
@@ -227,26 +248,26 @@ export default function Storefront() {
         </div>
       </section>
 
-      {!isLoading && products && products.length > 0 && (
+      {!isLoading && visibleProducts && visibleProducts.length > 0 && (
         <div className="space-y-10">
           <ProductCarousel
             eyebrow="Deal of the day"
             title="Everything Under €10"
-            products={products.filter((product) => product.price <= 10)}
+            products={visibleProducts.filter((product) => product.price <= 10)}
             onAdd={handleAddToCart}
             onViewAll={() => document.getElementById("all-products")?.scrollIntoView({ behavior: "smooth" })}
           />
           <ProductCarousel
             eyebrow="Picked for you"
             title="Customer Favourites"
-            products={products.filter((product) => product.featured)}
+            products={visibleProducts.filter((product) => product.featured)}
             onAdd={handleAddToCart}
             onViewAll={() => document.getElementById("all-products")?.scrollIntoView({ behavior: "smooth" })}
           />
           <ProductCarousel
             eyebrow="Moving fast"
             title="Last Chance Clearance"
-            products={products.filter(
+            products={visibleProducts.filter(
               (product) =>
                 product.badge === "Last Chance" ||
                 (product.compareAtPrice != null && product.compareAtPrice > product.price),
@@ -264,7 +285,7 @@ export default function Storefront() {
             <div key={i} className="h-80 bg-muted animate-pulse rounded-2xl" />
           ))}
         </div>
-      ) : products?.length === 0 ? (
+      ) : visibleProducts?.length === 0 ? (
         <div className="text-center py-24 bg-card rounded-2xl border border-border">
           <Tag className="h-16 w-16 mx-auto text-muted-foreground mb-4 opacity-50" />
           <h2 className="text-2xl font-bold">No items found</h2>
@@ -272,7 +293,7 @@ export default function Storefront() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products?.map(product => (
+          {visibleProducts?.map(product => (
             <div key={product.id} className="bg-card rounded-2xl p-4 flex flex-col border border-border group hover:shadow-lg transition-shadow duration-300">
               <div className="relative aspect-square mb-4 rounded-xl overflow-hidden bg-muted">
                 {product.badge && (

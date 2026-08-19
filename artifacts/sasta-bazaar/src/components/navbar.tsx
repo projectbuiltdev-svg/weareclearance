@@ -4,6 +4,21 @@ import { useCart } from "@/lib/cart"
 import { Button } from "./ui/button"
 import clearanceLogo from "@assets/_weareclearance.com_logo__1787141491881.jpg"
 
+const mainMenuItems = [
+  ["🔥", "Deals", "deals"],
+  ["💷", "£5 & Under", "under-5"],
+  ["💰", "£10 & Under", "under-10"],
+  ["🏷️", "£20 & Under", "under-20"],
+  ["🎉", "Multibuy Deals", "multibuy"],
+  ["📦", "Bulk Buys", "bulk"],
+  ["🏠", "Home & Living", "home"],
+  ["🍳", "Kitchen & Dining", "kitchen"],
+  ["🎁", "Gifts", "gifts"],
+  ["⚡", "Last Chance Clearance", "last-chance"],
+  ["🧹", "Household", "household"],
+  ["🌿", "Garden & Outdoor", "garden"],
+] as const
+
 export function Navbar() {
   const { items } = useCart()
   const itemCount = items.reduce((acc, item) => acc + item.quantity, 0)
@@ -18,7 +33,7 @@ export function Navbar() {
             className="h-14 w-auto max-w-[250px] rounded-md object-contain"
           />
         </Link>
-        
+
         <nav className="flex items-center gap-4">
           <Link href="/admin">
             <Button variant="ghost" size="sm" className="font-bold text-white/80 hover:bg-white/10 hover:text-white">
@@ -39,6 +54,26 @@ export function Navbar() {
           </Link>
         </nav>
       </div>
+      <nav aria-label="Main menu" className="border-t border-white/15">
+        <div className="container mx-auto flex items-center gap-5 overflow-x-auto px-4 py-2.5 whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {mainMenuItems.map(([icon, label, menu]) => (
+            <a
+              key={label}
+              href={`/?menu=${menu}#all-products`}
+              className="text-xs font-bold text-white/85 transition-colors hover:text-white"
+            >
+              <span className="mr-1.5" aria-hidden="true">{icon}</span>
+              {label}
+            </a>
+          ))}
+          <a
+            href="/#departments"
+            className="ml-auto text-xs font-black text-secondary transition-colors hover:text-white"
+          >
+            More
+          </a>
+        </div>
+      </nav>
     </header>
   )
 }
