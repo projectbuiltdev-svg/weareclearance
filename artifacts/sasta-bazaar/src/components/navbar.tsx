@@ -170,7 +170,7 @@ export function Navbar() {
                 <img
                   src={clearanceLogo}
                   alt="We are Clearance"
-                  className="h-16 w-auto max-w-[240px] rounded-md object-contain"
+                  className="h-20 w-auto max-w-[300px] rounded-md object-contain"
                 />
                 <SheetTitle className="sr-only">Shop Clearance</SheetTitle>
                 <p className="text-sm text-white/55">Great finds. Less spend.</p>
