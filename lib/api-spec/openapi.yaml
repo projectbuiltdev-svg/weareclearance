@@ -10,6 +10,10 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: products
+    description: Storefront product catalogue
+  - name: admin
+    description: Catalogue management
 paths:
   /healthz:
     get:
@@ -24,6 +28,138 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /products:
+    get:
+      operationId: listProducts
+      tags: [products]
+      summary: List storefront products
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: featured
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+    post:
+      operationId: createProduct
+      tags: [admin]
+      summary: Create a product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInput"
+      responses:
+        "201":
+          description: Created product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+  /products/{id}:
+    patch:
+      operationId: updateProduct
+      tags: [admin]
+      summary: Update a product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductUpdate"
+      responses:
+        "200":
+          description: Updated product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Product not found
+    delete:
+      operationId: deleteProduct
+      tags: [admin]
+      summary: Delete a product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Product deleted
+        "404":
+          description: Product not found
+  /products/import:
+    post:
+      operationId: importProducts
+      tags: [admin]
+      summary: Import products from a parsed CSV
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductImportInput"
+      responses:
+        "201":
+          description: Imported products
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductImportResult"
+  /categories:
+    get:
+      operationId: listCategories
+      tags: [products]
+      summary: List product categories
+      responses:
+        "200":
+          description: Categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /admin/summary:
+    get:
+      operationId: getAdminSummary
+      tags: [admin]
+      summary: Get catalogue summary
+      responses:
+        "200":
+          description: Catalogue summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminSummary"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +169,72 @@ components:
           type: string
       required:
         - status
+    Product:
+      type: object
+      required: [id, name, slug, description, category, price, compareAtPrice, imageUrl, badge, featured, inventory, createdAt]
+      properties:
+        id: { type: number }
+        name: { type: string }
+        slug: { type: string }
+        description: { type: string }
+        category: { type: string }
+        price: { type: number }
+        compareAtPrice: { type: ["number", "null"] }
+        imageUrl: { type: string }
+        badge: { type: ["string", "null"] }
+        featured: { type: boolean }
+        inventory: { type: number }
+        createdAt: { type: string, format: date-time }
+    ProductInput:
+      type: object
+      required: [name, description, category, price, imageUrl]
+      properties:
+        name: { type: string, minLength: 1 }
+        description: { type: string }
+        category: { type: string, minLength: 1 }
+        price: { type: number, minimum: 0 }
+        compareAtPrice: { type: ["number", "null"], minimum: 0 }
+        imageUrl: { type: string, minLength: 1 }
+        badge: { type: ["string", "null"] }
+        featured: { type: boolean, default: false }
+        inventory: { type: number, minimum: 0, default: 20 }
+    ProductUpdate:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        description: { type: string }
+        category: { type: string, minLength: 1 }
+        price: { type: number, minimum: 0 }
+        compareAtPrice: { type: ["number", "null"], minimum: 0 }
+        imageUrl: { type: string, minLength: 1 }
+        badge: { type: ["string", "null"] }
+        featured: { type: boolean }
+        inventory: { type: number, minimum: 0 }
+    ProductImportInput:
+      type: object
+      required: [products]
+      properties:
+        products:
+          type: array
+          minItems: 1
+          maxItems: 500
+          items:
+            $ref: "#/components/schemas/ProductInput"
+    ProductImportResult:
+      type: object
+      required: [imported, products]
+      properties:
+        imported: { type: number }
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+    AdminSummary:
+      type: object
+      required: [totalProducts, featuredProducts, lowStockProducts, categories]
+      properties:
+        totalProducts: { type: number }
+        featuredProducts: { type: number }
+        lowStockProducts: { type: number }
+        categories: { type: number }
 
