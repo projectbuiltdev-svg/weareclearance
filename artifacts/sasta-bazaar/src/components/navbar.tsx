@@ -95,7 +95,7 @@ const mobileMenuSections = [
 ]
 
 const navTriggerClass =
-  "group inline-flex flex-none items-center rounded-xl border border-transparent px-3 py-2 text-xs font-bold tracking-wide text-white/80 transition-all duration-200 hover:-translate-y-px hover:border-white/15 hover:bg-white/[0.08] hover:text-white"
+  "group inline-flex flex-none items-center rounded-xl border border-transparent px-3 py-2 text-sm font-bold tracking-wide text-white/80 transition-all duration-200 hover:-translate-y-px hover:border-white/15 hover:bg-white/[0.08] hover:text-white"
 const navIconClass = "nav-icon-pulse mr-2 h-5 w-5 transition-colors"
 const dropdownContentClass =
   "min-w-56 overflow-hidden rounded-2xl border border-white/10 bg-[#101010] p-1.5 text-white shadow-[0_18px_48px_rgba(0,0,0,0.5)]"
