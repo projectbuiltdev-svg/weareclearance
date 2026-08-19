@@ -18,9 +18,26 @@ const dealMenuItems = [
   ["📦", "Bulk Buys", "bulk"],
 ] as const
 
+const homeMenuItems = [
+  ["🛏️", "Bedroom", "bedroom"],
+  ["☁️", "Pillows", "pillows"],
+  ["🛌", "Duvet Covers & Bed Sets", "duvet"],
+  ["🧺", "Sheets", "sheets"],
+  ["🛁", "Bathroom", "bathroom"],
+  ["🧖", "Towels", "towels"],
+  ["🥋", "Bathrobes", "bathrobes"],
+  ["🗄️", "Storage & Organisation", "storage"],
+] as const
+
+const kitchenMenuItems = [
+  ["🥘", "Cookware", "cookware"],
+  ["🔌", "Kitchen Appliances", "appliances"],
+  ["🥡", "Food Storage", "food-storage"],
+  ["🥂", "Glassware & Drinkware", "glassware"],
+  ["🥄", "Kitchen Accessories", "kitchen-accessories"],
+] as const
+
 const mainMenuItems = [
-  ["🏠", "Home & Living", "home"],
-  ["🍳", "Kitchen & Dining", "kitchen"],
   ["🎁", "Gifts", "gifts"],
   ["⚡", "Last Chance Clearance", "last-chance"],
   ["🧹", "Household", "household"],
@@ -77,6 +94,52 @@ export function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="min-w-48">
               {dealMenuItems.map(([icon, label, menu]) => (
+                <DropdownMenuItem key={label} asChild>
+                  <a href={`/?menu=${menu}#all-products`} className="font-bold">
+                    <span aria-hidden="true">{icon}</span>
+                    {label}
+                  </a>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex items-center text-xs font-bold text-white/85 transition-colors hover:text-white"
+              >
+                <span className="mr-1.5" aria-hidden="true">🏠</span>
+                Home &amp; Living
+                <ChevronDown className="ml-1 h-3.5 w-3.5" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-56">
+              {homeMenuItems.map(([icon, label, menu]) => (
+                <DropdownMenuItem key={label} asChild>
+                  <a href={`/?menu=${menu}#all-products`} className="font-bold">
+                    <span aria-hidden="true">{icon}</span>
+                    {label}
+                  </a>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex items-center text-xs font-bold text-white/85 transition-colors hover:text-white"
+              >
+                <span className="mr-1.5" aria-hidden="true">🍳</span>
+                Kitchen &amp; Dining
+                <ChevronDown className="ml-1 h-3.5 w-3.5" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-56">
+              {kitchenMenuItems.map(([icon, label, menu]) => (
                 <DropdownMenuItem key={label} asChild>
                   <a href={`/?menu=${menu}#all-products`} className="font-bold">
                     <span aria-hidden="true">{icon}</span>

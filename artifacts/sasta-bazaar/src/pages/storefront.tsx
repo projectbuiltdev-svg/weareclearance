@@ -152,7 +152,19 @@ export default function Storefront() {
       return product.badge === "Last Chance" || (product.compareAtPrice != null && product.compareAtPrice > product.price)
     }
     const departmentCategories: Record<string, string[]> = {
-      home: ["Bathroom", "Food Storage", "For the Home"],
+      bedroom: ["Bedroom"],
+      pillows: ["Pillows"],
+      duvet: ["Duvet Covers & Bed Sets"],
+      sheets: ["Sheets"],
+      bathroom: ["Bathroom"],
+      towels: ["Towels", "Bathroom"],
+      bathrobes: ["Bathrobes"],
+      storage: ["Storage", "Food Storage"],
+      cookware: ["Cookware"],
+      appliances: ["Appliances"],
+      "food-storage": ["Food Storage"],
+      glassware: ["Glassware & Drinkware"],
+      "kitchen-accessories": ["Kitchen Accessories", "Accessories"],
       kitchen: ["Accessories", "Food Storage"],
       gifts: ["For the Home"],
       household: ["Cleaning", "Paper Products", "Essentials"],
