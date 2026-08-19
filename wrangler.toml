@@ -1,0 +1,3 @@
+name = "weareclearance"
+compatibility_date = "2026-08-19"
+pages_build_output_dir = "artifacts/sasta-bazaar/dist/public"
