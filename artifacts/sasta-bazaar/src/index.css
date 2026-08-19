@@ -140,3 +140,25 @@
   border: 1px solid hsl(var(--border));
   box-shadow: none;
 }
+
+@keyframes nav-icon-pulse {
+  0%, 100% {
+    opacity: 0.68;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.nav-icon-pulse {
+  animation: nav-icon-pulse 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-icon-pulse {
+    animation: none;
+  }
+}

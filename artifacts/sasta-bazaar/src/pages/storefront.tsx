@@ -13,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import heroImage from "@assets/generated_images/clearance-hero.jpg"
 
 const categoryGroups = [
   {
@@ -196,14 +197,19 @@ export default function Storefront() {
   return (
     <main className="container mx-auto px-4 py-8 md:py-10 space-y-8">
       {/* Hero Banner */}
-      <section className="bg-card border border-border p-8 md:p-12 rounded-2xl flex flex-col items-center text-center">
-        <p className="text-xs font-bold tracking-[0.22em] uppercase text-primary mb-3">Everyday clearance</p>
-        <h1 className="font-display font-black text-4xl md:text-6xl tracking-tight mb-4 text-foreground">
+      <section
+        className="relative overflow-hidden rounded-2xl border border-border bg-card bg-cover bg-center p-8 text-center md:p-12"
+        style={{ backgroundImage: `linear-gradient(90deg, rgba(255,255,255,.94) 0%, rgba(255,255,255,.78) 48%, rgba(255,255,255,.2) 100%), url(${heroImage})` }}
+      >
+        <div className="relative z-10 mx-auto max-w-2xl">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-primary">Everyday clearance</p>
+          <h1 className="mb-4 font-display text-4xl font-black tracking-tight text-foreground md:text-6xl">
           Great finds. Less spend.
-        </h1>
-        <p className="text-base md:text-lg text-muted-foreground max-w-xl">
-          Useful products, limited-time reductions, and new clearance lines added regularly.
-        </p>
+          </h1>
+          <p className="mx-auto max-w-xl text-base text-muted-foreground md:text-lg">
+            Useful products, limited-time reductions, and new clearance lines added regularly.
+          </p>
+        </div>
       </section>
 
       <section id="departments" className="bg-card rounded-2xl border border-border p-5 md:p-6 scroll-mt-32">

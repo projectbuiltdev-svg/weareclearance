@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "2nJWGgaptYhGAHxrImHQs"
+uri = "file://attached_assets/generated_images/clearance-hero.jpg"
+type = "image"
+title = "Clearance store hero image"
+description = "Generated hero artwork used in the Sasta Bazaar storefront."
+logical_id = "c87f9f6f-dee4-4845-91f2-f30918590c03"
+content_hash = "sha256:49f324752a473c307b5518eaabe2e012840464d9a9493ad6e6e3c74d3a290a11"
+size = 156424
+mtime_ms = 1787143095080
+storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:71f3e437-c9d0-484f-b97e-d486149572a7/c87f9f6f-dee4-4845-91f2-f30918590c03/b190097c-5c5a-4c03-9c2b-531d0d3d1ce4"
+storage_version_token = "1787143134761789"
+content_type = "image/jpeg"
