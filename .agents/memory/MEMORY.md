@@ -1,0 +1,1 @@
+- [Generated validation schemas](generated-validation.md) — this workspace's Orval/Zod setup does not accept OpenAPI integer schemas; use numeric schemas with minimum constraints.
