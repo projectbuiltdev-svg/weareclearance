@@ -19,19 +19,68 @@ import { db, productsTable, type Product } from "@workspace/db";
 const router: IRouter = Router();
 
 const starterProducts = [
-  ["Smart Steel Bottle", "Kitchen", 299, 499, "Everyday carry bottle with a spill-safe lid.", "Bestseller", true],
-  ["Cloud Soft Towel Set", "Home", 449, 799, "Two plush, quick-dry towels for the everyday refresh.", "Save 44%", true],
-  ["Mini Bluetooth Speaker", "Electronics", 699, 1299, "Pocket-size sound with a full, room-filling beat.", "Hot Deal", true],
-  ["Cotton Oversized Tee", "Fashion", 399, 699, "Soft cotton staple in a relaxed all-day fit.", "Trending", false],
-  ["Glass Storage Box", "Kitchen", 349, 599, "A tidy way to prep, pack, and stack your pantry.", "New", false],
-  ["Glow Table Lamp", "Home", 799, 1499, "A warm little glow for reading corners and side tables.", "Limited", false],
+  {
+    name: "Stainless Steel Water Bottle",
+    category: "Accessories",
+    price: 2.99,
+    compareAtPrice: 4.99,
+    description: "A durable everyday bottle with a leak-resistant lid.",
+    badge: "Bestseller",
+    featured: true,
+    imageUrl: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    name: "Cotton Towel Set",
+    category: "Bathroom",
+    price: 4.99,
+    compareAtPrice: 8.99,
+    description: "Two soft, quick-dry towels for an easy bathroom refresh.",
+    badge: "Save 44%",
+    featured: true,
+    imageUrl: "https://www.americanblanketcompany.com/cdn/shop/files/cotton-bathtowels-white-productthumbnail-2025_2000x.jpg?v=1749829306",
+  },
+  {
+    name: "Portable Bluetooth Speaker",
+    category: "Audio",
+    price: 7.99,
+    compareAtPrice: 12.99,
+    description: "Compact wireless sound for kitchens, gardens, and weekends away.",
+    badge: "Hot Deal",
+    featured: true,
+    imageUrl: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    name: "Relaxed Cotton T-Shirt",
+    category: "Women's",
+    price: 4.49,
+    compareAtPrice: 6.99,
+    description: "A soft cotton staple in an easy, relaxed fit.",
+    badge: "Trending",
+    featured: false,
+    imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    name: "Glass Food Storage Box",
+    category: "Food Storage",
+    price: 3.49,
+    compareAtPrice: 5.99,
+    description: "A simple glass container for prepping, packing, and storing.",
+    badge: "New",
+    featured: false,
+    imageUrl: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    name: "Table Lamp",
+    category: "For the Home",
+    price: 8.99,
+    compareAtPrice: 14.99,
+    description: "A warm, compact lamp for bedside tables and reading corners.",
+    badge: "Last Chance",
+    featured: false,
+    imageUrl: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=80",
+  },
 ] as const;
 let seedPromise: Promise<void> | null = null;
-
-function imageFor(label: string, color: string): string {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800"><rect width="100%" height="100%" fill="${color}"/><circle cx="660" cy="140" r="180" fill="rgba(255,255,255,.22)"/><text x="60" y="390" font-family="Arial, sans-serif" font-size="54" font-weight="700" fill="#1d1d1d">${label}</text><text x="60" y="455" font-family="Arial, sans-serif" font-size="26" fill="#1d1d1d">Sasta Bazaar pick</text></svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
 
 function slugify(name: string, suffix: number): string {
   const base = name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "product";
@@ -53,19 +102,11 @@ async function seedIfEmpty(): Promise<void> {
     const [existing] = await db.select({ id: productsTable.id }).from(productsTable).limit(1);
     if (existing) return;
 
-    const palette = ["#f9d556", "#9edce8", "#ffb76b", "#d3b8f2", "#b9dfa0", "#ffcecf"];
     await db.insert(productsTable).values(
-      starterProducts.map(([name, category, price, compareAtPrice, description, badge, featured], index) => ({
-        name,
-        slug: slugify(name, index + 1),
-        category,
-        price,
-        compareAtPrice,
-        description,
-        badge,
-        featured,
+      starterProducts.map((product, index) => ({
+        ...product,
+        slug: slugify(product.name, index + 1),
         inventory: 12 + index * 7,
-        imageUrl: imageFor(name, palette[index] ?? "#f4dfb8"),
       })),
     );
   })();

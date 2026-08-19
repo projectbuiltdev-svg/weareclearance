@@ -48,33 +48,31 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* LIGHT MODE - Vibrant Indian Bazaar */
+/* LIGHT MODE - Clean clearance storefront */
 :root {
-  --background: 40 33% 98%; /* Floral white / cream */
-  --foreground: 20 14% 10%;
+  --background: 30 25% 98%;
+  --foreground: 220 16% 16%;
   
-  --border: 30 20% 85%;
-  --input: 30 20% 80%;
-  --ring: 15 85% 50%;
+  --border: 220 12% 89%;
+  --input: 220 12% 82%;
+  --ring: 2 88% 58%;
   
   --card: 0 0% 100%;
-  --card-foreground: 20 14% 10%;
-  --card-border: 30 20% 90%;
+  --card-foreground: 220 16% 16%;
+  --card-border: 220 12% 89%;
   
   --popover: 0 0% 100%;
-  --popover-foreground: 20 14% 10%;
-  --popover-border: 30 20% 90%;
+  --popover-foreground: 220 16% 16%;
+  --popover-border: 220 12% 89%;
   
-  /* Saffron Orange */
-  --primary: 15 85% 50%;
+  --primary: 2 88% 58%;
   --primary-foreground: 0 0% 100%;
   
-  /* Marigold Yellow */
-  --secondary: 42 98% 53%;
-  --secondary-foreground: 20 14% 10%;
+  --secondary: 42 96% 56%;
+  --secondary-foreground: 220 16% 16%;
   
-  --muted: 30 20% 92%;
-  --muted-foreground: 25 10% 40%;
+  --muted: 30 18% 95%;
+  --muted-foreground: 220 8% 43%;
   
   /* Jade Green */
   --accent: 158 100% 33%;
@@ -83,7 +81,7 @@
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
   
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 }
 
 .dark {
@@ -134,11 +132,11 @@
 }
 
 .bazaar-border {
-  border: 4px solid hsl(var(--primary));
-  box-shadow: 4px 4px 0px hsl(var(--primary));
+  border: 1px solid hsl(var(--border));
+  box-shadow: none;
 }
 
 .bazaar-border-secondary {
-  border: 4px solid hsl(var(--secondary));
-  box-shadow: 4px 4px 0px hsl(var(--secondary));
+  border: 1px solid hsl(var(--border));
+  box-shadow: none;
 }
