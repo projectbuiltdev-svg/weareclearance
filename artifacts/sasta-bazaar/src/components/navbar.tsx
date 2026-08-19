@@ -37,11 +37,28 @@ const kitchenMenuItems = [
   ["🥄", "Kitchen Accessories", "kitchen-accessories"],
 ] as const
 
+const giftsMenuItems = [
+  ["🌷", "Gifts for Her", "gifts-for-her"],
+  ["🎩", "Gifts for Him", "gifts-for-him"],
+  ["🏡", "Home Gifts", "home-gifts"],
+  ["🎀", "Gift Sets", "gift-sets"],
+] as const
+
+const householdMenuItems = [
+  ["🧽", "Cleaning", "cleaning"],
+  ["🧻", "Paper Products", "paper-products"],
+  ["🗑️", "Bin Bags", "bin-bags"],
+  ["🏡", "Household Essentials", "household-essentials"],
+] as const
+
+const gardenMenuItems = [
+  ["🪑", "Garden Furniture", "garden-furniture"],
+  ["🌱", "Garden Accessories", "garden-accessories"],
+  ["⛺", "Camping & Outdoor", "camping-outdoor"],
+] as const
+
 const mainMenuItems = [
-  ["🎁", "Gifts", "gifts"],
   ["⚡", "Last Chance Clearance", "last-chance"],
-  ["🧹", "Household", "household"],
-  ["🌿", "Garden & Outdoor", "garden"],
 ] as const
 
 export function Navbar() {
@@ -140,6 +157,75 @@ export function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="min-w-56">
               {kitchenMenuItems.map(([icon, label, menu]) => (
+                <DropdownMenuItem key={label} asChild>
+                  <a href={`/?menu=${menu}#all-products`} className="font-bold">
+                    <span aria-hidden="true">{icon}</span>
+                    {label}
+                  </a>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex items-center text-xs font-bold text-white/85 transition-colors hover:text-white"
+              >
+                <span className="mr-1.5" aria-hidden="true">🎁</span>
+                Gifts
+                <ChevronDown className="ml-1 h-3.5 w-3.5" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-48">
+              {giftsMenuItems.map(([icon, label, menu]) => (
+                <DropdownMenuItem key={label} asChild>
+                  <a href={`/?menu=${menu}#all-products`} className="font-bold">
+                    <span aria-hidden="true">{icon}</span>
+                    {label}
+                  </a>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex items-center text-xs font-bold text-white/85 transition-colors hover:text-white"
+              >
+                <span className="mr-1.5" aria-hidden="true">🧹</span>
+                Household
+                <ChevronDown className="ml-1 h-3.5 w-3.5" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-52">
+              {householdMenuItems.map(([icon, label, menu]) => (
+                <DropdownMenuItem key={label} asChild>
+                  <a href={`/?menu=${menu}#all-products`} className="font-bold">
+                    <span aria-hidden="true">{icon}</span>
+                    {label}
+                  </a>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex items-center text-xs font-bold text-white/85 transition-colors hover:text-white"
+              >
+                <span className="mr-1.5" aria-hidden="true">🌿</span>
+                Garden &amp; Outdoor
+                <ChevronDown className="ml-1 h-3.5 w-3.5" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-56">
+              {gardenMenuItems.map(([icon, label, menu]) => (
                 <DropdownMenuItem key={label} asChild>
                   <a href={`/?menu=${menu}#all-products`} className="font-bold">
                     <span aria-hidden="true">{icon}</span>
