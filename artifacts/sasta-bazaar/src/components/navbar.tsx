@@ -118,14 +118,14 @@ export function Navbar() {
           />
         </Link>
 
-        <nav className="absolute right-3 top-1/2 z-10 flex -translate-y-1/2 items-center justify-end gap-1.5 sm:static sm:col-start-3 sm:row-start-1 sm:translate-y-0 sm:gap-2 sm:pl-2 lg:gap-4">
-          <div className="hidden items-center rounded-lg border border-white/15 bg-white/[0.06] p-0.5 sm:flex" aria-label="Currency">
+        <nav className="absolute right-3 top-1/2 z-10 flex -translate-y-1/2 items-center justify-end gap-1.5 sm:static sm:col-start-3 sm:row-start-1 sm:translate-y-0 sm:gap-2 sm:pl-2 sm:pr-3 lg:gap-4 lg:pr-4">
+          <div className="hidden h-9 items-center rounded-lg border border-white/15 bg-white/[0.06] p-0.5 sm:flex" aria-label="Currency">
             <button
               type="button"
               aria-label="Use pounds"
               aria-pressed={currency === "£"}
               onClick={() => setCurrency("£")}
-              className={`flex h-7 w-7 items-center justify-center rounded-md text-xs font-black transition-colors ${
+              className={`flex h-8 w-8 items-center justify-center rounded-md text-xs font-black transition-colors ${
                 currency === "£" ? "bg-white text-black" : "text-white/55 hover:text-white"
               }`}
             >
@@ -136,7 +136,7 @@ export function Navbar() {
               aria-label="Use euros"
               aria-pressed={currency === "€"}
               onClick={() => setCurrency("€")}
-              className={`flex h-7 w-7 items-center justify-center rounded-md text-xs font-black transition-colors ${
+              className={`flex h-8 w-8 items-center justify-center rounded-md text-xs font-black transition-colors ${
                 currency === "€" ? "bg-white text-black" : "text-white/55 hover:text-white"
               }`}
             >
@@ -144,7 +144,7 @@ export function Navbar() {
             </button>
           </div>
           <Link href="/checkout">
-            <Button variant="secondary" size="sm" className="relative h-8 px-2.5 text-xs font-black group">
+            <Button variant="secondary" size="sm" className="relative h-9 px-2.5 text-xs font-black group">
               <ShoppingBag className="mr-1.5 h-4 w-4 group-hover:-rotate-12 transition-transform" />
               <span className="hidden sm:inline">Cart</span>
               {itemCount > 0 && (
@@ -244,7 +244,7 @@ export function Navbar() {
         </nav>
       </div>
       <nav aria-label="Main menu" className="col-start-2 row-start-1 hidden min-w-0 overflow-hidden bg-[#090909]/70 lg:block">
-        <div className="flex items-center justify-center gap-1.5 overflow-x-auto px-2 py-2.5 whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+         <div className="flex items-center justify-start gap-1.5 overflow-x-auto px-2 py-2.5 whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
