@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Search, Tag, ShoppingCart } from "lucide-react"
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
+import { staticCategories, staticProducts } from "@/data/static-products"
 import {
   Carousel,
   CarouselContent,
@@ -132,16 +133,22 @@ export default function Storefront() {
   const [category, setCategory] = useState<string>("")
   const [menuFilter] = useState(() => new URLSearchParams(window.location.search).get("menu") ?? "")
   
-  const { data: products, isLoading } = useListProducts(
+  const { data: apiProducts } = useListProducts(
     { search: search || undefined, category: category || undefined },
     { query: { queryKey: ["/api/products", search, category] } }
   )
   
-  const { data: categories = [] } = useListCategories({ query: { queryKey: ["/api/categories"] } })
+  const { data: apiCategories } = useListCategories({ query: { queryKey: ["/api/categories"] } })
   const { addToCart } = useCart()
   const { formatPrice } = useCurrency()
   const { toast } = useToast()
-  const visibleProducts = products?.filter((product) => {
+  const products = Array.isArray(apiProducts) ? apiProducts : staticProducts.filter((product) => {
+    const matchesSearch = !search || `${product.name} ${product.description}`.toLowerCase().includes(search.toLowerCase())
+    const matchesCategory = !category || product.category === category
+    return matchesSearch && matchesCategory
+  })
+  const categories = Array.isArray(apiCategories) && apiCategories.length ? apiCategories : staticCategories
+  const visibleProducts = products.filter((product) => {
     if (!menuFilter) return true
     if (menuFilter === "under-5") return product.price <= 5
     if (menuFilter === "under-10") return product.price <= 10
@@ -273,7 +280,7 @@ export default function Storefront() {
         </div>
       </section>
 
-      {!isLoading && visibleProducts && visibleProducts.length > 0 && (
+      {visibleProducts.length > 0 && (
         <div className="space-y-10">
           <ProductCarousel
             eyebrow="Deal of the day"
@@ -304,13 +311,7 @@ export default function Storefront() {
       )}
 
       {/* Product Grid */}
-      {isLoading ? (
-        <div id="all-products" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 scroll-mt-24">
-          {[1,2,3,4,5,6,7,8].map(i => (
-            <div key={i} className="h-80 bg-muted animate-pulse rounded-2xl" />
-          ))}
-        </div>
-      ) : visibleProducts?.length === 0 ? (
+      {visibleProducts.length === 0 ? (
         <div className="text-center py-24 bg-card rounded-2xl border border-border">
           <Tag className="h-16 w-16 mx-auto text-muted-foreground mb-4 opacity-50" />
           <h2 className="text-2xl font-bold">No items found</h2>
@@ -318,7 +319,7 @@ export default function Storefront() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {visibleProducts?.map(product => (
+          {visibleProducts.map(product => (
             <div key={product.id} className="bg-card rounded-2xl p-4 flex flex-col border border-border group hover:shadow-lg transition-shadow duration-300">
               <div className="relative aspect-square mb-4 rounded-xl overflow-hidden bg-muted">
                 {product.badge && (
