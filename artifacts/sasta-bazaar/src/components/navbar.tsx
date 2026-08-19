@@ -244,7 +244,7 @@ export function Navbar() {
         </nav>
       </div>
       <nav aria-label="Main menu" className="col-start-2 row-start-1 hidden min-w-0 overflow-hidden bg-[#090909]/70 lg:block">
-         <div className="flex items-center justify-start gap-1.5 overflow-x-auto px-2 py-2.5 whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+         <div className="flex items-center justify-center gap-1.5 overflow-x-auto px-2 py-2.5 whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
