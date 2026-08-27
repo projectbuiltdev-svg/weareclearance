@@ -74,6 +74,7 @@ function ProductCarousel({
                   )}
                   <div className="relative aspect-[4/5] overflow-hidden bg-muted/30 flex items-center justify-center p-6 border-b border-border/50">
                     {product.imageUrl ? (
+                      <>
                       <img
                         src={product.imageUrl}
                         alt={product.name}
@@ -84,6 +85,7 @@ function ProductCarousel({
                         }}
                       />
                       <span className="hidden font-display text-4xl italic text-blue-700/25" aria-hidden="true">WAC</span>
+                      </>
                     ) : (
                       <span className="font-display italic text-4xl text-muted-foreground/30">C</span>
                     )}
@@ -238,9 +240,9 @@ export default function Storefront() {
           <p className="text-sm md:text-sm font-semibold uppercase tracking-[0.3em] mb-6 text-white/90">
             The Spring Edit
           </p>
-          <h1 className="font-display text-5xl md:text-7xl leading-[1.05] mb-8">
+          <h1 className="font-display mb-8 text-5xl leading-[1.05] !text-white md:text-7xl">
             Elevated living,<br />
-            <span className="italic font-light">accessible elegance.</span>
+            <span className="font-light italic !text-white">accessible elegance.</span>
           </h1>
           <p className="text-lg text-white/80 font-light mb-10 max-w-lg leading-relaxed">
             Discover our curated collection of premium home, kitchen, and lifestyle essentials. Distinctive design without the typical premium price tag.
@@ -457,6 +459,7 @@ export default function Storefront() {
                 )}
                 <div className="relative aspect-[4/5] bg-muted/30 overflow-hidden flex items-center justify-center p-6 border-b border-border/50">
                   {product.imageUrl ? (
+                    <>
                     <img 
                       src={product.imageUrl} 
                       alt={product.name} 
@@ -467,6 +470,7 @@ export default function Storefront() {
                       }}
                     />
                     <span className="hidden font-display text-4xl italic text-blue-700/25" aria-hidden="true">WAC</span>
+                    </>
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-muted-foreground/30 font-display italic text-4xl">
                       C

@@ -19,7 +19,7 @@ const rootOptions = {
   },
 };
 
-if (root.hasChildNodes()) {
+if (root.firstElementChild) {
   hydrateRoot(root, app, rootOptions);
 } else {
   createRoot(root, rootOptions).render(app);
