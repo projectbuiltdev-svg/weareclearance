@@ -181,27 +181,36 @@ export function Navbar() {
         </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden flex-1 items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-slate-50/90 p-1.5 shadow-sm lg:flex">
+        <nav className="relative hidden flex-1 items-center justify-center gap-1 overflow-hidden rounded-2xl border border-white/15 bg-[linear-gradient(135deg,#05070d_0%,#0b1738_52%,#06102a_100%)] p-1.5 shadow-[0_18px_45px_-20px_rgba(3,15,45,0.8),inset_0_1px_0_rgba(255,255,255,0.18)] lg:flex">
+          <span className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent" />
+          <span className="pointer-events-none absolute -left-12 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full bg-blue-500/20 blur-2xl" />
+          <span className="pointer-events-none absolute -right-10 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full bg-red-500/20 blur-2xl" />
           {navGroups.map(({ label, items: groupItems }) => (
             <DropdownMenu key={label}>
               <DropdownMenuTrigger asChild>
-                <button className="group inline-flex items-center rounded-full px-5 py-2.5 text-[15px] font-bold tracking-tight text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:text-primary hover:shadow-md data-[state=open]:bg-white data-[state=open]:text-primary data-[state=open]:shadow-md">
-                  {label === "Deals" && <span className="mr-2 h-2 w-2 rounded-full bg-accent shadow-[0_0_0_3px_rgba(37,99,235,0.12)]" />}
+                <button className="group relative z-10 inline-flex items-center rounded-xl border border-transparent px-5 py-3 text-[14px] font-extrabold uppercase tracking-[0.08em] text-white/90 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/10 hover:text-white hover:shadow-[0_10px_24px_-12px_rgba(255,255,255,0.65)] data-[state=open]:border-white/20 data-[state=open]:bg-white data-[state=open]:text-slate-950 data-[state=open]:shadow-xl">
+                  {label === "Deals" && <span className="mr-2 h-2 w-2 rounded-full bg-red-500 shadow-[0_0_12px_3px_rgba(239,68,68,0.7)]" />}
                   {label}
-                  <ChevronDown className="ml-1.5 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  <ChevronDown className="ml-2 h-3.5 w-3.5 opacity-70 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="min-w-64 rounded-2xl border border-slate-200 border-t-4 border-t-primary bg-white p-2.5 shadow-2xl">
+              <DropdownMenuContent align="start" className="min-w-72 overflow-hidden rounded-2xl border border-slate-200/80 bg-white/95 p-2.5 shadow-[0_28px_70px_-20px_rgba(2,12,35,0.55)] backdrop-blur-xl">
+                <div className="mb-2 rounded-xl bg-[linear-gradient(135deg,#080d1b,#102759)] px-4 py-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-white">
+                  Explore {label}
+                </div>
                 {groupItems.map((item) => (
-                  <DropdownMenuItem key={item.menu} asChild className="rounded-xl px-3.5 py-3 text-sm font-semibold focus:bg-primary/5 focus:text-primary">
-                    <a href={`/?menu=${item.menu}#all-products`}>{item.label}</a>
+                  <DropdownMenuItem key={item.menu} asChild className="group/item rounded-xl px-3.5 py-3 text-sm font-bold focus:bg-red-50 focus:text-primary">
+                    <a href={`/?menu=${item.menu}#all-products`} className="flex items-center justify-between">
+                      {item.label}
+                      <span className="h-1.5 w-1.5 rounded-full bg-slate-200 transition-all group-hover/item:bg-primary group-hover/item:shadow-[0_0_8px_rgba(229,16,29,0.55)]" />
+                    </a>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
           ))}
           {directNavItems.map(({ label, menu }) => (
-            <a key={menu} href={`/?menu=${menu}#all-products`} className="rounded-full bg-primary px-5 py-2.5 text-[15px] font-extrabold tracking-tight text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-lg">
+            <a key={menu} href={`/?menu=${menu}#all-products`} className="relative z-10 ml-1 overflow-hidden rounded-xl border border-red-400/40 bg-[linear-gradient(135deg,#ff2333_0%,#d40717_55%,#a9000c_100%)] px-5 py-3 text-[14px] font-black uppercase tracking-[0.1em] text-white shadow-[0_10px_26px_-10px_rgba(220,10,25,0.85),inset_0_1px_0_rgba(255,255,255,0.35)] transition-all duration-300 before:absolute before:inset-y-0 before:-left-1/2 before:w-1/3 before:skew-x-[-20deg] before:bg-white/25 before:blur-sm before:transition-all before:duration-700 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-10px_rgba(220,10,25,0.95)] hover:before:left-[130%]">
               {label}
             </a>
           ))}
