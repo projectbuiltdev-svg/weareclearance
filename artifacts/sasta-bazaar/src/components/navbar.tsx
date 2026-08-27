@@ -89,10 +89,7 @@ export function Navbar() {
           <span>Fast, fair delivery straight to your door</span>
         </div>
         <div className="flex items-center gap-4">
-          <Link href="/admin" className="hover:text-primary-foreground/80 transition-colors">
-            Store Admin
-          </Link>
-          <div className="flex items-center gap-2 border-l border-white/20 pl-4">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrency("£")}
               className={`hover:text-white transition-colors ${currency === "£" ? "text-white font-bold" : "text-white/60"}`}
