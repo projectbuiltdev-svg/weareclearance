@@ -100,11 +100,11 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full max-w-full overflow-x-clip border-b border-border bg-white text-black">
       {/* Top utility bar */}
-      <div className="hidden sm:flex items-center justify-between px-4 py-1.5 bg-secondary text-secondary-foreground text-xs font-medium">
-        <div className="flex items-center gap-4">
-          <span>Fast, fair delivery straight to your door</span>
-        </div>
-        <div className="flex items-center gap-4">
+      <div className="relative hidden min-h-8 items-center justify-center bg-secondary px-4 py-1.5 text-secondary-foreground sm:flex">
+        <span className="text-center text-[10px] font-semibold uppercase tracking-[0.18em]">
+          Fast, fair delivery straight to your door
+        </span>
+        <div className="absolute right-4 flex items-center gap-4 border-l border-white/20 pl-4 text-xs font-medium">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrency("£")}
