@@ -12,8 +12,9 @@ const template = await readFile(clientHtmlPath, "utf8")
 const { render } = await import(serverEntryPath)
 const staticProductsSource = await readFile(staticProductsPath, "utf8")
 const publishedCatalogue = JSON.parse(await readFile(publishedCataloguePath, "utf8"))
-const productArrayStart = staticProductsSource.indexOf("[")
-const productArrayEnd = staticProductsSource.indexOf("\n]\n\nexport") + 2
+const legacyArrayMarker = "const legacyStaticProducts = ["
+const productArrayStart = staticProductsSource.indexOf(legacyArrayMarker) + legacyArrayMarker.length - 1
+const productArrayEnd = staticProductsSource.indexOf("\n]\n\nconst normalizedLegacyProducts") + 2
 const legacyProductMetadata = JSON.parse(staticProductsSource.slice(productArrayStart, productArrayEnd))
 const publishedKeys = new Set(publishedCatalogue.products.map((product) => product.sku || product.slug))
 const productMetadata = [
