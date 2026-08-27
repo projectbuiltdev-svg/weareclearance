@@ -528,16 +528,24 @@ export default function Storefront() {
             ].map(([question, answer], index) => {
               const isOpen = openFaq === question
               return (
-                <div key={question} className={`self-start bg-white px-4 py-3 md:px-5 ${isOpen ? "bg-[#fbfaf7]" : ""}`}>
+                <div key={question} className={`self-start bg-white px-4 py-3 transition-colors md:px-5 ${isOpen ? "bg-[#fbfaf7]" : "hover:bg-slate-50"}`}>
                   <button
                     type="button"
                     aria-expanded={isOpen}
                     aria-controls={`faq-answer-${index}`}
                     onClick={() => setOpenFaq(isOpen ? null : question)}
-                    className="flex w-full items-center justify-between gap-4 text-left text-sm font-semibold leading-snug"
+                    className="group/faq flex w-full items-center justify-between gap-4 text-left text-sm font-semibold leading-snug"
                   >
-                    <span>{question}</span>
-                    <ChevronDown className={`h-4 w-4 shrink-0 text-blue-700 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                    <span className={`transition-colors ${isOpen ? "text-blue-800" : "group-hover/faq:text-blue-800"}`}>{question}</span>
+                    <span
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center border transition-all ${
+                        isOpen
+                          ? "border-blue-700 bg-blue-700 text-white shadow-sm"
+                          : "border-blue-200 bg-blue-50/60 text-blue-700 group-hover/faq:border-blue-700 group-hover/faq:bg-blue-700 group-hover/faq:text-white"
+                      }`}
+                    >
+                      <ChevronDown aria-hidden="true" className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                    </span>
                   </button>
                   {isOpen && (
                     <p id={`faq-answer-${index}`} className="mt-3 text-sm leading-6 text-muted-foreground">
