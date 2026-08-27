@@ -248,7 +248,7 @@ export default function Storefront() {
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/35 via-slate-900/10 to-transparent" />
         </div>
         
-        <div className="relative z-10 mx-4 max-w-2xl border border-white/45 bg-slate-950/25 p-6 text-white shadow-[0_30px_80px_-28px_rgba(0,0,0,0.78),inset_0_1px_0_rgba(255,255,255,0.3)] backdrop-blur-md sm:mx-8 sm:bg-slate-950/22 sm:p-8 md:mx-12 md:p-12 lg:mx-20 lg:p-14">
+        <div className="relative z-10 mx-4 max-w-2xl border border-white/50 bg-slate-950/10 p-6 text-white shadow-[0_24px_70px_-30px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-sm sm:mx-8 sm:bg-slate-950/[0.08] sm:p-8 md:mx-12 md:p-12 lg:mx-20 lg:p-14">
           <p className="text-sm md:text-sm font-semibold uppercase tracking-[0.3em] mb-6 text-white/90">
             The Spring Edit
           </p>
