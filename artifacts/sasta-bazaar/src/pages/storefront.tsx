@@ -79,7 +79,7 @@ function ProductCarousel({
                 <article className="retail-card group h-full flex flex-col relative bg-white pb-5">
                   {product.badge && (
                     <div className="absolute top-4 left-4 z-10">
-                      <Badge className="bg-accent text-accent-foreground font-medium tracking-widest uppercase rounded-none px-3 py-1 pointer-events-none text-[10px] shadow-sm">
+                      <Badge className="pointer-events-none rounded-none border border-blue-200/80 bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-blue-950 shadow-[0_8px_24px_-12px_rgba(30,64,175,0.55)] backdrop-blur-md before:mr-2 before:h-1.5 before:w-1.5 before:rotate-45 before:bg-blue-600 before:content-['']">
                         {product.badge}
                       </Badge>
                     </div>
@@ -561,7 +561,7 @@ export default function Storefront() {
               <article key={product.id} className="retail-card group flex flex-col relative bg-white animate-slide-down pb-5">
                 {product.badge && (
                   <div className="absolute top-4 left-4 z-10">
-                    <Badge className="bg-accent text-accent-foreground font-medium tracking-widest uppercase rounded-none px-3 py-1 pointer-events-none text-[10px] shadow-sm">
+                    <Badge className="pointer-events-none rounded-none border border-blue-200/80 bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-blue-950 shadow-[0_8px_24px_-12px_rgba(30,64,175,0.55)] backdrop-blur-md before:mr-2 before:h-1.5 before:w-1.5 before:rotate-45 before:bg-blue-600 before:content-['']">
                       {product.badge}
                     </Badge>
                   </div>
