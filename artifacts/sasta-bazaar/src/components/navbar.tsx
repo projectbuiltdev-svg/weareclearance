@@ -104,7 +104,7 @@ export function Navbar() {
       {/* Top utility bar */}
       <div className="relative hidden min-h-8 items-center justify-center bg-secondary px-4 py-1.5 text-secondary-foreground sm:flex">
         <span className="text-center text-[10px] font-semibold uppercase tracking-[0.18em]">
-          Fast, fair delivery straight to your door
+          Complimentary Delivery <span aria-hidden="true">—</span> On all orders over £50
         </span>
         <div className="absolute right-4 flex items-center gap-4 border-l border-white/20 pl-4 text-xs font-medium">
           <div className="flex items-center gap-2">
