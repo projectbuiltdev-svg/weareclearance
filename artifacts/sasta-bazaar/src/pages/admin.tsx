@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { 
   useListProducts, 
+  useListCategories,
   useGetAdminSummary, 
   useCreateProduct, 
   useUpdateProduct, 
@@ -133,6 +134,7 @@ function AdminContent() {
   const { data: products, isLoading: isLoadingProducts } = useListProducts(listParams, { 
     query: { queryKey: getListProductsQueryKey(listParams) } 
   })
+  const { data: categories = [] } = useListCategories()
   
   const createProduct = useCreateProduct()
   const updateProduct = useUpdateProduct()
@@ -443,8 +445,22 @@ function AdminContent() {
               </div>
 
               <div className="col-span-2 md:col-span-1 space-y-3">
-                <Label className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Category</Label>
-                <Input required value={form.category} onChange={e => setForm({...form, category: e.target.value})} className="h-11 bg-transparent border-b border-0 border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base" />
+                <Label htmlFor="product-category" className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Category</Label>
+                <select
+                  id="product-category"
+                  required
+                  value={form.category}
+                  onChange={e => setForm({...form, category: e.target.value})}
+                  className="h-11 w-full bg-transparent border-b border-x-0 border-t-0 border-border rounded-none px-0 text-base outline-none focus:border-primary"
+                >
+                  <option value="" disabled>Select a category</option>
+                  {form.category && !categories.includes(form.category) && (
+                    <option value={form.category}>{form.category}</option>
+                  )}
+                  {categories.map((category) => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </select>
               </div>
               
               <div className="col-span-2 md:col-span-1 space-y-3">
