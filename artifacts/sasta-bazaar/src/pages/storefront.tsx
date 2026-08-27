@@ -554,7 +554,7 @@ export default function Storefront() {
                   )}
                 </div>
               )
-            ))}
+            })}
           </div>
         </div>
       </section>
