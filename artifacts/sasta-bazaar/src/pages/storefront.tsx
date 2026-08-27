@@ -4,7 +4,18 @@ import { useCart } from "@/lib/cart"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Search, Tag, ShoppingBag, ArrowRight, Star } from "lucide-react"
+import {
+  Search,
+  Tag,
+  ShoppingBag,
+  ArrowRight,
+  Star,
+  BadgePercent,
+  House,
+  CookingPot,
+  Gift,
+  Clock3,
+} from "lucide-react"
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
 import { staticCategories, staticProducts } from "@/data/static-products"
@@ -368,20 +379,20 @@ export default function Storefront() {
       <section aria-label="Featured shopping categories" className="order-3 border-y border-border bg-white">
         <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-5">
           {[
-            { number: "01", title: "Deals", subtitle: "Accessible Luxuries Under £10", menu: "under-10" },
-            { number: "02", title: "Home & Living", menu: "bedroom" },
-            { number: "03", title: "Kitchen & Dining", menu: "cookware" },
-            { number: "04", title: "Gifts", menu: "gifts-for-her" },
-            { number: "05", title: "Last Chance", menu: "last-chance" },
+            { Icon: BadgePercent, title: "Deals", subtitle: "Accessible Luxuries Under £10", menu: "under-10" },
+            { Icon: House, title: "Home & Living", menu: "bedroom" },
+            { Icon: CookingPot, title: "Kitchen & Dining", menu: "cookware" },
+            { Icon: Gift, title: "Gifts", menu: "gifts-for-her" },
+            { Icon: Clock3, title: "Last Chance", menu: "last-chance" },
           ].map((item) => (
             <a
               key={item.title}
               href={`/?menu=${item.menu}#all-products`}
               className="group relative flex min-h-36 flex-col justify-between overflow-hidden px-6 py-7 transition-colors duration-300 hover:bg-blue-700"
             >
-              <span className="text-[10px] font-bold tracking-[0.24em] text-blue-700 transition-colors group-hover:text-white/60">
-                {item.number}
-              </span>
+              <div className="flex h-10 w-10 items-center justify-center border border-blue-200 text-blue-700 transition-all duration-300 group-hover:border-white/40 group-hover:bg-white/10 group-hover:text-white">
+                <item.Icon className="h-5 w-5 stroke-[1.5]" />
+              </div>
               <div>
                 <h2 className="font-display text-2xl leading-tight text-foreground transition-colors group-hover:text-white">
                   {item.title}
