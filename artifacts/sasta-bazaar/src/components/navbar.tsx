@@ -6,7 +6,9 @@ import {
   Search,
   PoundSterling,
   Euro,
-  ChevronDown
+  ChevronDown,
+  Flame,
+  BadgePercent,
 } from "lucide-react"
 import { useCart } from "@/lib/cart"
 import { useCurrency } from "@/lib/currency"
@@ -211,7 +213,12 @@ export function Navbar() {
             <DropdownMenu key={label} modal={false}>
               <DropdownMenuTrigger asChild>
                 <button className="group relative z-10 inline-flex items-center rounded-2xl border border-transparent px-5 py-3 text-[14px] font-extrabold uppercase tracking-[0.075em] text-slate-800 transition-all duration-300 after:absolute after:inset-x-5 after:bottom-1 after:h-0.5 after:origin-center after:scale-x-0 after:rounded-full after:bg-blue-600 after:transition-transform after:duration-300 hover:-translate-y-0.5 hover:border-blue-100 hover:bg-white hover:text-blue-800 hover:shadow-[0_12px_28px_-18px_rgba(30,64,175,0.7)] hover:after:scale-x-100 data-[state=open]:border-blue-200 data-[state=open]:bg-blue-700 data-[state=open]:text-white data-[state=open]:shadow-[0_12px_28px_-14px_rgba(29,78,216,0.7)]">
-                  {label === "Deals" && <span className="mr-2 h-2 w-2 rounded-full bg-blue-600 shadow-[0_0_0_4px_rgba(37,99,235,0.12),0_0_12px_rgba(37,99,235,0.55)]" />}
+                  {label === "Deals" && (
+                    <Flame
+                      aria-hidden="true"
+                      className="mr-2 h-4 w-4 text-orange-500 transition-transform duration-300 group-hover:scale-110 data-[state=open]:text-orange-200"
+                    />
+                  )}
                   {label}
                   <ChevronDown className="ml-2 h-3.5 w-3.5 opacity-70 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                 </button>
@@ -232,7 +239,8 @@ export function Navbar() {
             </DropdownMenu>
           ))}
           {directNavItems.map(({ label, menu }) => (
-            <a key={menu} href={`/collections/${menu}`} className="relative z-10 ml-1 overflow-hidden rounded-2xl border border-blue-400/50 bg-[linear-gradient(135deg,#0b2f70_0%,#1554b5_52%,#2878e8_100%)] px-5 py-3 text-[14px] font-black uppercase tracking-[0.1em] text-white shadow-[0_12px_28px_-13px_rgba(21,84,181,0.85),inset_0_1px_0_rgba(255,255,255,0.3)] transition-all duration-300 before:absolute before:inset-y-0 before:-left-1/2 before:w-1/3 before:skew-x-[-20deg] before:bg-white/30 before:blur-sm before:transition-all before:duration-700 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-13px_rgba(21,84,181,0.95)] hover:before:left-[130%]">
+            <a key={menu} href={`/collections/${menu}`} className="group relative z-10 ml-1 inline-flex items-center overflow-hidden rounded-2xl border border-blue-400/50 bg-[linear-gradient(135deg,#0b2f70_0%,#1554b5_52%,#2878e8_100%)] px-5 py-3 text-[14px] font-black uppercase tracking-[0.1em] text-white shadow-[0_12px_28px_-13px_rgba(21,84,181,0.85),inset_0_1px_0_rgba(255,255,255,0.3)] transition-all duration-300 before:absolute before:inset-y-0 before:-left-1/2 before:w-1/3 before:skew-x-[-20deg] before:bg-white/30 before:blur-sm before:transition-all before:duration-700 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-13px_rgba(21,84,181,0.95)] hover:before:left-[130%]">
+              <BadgePercent aria-hidden="true" className="mr-2 h-4 w-4 text-amber-200 transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110" />
               {label}
             </a>
           ))}

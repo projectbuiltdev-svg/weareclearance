@@ -24,11 +24,9 @@ import {
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useCurrency } from "@/lib/currency"
-import { Show, SignIn, useAuth, useClerk } from "@clerk/react"
+import { Show, useAuth, useClerk } from "@clerk/react"
 import { CsvImport } from "@/components/admin/csv-import"
 import { ImageUpload } from "@/components/admin/image-upload"
-
-const basePath = import.meta.env.BASE_URL.replace(/\/$/, "")
 
 type AdminAccess = {
   isOwner: boolean
@@ -37,7 +35,13 @@ type AdminAccess = {
   admins: Array<{ email: string; clerkUserId: string | null; createdAt: string }>
 }
 
-function AdminContent({ initialAdminAccess }: { initialAdminAccess: AdminAccess }) {
+function AdminContent({
+  initialAdminAccess,
+  onSignOut,
+}: {
+  initialAdminAccess: AdminAccess
+  onSignOut: () => void
+}) {
   type PublishStatus = {
     state: "idle" | "preparing" | "pushed" | "deploying" | "live" | "failed"
     message: string
@@ -49,7 +53,6 @@ function AdminContent({ initialAdminAccess }: { initialAdminAccess: AdminAccess 
   const queryClient = useQueryClient()
   const { toast } = useToast()
   const { formatPrice, gbpPerEur, refreshExchangeRate } = useCurrency()
-  const { signOut } = useClerk()
   const { getToken } = useAuth()
   
   const { data: summary, isLoading: isLoadingSummary } = useGetAdminSummary({ query: { queryKey: ["/api/admin/summary"] } })
@@ -314,7 +317,7 @@ function AdminContent({ initialAdminAccess }: { initialAdminAccess: AdminAccess 
             New Product
           </Button>
           
-          <Button variant="outline" className="h-12 px-6 uppercase tracking-widest text-xs font-semibold rounded-none ml-auto border-border bg-white hover:bg-muted" onClick={() => signOut({ redirectUrl: import.meta.env.BASE_URL.replace(/\/$/, "") || "/" })}>
+          <Button variant="outline" className="h-12 px-6 uppercase tracking-widest text-xs font-semibold rounded-none ml-auto border-border bg-white hover:bg-muted" onClick={onSignOut}>
             <LogOut className="h-4 w-4 mr-3 opacity-70" />
             Sign Out
           </Button>
@@ -701,40 +704,121 @@ export default function Admin() {
         <AdminAccessGate />
       </Show>
       <Show when="signed-out">
-        <AdminSignIn />
+        <AdminSignedOutEntry />
       </Show>
     </>
   )
 }
 
 function AdminSignIn() {
+  const [email, setEmail] = useState("support@weareclearance.com")
+  const [password, setPassword] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    setError(null)
+    setIsSubmitting(true)
+    try {
+      const response = await fetch("/api/admin/test-login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      })
+      const body = await response.json()
+      if (!response.ok) throw new Error(body.error || "Could not sign in.")
+      window.location.reload()
+    } catch (loginError) {
+      setError(loginError instanceof Error ? loginError.message : "Could not sign in.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <main className="container mx-auto flex min-h-[70vh] max-w-3xl items-center justify-center px-4 py-12">
       <section className="w-full border border-border bg-[#fbfaf7] px-4 py-8 md:px-8 md:py-10">
         <div className="mb-8 text-center">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-700">Private access</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-700">Temporary private access</p>
           <h1 className="mt-3 font-display text-3xl text-foreground md:text-4xl">Administrator sign in</h1>
           <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted-foreground">
-            Enter your approved email address and password to access the We Are Clearance dashboard.
+            Enter the owner email address and the temporary testing password to access the We Are Clearance dashboard.
           </p>
         </div>
-        <div className="flex justify-center">
-          <SignIn
-            routing="hash"
-            signUpUrl={`${basePath}/sign-up`}
-            fallbackRedirectUrl={`${basePath}/admin`}
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="mx-auto max-w-md space-y-5 border border-border bg-white p-6 md:p-8">
+          <div className="space-y-2">
+            <Label htmlFor="test-admin-email" className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Email address</Label>
+            <Input
+              id="test-admin-email"
+              type="email"
+              autoComplete="username"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+              className="rounded-none"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="test-admin-password" className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Password</Label>
+            <Input
+              id="test-admin-password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+              className="rounded-none"
+            />
+          </div>
+          {error && <p role="alert" className="border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">{error}</p>}
+          <Button type="submit" className="h-12 w-full rounded-none text-xs font-semibold uppercase tracking-widest" disabled={isSubmitting}>
+            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Sign in to Admin
+          </Button>
+        </form>
       </section>
     </main>
   )
 }
 
-function AdminAccessGate() {
+function AdminSignedOutEntry() {
+  const [testSessionState, setTestSessionState] = useState<"checking" | "active" | "inactive">("checking")
+
+  useEffect(() => {
+    fetch("/api/admin/test-session", { credentials: "include" })
+      .then((response) => response.json())
+      .then((body) => setTestSessionState(body.authenticated ? "active" : "inactive"))
+      .catch(() => setTestSessionState("inactive"))
+  }, [])
+
+  if (testSessionState === "active") return <AdminAccessGate temporarySession />
+  if (testSessionState === "checking") {
+    return (
+      <main className="container mx-auto flex min-h-[60vh] max-w-2xl items-center justify-center px-4 py-12">
+        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+          <Loader2 className="h-5 w-5 animate-spin" />
+          Preparing Administrator sign in…
+        </div>
+      </main>
+    )
+  }
+  return <AdminSignIn />
+}
+
+function AdminAccessGate({ temporarySession = false }: { temporarySession?: boolean }) {
   const { getToken } = useAuth()
   const { signOut } = useClerk()
   const [adminAccess, setAdminAccess] = useState<AdminAccess | null>(null)
   const [error, setError] = useState<string | null>(null)
+
+  const handleSignOut = async () => {
+    if (temporarySession) {
+      await fetch("/api/admin/test-logout", { method: "POST", credentials: "include" }).catch(() => undefined)
+    }
+    await signOut({ redirectUrl: import.meta.env.BASE_URL.replace(/\/$/, "") || "/" })
+  }
 
   useEffect(() => {
     let active = true
@@ -757,7 +841,7 @@ function AdminAccessGate() {
     }
   }, [getToken])
 
-  if (adminAccess) return <AdminContent initialAdminAccess={adminAccess} />
+  if (adminAccess) return <AdminContent initialAdminAccess={adminAccess} onSignOut={handleSignOut} />
 
   return (
     <main className="container mx-auto flex min-h-[60vh] max-w-2xl items-center px-4 py-12">
@@ -767,7 +851,7 @@ function AdminAccessGate() {
             <h1 className="font-display text-3xl">Administrator access required</h1>
             <p className="mt-4 text-sm leading-6 text-muted-foreground">{error}</p>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">Ask the primary owner to add your email address before signing in again.</p>
-            <Button className="mt-8 rounded-none" onClick={() => signOut({ redirectUrl: import.meta.env.BASE_URL.replace(/\/$/, "") || "/" })}>
+            <Button className="mt-8 rounded-none" onClick={handleSignOut}>
               Sign out
             </Button>
           </>
