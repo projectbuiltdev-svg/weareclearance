@@ -19,7 +19,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Badge } from "@/components/ui/badge"
 import { 
   Package, LayoutGrid, AlertTriangle, Upload, 
-  Plus, Edit2, Trash2, Loader2, LogOut, Search
+  Plus, Edit2, Trash2, Loader2, LogOut, Search, Rocket, CheckCircle2, XCircle
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useCurrency } from "@/lib/currency"
@@ -29,6 +29,14 @@ import { CsvImport } from "@/components/admin/csv-import"
 import { ImageUpload } from "@/components/admin/image-upload"
 
 function AdminContent() {
+  type PublishStatus = {
+    state: "idle" | "preparing" | "pushed" | "deploying" | "live" | "failed"
+    message: string
+    updatedAt: string
+    lastPublishedAt?: string
+    runUrl?: string
+  }
+
   const queryClient = useQueryClient()
   const { toast } = useToast()
   const { formatPrice, gbpPerEur, refreshExchangeRate } = useCurrency()
@@ -41,6 +49,48 @@ function AdminContent() {
   const [debouncedSearch, setDebouncedSearch] = useState("")
   const [exchangeRate, setExchangeRate] = useState("")
   const [isSavingRate, setIsSavingRate] = useState(false)
+  const [publishStatus, setPublishStatus] = useState<PublishStatus | null>(null)
+  const [isStartingPublish, setIsStartingPublish] = useState(false)
+
+  const loadPublishStatus = async () => {
+    const token = await getToken()
+    const response = await fetch("/api/admin/publish-catalogue", {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
+    if (!response.ok) throw new Error("Could not load publishing status")
+    setPublishStatus(await response.json())
+  }
+
+  useEffect(() => {
+    loadPublishStatus().catch(() => undefined)
+  }, [])
+
+  useEffect(() => {
+    const running = publishStatus && ["preparing", "pushed", "deploying"].includes(publishStatus.state)
+    if (!running) return
+    const timer = window.setInterval(() => loadPublishStatus().catch(() => undefined), 4_000)
+    return () => window.clearInterval(timer)
+  }, [publishStatus?.state])
+
+  const publishCatalogue = async () => {
+    if (!window.confirm("Publish the current products, prices, stock, images and currency rate to the live store?")) return
+    setIsStartingPublish(true)
+    try {
+      const token = await getToken()
+      const response = await fetch("/api/admin/publish-catalogue", {
+        method: "POST",
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
+      const body = await response.json()
+      if (!response.ok) throw new Error(body.error || body.message || "Could not start publishing")
+      setPublishStatus(body)
+      toast({ title: "Catalogue publishing started" })
+    } catch (error) {
+      toast({ title: error instanceof Error ? error.message : "Could not publish catalogue", variant: "destructive" })
+    } finally {
+      setIsStartingPublish(false)
+    }
+  }
 
   useEffect(() => setExchangeRate(String(gbpPerEur)), [gbpPerEur])
 
@@ -186,6 +236,19 @@ function AdminContent() {
         </div>
         <div className="flex flex-wrap items-center gap-4">
           <CsvImport onSuccess={invalidateData} />
+
+          <Button
+            type="button"
+            variant="outline"
+            className="h-12 px-6 uppercase tracking-widest text-xs font-semibold rounded-none border-blue-700 text-blue-800 hover:bg-blue-50"
+            onClick={publishCatalogue}
+            disabled={isStartingPublish || !!publishStatus && ["preparing", "pushed", "deploying"].includes(publishStatus.state)}
+          >
+            {isStartingPublish || publishStatus && ["preparing", "pushed", "deploying"].includes(publishStatus.state)
+              ? <Loader2 className="h-4 w-4 mr-3 animate-spin" />
+              : <Rocket className="h-4 w-4 mr-3" />}
+            Publish catalogue
+          </Button>
           
           <Button className="h-12 px-6 uppercase tracking-widest text-xs font-semibold rounded-none" onClick={() => handleOpenDialog()}>
             <Plus className="h-4 w-4 mr-3" />
@@ -198,6 +261,38 @@ function AdminContent() {
           </Button>
         </div>
       </div>
+
+      {publishStatus && publishStatus.state !== "idle" && (
+        <section className={`border p-5 ${
+          publishStatus.state === "failed"
+            ? "border-red-200 bg-red-50"
+            : publishStatus.state === "live"
+              ? "border-emerald-200 bg-emerald-50"
+              : "border-blue-200 bg-blue-50"
+        }`}>
+          <div className="flex items-start gap-3">
+            {publishStatus.state === "failed"
+              ? <XCircle className="mt-0.5 h-5 w-5 text-red-700" />
+              : publishStatus.state === "live"
+                ? <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-700" />
+                : <Loader2 className="mt-0.5 h-5 w-5 animate-spin text-blue-700" />}
+            <div>
+              <p className="text-sm font-semibold capitalize">{publishStatus.state}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{publishStatus.message}</p>
+              {publishStatus.lastPublishedAt && (
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Last published {new Date(publishStatus.lastPublishedAt).toLocaleString()}
+                </p>
+              )}
+              {publishStatus.runUrl && (
+                <a href={publishStatus.runUrl} target="_blank" rel="noreferrer" className="mt-2 inline-block text-xs font-semibold text-blue-800 underline">
+                  View deployment
+                </a>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="border border-border bg-white p-6 md:p-8">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">

@@ -6,13 +6,20 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const clientHtmlPath = path.join(projectRoot, "dist/public/index.html")
 const serverEntryPath = path.join(projectRoot, "dist/server/entry-server.js")
 const staticProductsPath = path.join(projectRoot, "src/data/static-products.ts")
+const publishedCataloguePath = path.join(projectRoot, "src/data/published-catalogue.json")
 
 const template = await readFile(clientHtmlPath, "utf8")
 const { render } = await import(serverEntryPath)
 const staticProductsSource = await readFile(staticProductsPath, "utf8")
+const publishedCatalogue = JSON.parse(await readFile(publishedCataloguePath, "utf8"))
 const productArrayStart = staticProductsSource.indexOf("[")
 const productArrayEnd = staticProductsSource.indexOf("\n]\n\nexport") + 2
-const productMetadata = JSON.parse(staticProductsSource.slice(productArrayStart, productArrayEnd))
+const legacyProductMetadata = JSON.parse(staticProductsSource.slice(productArrayStart, productArrayEnd))
+const publishedKeys = new Set(publishedCatalogue.products.map((product) => product.sku || product.slug))
+const productMetadata = [
+  ...publishedCatalogue.products,
+  ...legacyProductMetadata.filter((product) => !publishedKeys.has(product.sku || product.slug)),
+]
 
 const faqItems = [
   ["What products does We Are Clearance sell?", "We Are Clearance sells clearance homeware, kitchen and dining essentials, affordable gifts, accessories and everyday household products."],

@@ -3,12 +3,14 @@ import healthRouter from "./health";
 import productsRouter from "./products";
 import storageRouter from "./storage";
 import settingsRouter from "./settings";
+import cataloguePublishRouter from "./cataloguePublish";
 
 const router: IRouter = Router();
 
 router.use(healthRouter);
 router.use(storageRouter);
 router.use(settingsRouter);
+router.use(cataloguePublishRouter);
 router.use(productsRouter);
 
 export default router;

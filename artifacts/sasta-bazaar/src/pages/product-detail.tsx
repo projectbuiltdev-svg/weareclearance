@@ -98,6 +98,7 @@ export default function ProductDetail() {
     } else if (!isLoading) {
       document.title = "Product Not Found | We Are Clearance"
     }
+    return undefined
   }, [product, isLoading])
 
   if (isLoading && !product) {

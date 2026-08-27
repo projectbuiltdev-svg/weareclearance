@@ -1,4 +1,5 @@
 import type { Product } from "@workspace/api-client-react"
+import publishedCatalogue from "./published-catalogue.json"
 
 const legacyStaticProducts = [
   {
@@ -604,10 +605,18 @@ const legacyStaticProducts = [
   }
 ]
 
-export const staticProducts: Product[] = legacyStaticProducts.map((product) => ({
+const normalizedLegacyProducts: Product[] = legacyStaticProducts.map((product) => ({
   ...product,
   shortDescription: ("shortDescription" in product ? product.shortDescription : undefined) ?? product.description,
   longDescription: product.description,
 }))
+
+const publishedProducts = publishedCatalogue.products as Product[]
+const publishedKeys = new Set(publishedProducts.map((product) => product.sku || product.slug))
+
+export const staticProducts: Product[] = [
+  ...publishedProducts,
+  ...normalizedLegacyProducts.filter((product) => !publishedKeys.has(product.sku || product.slug)),
+]
 
 export const staticCategories = [...new Set(staticProducts.map((product) => product.category))].sort()
