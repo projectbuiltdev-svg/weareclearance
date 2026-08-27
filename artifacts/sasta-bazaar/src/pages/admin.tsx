@@ -16,11 +16,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { 
   Package, LayoutGrid, AlertTriangle, Upload, 
-  Plus, Edit2, Trash2, Euro, Loader2
+  Plus, Edit2, Trash2, PoundSterling, Loader2
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
@@ -109,7 +109,7 @@ export default function Admin() {
   }
 
   const handleDelete = (id: number) => {
-    if (confirm("Are you sure you want to delete this item?")) {
+    if (confirm("Are you sure you want to delete this product?")) {
       deleteProduct.mutate({ id }, {
         onSuccess: () => {
           toast({ title: "Product deleted" })
@@ -131,6 +131,7 @@ export default function Admin() {
         
         const headers = lines[0].split(',').map(h => h.trim().toLowerCase())
         const importedProducts = lines.slice(1).map(line => {
+           // Basic CSV parsing (doesn't handle quotes properly, but sufficient for simple cases)
            const values = line.split(',').map(v => v.trim())
            const p: any = {}
            headers.forEach((h, i) => { p[h] = values[i] })
@@ -149,32 +150,31 @@ export default function Admin() {
 
         importProducts.mutate({ data: { products: importedProducts } }, {
           onSuccess: (res) => {
-            toast({ title: `Imported ${res.imported} products!` })
+            toast({ title: `Successfully imported ${res.imported} products` })
             invalidateData()
           },
-          onError: (err) => {
-            toast({ title: "Import failed", variant: "destructive" })
+          onError: () => {
+            toast({ title: "Import failed. Please check your CSV format.", variant: "destructive" })
           }
         })
       } catch (err) {
-        toast({ title: "Failed to parse CSV", variant: "destructive" })
+        toast({ title: "Failed to parse CSV file", variant: "destructive" })
       }
     }
     reader.readAsText(file)
-    // reset input
     e.target.value = ''
   }
 
   return (
-    <main className="container mx-auto px-4 py-8 space-y-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <main className="container mx-auto px-4 py-8 md:py-12 space-y-8 bg-muted/20 min-h-screen">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white p-6 rounded-xl border border-border shadow-sm">
         <div>
-          <h1 className="font-display font-black text-3xl uppercase tracking-tight">Dukan Manager</h1>
-          <p className="text-muted-foreground font-medium">Manage your catalogue, stock, and prices.</p>
+          <h1 className="font-display font-bold text-2xl tracking-tight mb-1">Store Administration</h1>
+          <p className="text-sm text-muted-foreground font-medium">Manage your catalogue, stock levels, and pricing.</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <Label htmlFor="csv-upload" className="cursor-pointer">
-            <div className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 px-6 py-2 border-2 border-primary text-primary bg-background hover:bg-primary hover:text-primary-foreground uppercase tracking-wide">
+            <div className="inline-flex items-center justify-center rounded-md text-sm font-semibold h-10 px-5 border-2 border-dashed border-primary/50 text-primary hover:border-primary hover:bg-primary/5 transition-colors">
               <Upload className="h-4 w-4 mr-2" />
               Import CSV
             </div>
@@ -187,9 +187,9 @@ export default function Admin() {
             />
           </Label>
           
-          <Button onClick={() => handleOpenDialog()}>
+          <Button className="h-10 px-6 font-bold shadow-sm" onClick={() => handleOpenDialog()}>
             <Plus className="h-4 w-4 mr-2" />
-            Add Item
+            New Product
           </Button>
         </div>
       </div>
@@ -197,85 +197,93 @@ export default function Admin() {
       {/* Stats */}
       {isLoadingSummary ? (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[1,2,3,4].map(i => <div key={i} className="h-24 bg-muted animate-pulse rounded-lg bazaar-border" />)}
+          {[1,2,3,4].map(i => <div key={i} className="h-28 bg-white animate-pulse rounded-xl border border-border" />)}
         </div>
       ) : summary && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-card p-4 rounded-lg bazaar-border border-l-8 border-l-primary flex flex-col justify-center">
-            <div className="flex items-center text-muted-foreground font-bold mb-1">
-              <Package className="h-4 w-4 mr-2" /> Total Items
+          <div className="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col justify-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+              <Package className="h-12 w-12" />
             </div>
-            <div className="text-3xl font-display font-black">{summary.totalProducts}</div>
+            <div className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-2">Total Products</div>
+            <div className="text-4xl font-display font-bold text-foreground">{summary.totalProducts}</div>
           </div>
-          <div className="bg-card p-4 rounded-lg bazaar-border border-l-8 border-l-secondary flex flex-col justify-center">
-            <div className="flex items-center text-muted-foreground font-bold mb-1">
-              <LayoutGrid className="h-4 w-4 mr-2" /> Categories
+          <div className="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col justify-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+              <LayoutGrid className="h-12 w-12" />
             </div>
-            <div className="text-3xl font-display font-black">{summary.categories}</div>
+            <div className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-2">Categories</div>
+            <div className="text-4xl font-display font-bold text-foreground">{summary.categories}</div>
           </div>
-          <div className="bg-card p-4 rounded-lg bazaar-border border-l-8 border-l-accent flex flex-col justify-center">
-            <div className="flex items-center text-muted-foreground font-bold mb-1">
-              <Upload className="h-4 w-4 mr-2" /> Featured
+          <div className="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col justify-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-10 text-accent">
+              <Upload className="h-12 w-12" />
             </div>
-            <div className="text-3xl font-display font-black">{summary.featuredProducts}</div>
+            <div className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-2">Featured</div>
+            <div className="text-4xl font-display font-bold text-accent">{summary.featuredProducts}</div>
           </div>
-          <div className="bg-card p-4 rounded-lg bazaar-border border-l-8 border-l-destructive flex flex-col justify-center">
-            <div className="flex items-center text-destructive font-bold mb-1">
-              <AlertTriangle className="h-4 w-4 mr-2" /> Low Stock
+          <div className="bg-white p-6 rounded-xl border border-border shadow-sm flex flex-col justify-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-10 text-destructive">
+              <AlertTriangle className="h-12 w-12" />
             </div>
-            <div className="text-3xl font-display font-black text-destructive">{summary.lowStockProducts}</div>
+            <div className="text-sm font-bold text-destructive uppercase tracking-wider mb-2">Low Stock</div>
+            <div className="text-4xl font-display font-bold text-destructive">{summary.lowStockProducts}</div>
           </div>
         </div>
       )}
 
       {/* Table */}
-      <div className="bg-card rounded-xl bazaar-border overflow-hidden">
+      <div className="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left text-sm whitespace-nowrap">
             <thead>
-              <tr className="bg-muted border-b-4 border-border">
-                <th className="p-4 font-black uppercase text-sm">Item</th>
-                <th className="p-4 font-black uppercase text-sm">Category</th>
-                <th className="p-4 font-black uppercase text-sm">Price</th>
-                <th className="p-4 font-black uppercase text-sm">Stock</th>
-                <th className="p-4 font-black uppercase text-sm text-right">Actions</th>
+              <tr className="bg-muted/50 border-b border-border">
+                <th className="px-6 py-4 font-bold text-muted-foreground">Product</th>
+                <th className="px-6 py-4 font-bold text-muted-foreground">Category</th>
+                <th className="px-6 py-4 font-bold text-muted-foreground">Price</th>
+                <th className="px-6 py-4 font-bold text-muted-foreground">Stock</th>
+                <th className="px-6 py-4 font-bold text-muted-foreground text-right">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-border">
               {isLoadingProducts ? (
                 <tr>
-                  <td colSpan={5} className="p-8 text-center text-muted-foreground">
-                    <Loader2 className="h-8 w-8 animate-spin mx-auto mb-2" />
-                    Loading catalogue...
+                  <td colSpan={5} className="p-12 text-center text-muted-foreground">
+                    <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+                    <p className="font-medium">Loading catalogue...</p>
                   </td>
                 </tr>
               ) : products?.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-8 text-center text-muted-foreground font-bold">
-                    No items in catalogue yet. Add one!
+                  <td colSpan={5} className="p-12 text-center text-muted-foreground">
+                    <Package className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                    <p className="font-semibold text-lg">No products found</p>
+                    <p>Add your first product to get started.</p>
                   </td>
                 </tr>
               ) : (
                 products?.map(p => (
-                  <tr key={p.id} className="border-b-2 border-border hover:bg-muted/50 transition-colors">
-                    <td className="p-4">
-                      <div className="font-bold">{p.name}</div>
-                      {p.badge && <Badge variant="secondary" className="mt-1 text-[10px]">{p.badge}</Badge>}
+                  <tr key={p.id} className="hover:bg-muted/30 transition-colors">
+                    <td className="px-6 py-4">
+                      <div className="font-semibold text-foreground max-w-[250px] truncate" title={p.name}>{p.name}</div>
+                      {p.badge && <Badge className="mt-1.5 text-[10px] bg-accent/10 text-accent hover:bg-accent/20 border-none shadow-none">{p.badge}</Badge>}
                     </td>
-                    <td className="p-4 font-medium text-muted-foreground">{p.category}</td>
-                    <td className="p-4 font-bold text-primary flex items-center">
-                      <Euro className="h-4 w-4" />{p.price.toFixed(2)}
+                    <td className="px-6 py-4 font-medium text-muted-foreground">{p.category}</td>
+                    <td className="px-6 py-4 font-bold">
+                      <span className="flex items-center">
+                        <PoundSterling className="h-3.5 w-3.5 mr-0.5 opacity-60" />{p.price.toFixed(2)}
+                      </span>
                     </td>
-                    <td className="p-4">
-                      <Badge variant={p.inventory < 5 ? "destructive" : "outline"} className="font-mono">
-                        {p.inventory} in stock
+                    <td className="px-6 py-4">
+                      <Badge variant={p.inventory < 5 ? "destructive" : "outline"} className={`font-mono ${p.inventory >= 5 ? 'border-border text-muted-foreground' : ''}`}>
+                        {p.inventory} units
                       </Badge>
                     </td>
-                    <td className="p-4 text-right">
-                      <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(p)}>
+                    <td className="px-6 py-4 text-right">
+                      <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/10 hover:text-primary transition-colors" onClick={() => handleOpenDialog(p)}>
                         <Edit2 className="h-4 w-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => handleDelete(p.id)}>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors ml-1" onClick={() => handleDelete(p.id)}>
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </td>
@@ -288,69 +296,71 @@ export default function Admin() {
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="font-display font-black text-2xl uppercase">
-              {editingProduct ? 'Edit Item' : 'New Item'}
+        <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden bg-white">
+          <DialogHeader className="px-6 py-5 border-b border-border bg-muted/30">
+            <DialogTitle className="font-display font-bold text-xl">
+              {editingProduct ? 'Edit Product' : 'Create New Product'}
             </DialogTitle>
           </DialogHeader>
           
-          <form onSubmit={handleSubmit} className="space-y-4 py-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2 col-span-2 md:col-span-1">
-                <Label>Name</Label>
-                <Input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
+          <form onSubmit={handleSubmit} className="p-6">
+            <div className="grid grid-cols-2 gap-5">
+              <div className="col-span-2 md:col-span-1 space-y-2">
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Product Name</Label>
+                <Input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="h-11 bg-muted/50 focus-visible:bg-white" />
               </div>
-              <div className="space-y-2 col-span-2 md:col-span-1">
-                <Label>Category</Label>
-                <Input required value={form.category} onChange={e => setForm({...form, category: e.target.value})} />
-              </div>
-              
-              <div className="space-y-2">
-                 <Label>Price (€)</Label>
-                <Input type="number" required min="0" step="0.01" value={form.price} onChange={e => setForm({...form, price: e.target.value})} />
-              </div>
-              <div className="space-y-2">
-                 <Label>Compare At Price (€)</Label>
-                <Input type="number" min="0" step="0.01" value={form.compareAtPrice} onChange={e => setForm({...form, compareAtPrice: e.target.value})} placeholder="Optional" />
-              </div>
-
-              <div className="space-y-2 col-span-2">
-                <Label>Description</Label>
-                <Textarea value={form.description} onChange={e => setForm({...form, description: e.target.value})} />
+              <div className="col-span-2 md:col-span-1 space-y-2">
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Category</Label>
+                <Input required value={form.category} onChange={e => setForm({...form, category: e.target.value})} className="h-11 bg-muted/50 focus-visible:bg-white" />
               </div>
               
-              <div className="space-y-2 col-span-2">
-                <Label>Image URL</Label>
-                <Input value={form.imageUrl} onChange={e => setForm({...form, imageUrl: e.target.value})} placeholder="https://..." />
+              <div className="space-y-2">
+                 <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Price (£)</Label>
+                <Input type="number" required min="0" step="0.01" value={form.price} onChange={e => setForm({...form, price: e.target.value})} className="h-11 bg-muted/50 focus-visible:bg-white" />
+              </div>
+              <div className="space-y-2">
+                 <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">RRP / Compare At (£)</Label>
+                <Input type="number" min="0" step="0.01" value={form.compareAtPrice} onChange={e => setForm({...form, compareAtPrice: e.target.value})} placeholder="Optional" className="h-11 bg-muted/50 focus-visible:bg-white" />
+              </div>
+
+              <div className="col-span-2 space-y-2">
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Description</Label>
+                <Textarea value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="min-h-[100px] bg-muted/50 focus-visible:bg-white resize-none" />
+              </div>
+              
+              <div className="col-span-2 space-y-2">
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Image URL</Label>
+                <Input value={form.imageUrl} onChange={e => setForm({...form, imageUrl: e.target.value})} placeholder="https://..." className="h-11 bg-muted/50 focus-visible:bg-white" />
               </div>
 
               <div className="space-y-2">
-                <Label>Stock</Label>
-                <Input type="number" required min="0" value={form.inventory} onChange={e => setForm({...form, inventory: e.target.value})} />
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Stock Level</Label>
+                <Input type="number" required min="0" value={form.inventory} onChange={e => setForm({...form, inventory: e.target.value})} className="h-11 bg-muted/50 focus-visible:bg-white" />
               </div>
               <div className="space-y-2">
-                <Label>Badge Text</Label>
-                <Input value={form.badge} onChange={e => setForm({...form, badge: e.target.value})} placeholder="e.g. 50% OFF" />
+                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Badge Text</Label>
+                <Input value={form.badge} onChange={e => setForm({...form, badge: e.target.value})} placeholder="e.g. 50% OFF" className="h-11 bg-muted/50 focus-visible:bg-white" />
               </div>
 
-              <div className="space-y-2 col-span-2 flex items-center gap-2 mt-2">
+              <div className="col-span-2 flex items-center gap-3 p-4 border border-border rounded-lg bg-muted/20 mt-2">
                 <input 
                   type="checkbox" 
                   id="featured" 
                   checked={form.featured} 
                   onChange={e => setForm({...form, featured: e.target.checked})}
-                  className="w-4 h-4 rounded border-2 border-input text-primary focus:ring-primary"
+                  className="w-5 h-5 rounded border-border text-primary focus:ring-primary focus:ring-offset-0 bg-white"
                 />
-                <Label htmlFor="featured" className="cursor-pointer">Show in Featured/Dhamaka Sale section</Label>
+                <Label htmlFor="featured" className="cursor-pointer font-semibold select-none">
+                  Highlight this product in 'Customer Favourites'
+                </Label>
               </div>
             </div>
             
-            <div className="pt-4 flex justify-end gap-2 border-t-2 border-border mt-4">
-              <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
-              <Button type="submit" disabled={createProduct.isPending || updateProduct.isPending}>
+            <div className="flex justify-end gap-3 mt-8 pt-6 border-t border-border">
+              <Button type="button" variant="outline" className="h-11 px-6 font-bold" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
+              <Button type="submit" disabled={createProduct.isPending || updateProduct.isPending} className="h-11 px-8 font-bold">
                 {(createProduct.isPending || updateProduct.isPending) && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                {editingProduct ? 'Save Changes' : 'Add Item'}
+                {editingProduct ? 'Save Changes' : 'Create Product'}
               </Button>
             </div>
           </form>

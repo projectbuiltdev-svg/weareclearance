@@ -4,7 +4,7 @@ import { useCart } from "@/lib/cart"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Search, Tag, ShoppingCart } from "lucide-react"
+import { Search, Tag, ShoppingCart, ArrowRight } from "lucide-react"
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
 import { staticCategories, staticProducts } from "@/data/static-products"
@@ -15,52 +15,34 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import heroImage from "@assets/generated_images/clearance-hero.jpg"
+import heroImage from "@/assets/retail-hero.jpg"
 
 const categoryGroups = [
   {
-    name: "Deals",
-    items: ["£5 & Under", "£10 & Under", "£20 & Under", "Multibuy", "Bulk Buys", "Last Chance Clearance"],
+    name: "Shop by Price",
+    items: ["Under £5", "Under £10", "Under £20", "Last Chance Clearance"],
   },
   {
     name: "Home & Living",
-    items: ["Bedroom", "Bathroom", "Storage", "Rugs"],
+    items: ["Bedroom", "Bathroom", "Storage", "Household Essentials"],
   },
   {
     name: "Kitchen & Dining",
-    items: ["Cookware", "Appliances", "Food Storage", "Glassware", "Accessories"],
+    items: ["Cookware", "Appliances", "Glassware & Drinkware", "Kitchen Accessories"],
   },
   {
-    name: "Gifts",
-    items: ["For Her", "For Him", "For the Home"],
-  },
-  {
-    name: "Household",
-    items: ["Cleaning", "Paper Products", "Essentials"],
-  },
-  {
-    name: "Garden & Outdoor",
-    items: ["Furniture", "Accessories", "Camping"],
-  },
-  {
-    name: "Clothing & Accessories",
-    items: ["Socks", "Workwear", "Men's", "Women's"],
-  },
-  {
-    name: "Beauty & Electricals",
-    items: ["Fragrances", "Personal Care", "Audio", "Tools"],
-  },
+    name: "Gifts & Seasonal",
+    items: ["Gifts for Her", "Gifts for Him", "Gift Sets", "Garden & Outdoor"],
+  }
 ] as const
 
 function ProductCarousel({
   title,
-  eyebrow,
   products,
   onAdd,
   onViewAll,
 }: {
   title: string
-  eyebrow: string
   products: any[]
   onAdd: (product: any) => void
   onViewAll: () => void
@@ -69,59 +51,68 @@ function ProductCarousel({
   if (products.length === 0) return null
 
   return (
-    <section className="space-y-4" aria-label={title}>
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">{eyebrow}</p>
-          <h2 className="font-display font-black text-2xl md:text-3xl tracking-tight">{title}</h2>
-        </div>
-        <Button variant="ghost" size="sm" className="font-bold text-primary" onClick={onViewAll}>
-          View all
+    <section className="space-y-6" aria-label={title}>
+      <div className="flex items-end justify-between gap-4 border-b border-border pb-4">
+        <h2 className="font-display font-bold text-2xl md:text-3xl text-foreground">{title}</h2>
+        <Button variant="link" size="sm" className="font-semibold text-primary hover:text-primary/80 px-0" onClick={onViewAll}>
+          View all <ArrowRight className="ml-1 h-4 w-4" />
         </Button>
       </div>
 
-      <div className="relative px-1">
-        <Carousel opts={{ align: "start", loop: products.length > 4 }} className="w-full">
+      <div className="relative">
+        <Carousel opts={{ align: "start", loop: false }} className="w-full">
           <CarouselContent className="-ml-4">
             {products.map((product) => (
-              <CarouselItem key={`${title}-${product.id}`} className="pl-4 basis-[82%] sm:basis-1/2 lg:basis-1/4">
-                <article className="h-full overflow-hidden rounded-2xl border border-border bg-card">
-                  <div className="relative aspect-[1.15] overflow-hidden bg-muted">
-                    {product.badge && (
-                      <Badge variant="accent" className="absolute right-3 top-3 z-10 text-xs">
+              <CarouselItem key={`${title}-${product.id}`} className="pl-4 basis-[85%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                <article className="retail-card group h-full flex flex-col relative">
+                  {product.badge && (
+                    <div className="absolute top-3 left-3 z-10">
+                      <Badge className="bg-accent text-accent-foreground font-bold tracking-wide rounded-sm px-2 py-0.5 pointer-events-none">
                         {product.badge}
                       </Badge>
+                    </div>
+                  )}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-muted flex items-center justify-center p-4">
+                    {product.imageUrl ? (
+                      <img
+                        src={product.imageUrl}
+                        alt={product.name}
+                        className="h-full w-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <span className="font-display font-bold text-4xl text-muted-foreground/30">No Image</span>
                     )}
-                    <img
-                      src={product.imageUrl}
-                      alt={product.name}
-                      className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                    />
                   </div>
-                  <div className="flex min-h-[168px] flex-col p-4">
-                    <p className="mb-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                  <div className="flex flex-1 flex-col p-4 sm:p-5">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1.5">
                       {product.category}
                     </p>
-                    <h3 className="line-clamp-2 flex-1 text-sm font-bold leading-snug">{product.name}</h3>
-                    <div className="mt-3 flex items-center gap-2">
-                      <span className="font-display text-xl font-black text-primary">{formatPrice(product.price)}</span>
-                      {product.compareAtPrice && product.compareAtPrice > product.price && (
-                        <span className="text-xs font-bold text-muted-foreground line-through">
-                          {formatPrice(product.compareAtPrice)}
+                    <h3 className="line-clamp-2 text-sm sm:text-base font-semibold leading-snug mb-3 flex-1">
+                      {product.name}
+                    </h3>
+                    <div className="flex items-end justify-between mt-auto">
+                      <div>
+                        <span className="font-display text-xl font-bold text-foreground block">
+                          {formatPrice(product.price)}
                         </span>
-                      )}
+                        {product.compareAtPrice && product.compareAtPrice > product.price && (
+                          <span className="text-xs font-medium text-muted-foreground line-through block mt-0.5">
+                            RRP {formatPrice(product.compareAtPrice)}
+                          </span>
+                        )}
+                      </div>
+                      <Button size="icon" className="h-10 w-10 rounded-full bg-black hover:bg-primary text-white transition-colors" onClick={() => onAdd(product)}>
+                        <ShoppingCart className="h-4 w-4" />
+                        <span className="sr-only">Add to cart</span>
+                      </Button>
                     </div>
-                    <Button size="sm" className="mt-3 w-full font-bold" onClick={() => onAdd(product)}>
-                      <ShoppingCart className="mr-2 h-4 w-4" />
-                      Add to cart
-                    </Button>
                   </div>
                 </article>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="-left-3 hidden sm:flex" />
-          <CarouselNext className="-right-3 hidden sm:flex" />
+          <CarouselPrevious className="hidden md:flex -left-5 bg-white border-border shadow-sm hover:bg-muted" />
+          <CarouselNext className="hidden md:flex -right-5 bg-white border-border shadow-sm hover:bg-muted" />
         </Carousel>
       </div>
     </section>
@@ -131,7 +122,7 @@ function ProductCarousel({
 export default function Storefront() {
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState<string>("")
-  const [menuFilter] = useState(() => new URLSearchParams(window.location.search).get("menu") ?? "")
+  const [menuFilter, setMenuFilter] = useState(() => new URLSearchParams(window.location.search).get("menu") ?? "")
   
   const { data: apiProducts } = useListProducts(
     { search: search || undefined, category: category || undefined },
@@ -142,12 +133,15 @@ export default function Storefront() {
   const { addToCart } = useCart()
   const { formatPrice } = useCurrency()
   const { toast } = useToast()
+  
   const products = Array.isArray(apiProducts) ? apiProducts : staticProducts.filter((product) => {
     const matchesSearch = !search || `${product.name} ${product.description}`.toLowerCase().includes(search.toLowerCase())
     const matchesCategory = !category || product.category === category
     return matchesSearch && matchesCategory
   })
+  
   const categories = Array.isArray(apiCategories) && apiCategories.length ? apiCategories : staticCategories
+  
   const visibleProducts = products.filter((product) => {
     if (!menuFilter) return true
     if (menuFilter === "under-5") return product.price <= 5
@@ -160,30 +154,9 @@ export default function Storefront() {
       return product.badge === "Last Chance" || (product.compareAtPrice != null && product.compareAtPrice > product.price)
     }
     const departmentCategories: Record<string, string[]> = {
-      bedroom: ["Bedroom"],
-      pillows: ["Pillows"],
-      duvet: ["Duvet Covers & Bed Sets"],
-      sheets: ["Sheets"],
-      bathroom: ["Bathroom"],
-      towels: ["Towels"],
-      bathrobes: ["Bathrobes"],
-      storage: ["Storage"],
-      cookware: ["Cookware"],
-      appliances: ["Appliances"],
-      "food-storage": ["Food Storage"],
-      glassware: ["Glassware & Drinkware"],
-      "kitchen-accessories": ["Kitchen Accessories"],
-      "gifts-for-her": ["Gifts for Her"],
-      "gifts-for-him": ["Gifts for Him"],
-      "home-gifts": ["Home Gifts"],
-      "gift-sets": ["Gift Sets"],
-      cleaning: ["Cleaning"],
-      "paper-products": ["Paper Products"],
-      "bin-bags": ["Bin Bags"],
-      "household-essentials": ["Household Essentials"],
-      "garden-furniture": ["Garden Furniture"],
-      "garden-accessories": ["Garden Accessories"],
-      "camping-outdoor": ["Camping & Outdoor"],
+      bedroom: ["Bedroom", "Duvet Covers & Bed Sets", "Pillows", "Sheets"],
+      cookware: ["Cookware", "Appliances", "Glassware & Drinkware", "Kitchen Accessories", "Food Storage"],
+      "gifts-for-her": ["Gifts for Her", "Gifts for Him", "Home Gifts", "Gift Sets"],
     }
     return departmentCategories[menuFilter]?.includes(product.category) ?? true
   })
@@ -191,183 +164,203 @@ export default function Storefront() {
   const handleAddToCart = (product: any) => {
     addToCart(product)
     toast({
-      title: "Added to Cart!",
-      description: `${product.name} is ready for checkout.`,
-      duration: 2000,
+      title: "Added to Basket",
+      description: `${product.name} has been added to your basket.`,
     })
   }
 
+  const handleFilterClick = (filter: string) => {
+    setCategory("")
+    setSearch("")
+    
+    // Map UI names back to logic
+    if (filter === "Under £5") setMenuFilter("under-5")
+    else if (filter === "Under £10") setMenuFilter("under-10")
+    else if (filter === "Under £20") setMenuFilter("under-20")
+    else if (filter === "Last Chance Clearance") setMenuFilter("last-chance")
+    else if (filter === "All") setMenuFilter("")
+    else {
+      setMenuFilter("")
+      setCategory(filter)
+    }
+    
+    document.getElementById("all-products")?.scrollIntoView({ behavior: "smooth" })
+  }
+
   return (
-    <main className="container mx-auto px-4 py-8 md:py-10 space-y-8">
+    <main className="container mx-auto px-4 py-8 md:py-12 space-y-12 md:space-y-16">
+      
       {/* Hero Banner */}
-      <section
-        className="relative overflow-hidden rounded-2xl border border-border bg-card bg-cover bg-center p-8 text-center md:p-12"
-        style={{ backgroundImage: `linear-gradient(90deg, rgba(255,255,255,.94) 0%, rgba(255,255,255,.78) 48%, rgba(255,255,255,.2) 100%), url(${heroImage})` }}
-      >
-        <div className="relative z-10 mx-auto max-w-2xl">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-primary">Everyday clearance</p>
-          <h1 className="mb-4 font-display text-4xl font-black tracking-tight text-foreground md:text-6xl">
-          Great finds. Less spend.
+      <section className="relative overflow-hidden rounded-2xl bg-muted h-[400px] md:h-[500px] flex items-center shadow-sm">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={heroImage} 
+            alt="Modern Minimal Retail" 
+            className="w-full h-full object-cover object-center opacity-90"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent dark:from-black/90 dark:to-black/20" />
+        </div>
+        <div className="relative z-10 px-8 md:px-16 max-w-2xl text-white">
+          <Badge className="bg-primary hover:bg-primary text-white font-bold tracking-wider rounded-sm px-3 py-1 mb-6 border-none">
+            EVERYDAY CLEARANCE
+          </Badge>
+          <h1 className="font-display font-bold text-4xl md:text-6xl tracking-tight leading-[1.1] mb-6">
+            Sharp prices.<br />Premium finds.
           </h1>
-          <p className="mx-auto max-w-xl text-base text-muted-foreground md:text-lg">
-            Useful products, limited-time reductions, and new clearance lines added regularly.
+          <p className="text-lg md:text-xl text-white/90 font-medium mb-8 max-w-md">
+            Curated clearance items for every room in your home. Quality you can trust, prices you can't ignore.
           </p>
+          <div className="flex flex-wrap gap-4">
+            <Button size="lg" className="bg-white text-black hover:bg-gray-100 font-bold px-8 h-12" onClick={() => handleFilterClick('All')}>
+              Shop All Deals
+            </Button>
+            <Button size="lg" variant="outline" className="text-white border-white/30 hover:bg-white/10 hover:text-white font-bold px-8 h-12 bg-transparent" onClick={() => handleFilterClick('Last Chance Clearance')}>
+              Last Chance
+            </Button>
+          </div>
         </div>
       </section>
 
-      <section id="departments" className="bg-card rounded-2xl border border-border p-5 md:p-6 scroll-mt-32">
-        <div className="flex items-end justify-between gap-4 mb-5">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Shop by department</p>
-            <h2 className="font-display font-black text-2xl md:text-3xl tracking-tight">Find your next bargain</h2>
-          </div>
-          <Button variant="outline" size="sm" onClick={() => setCategory("")}>View all</Button>
-        </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      {/* Directory / Categories */}
+      <section className="bg-white rounded-2xl border border-border p-6 md:p-8 shadow-sm">
+        <h2 className="font-display font-bold text-lg mb-6 uppercase tracking-wider text-muted-foreground border-b border-border pb-4">
+          Shop by Department
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {categoryGroups.map((group) => (
-            <div key={group.name} className="space-y-2">
-              <h3 className="font-bold text-sm text-foreground">{group.name}</h3>
-              <div className="flex flex-wrap gap-1.5">
+            <div key={group.name} className="space-y-4">
+              <h3 className="font-bold text-base text-foreground">{group.name}</h3>
+              <ul className="space-y-2.5">
                 {group.items.map((item) => (
-                  <button
-                    key={`${group.name}-${item}`}
-                    type="button"
-                    onClick={() => setCategory(item)}
-                    className={`text-left text-xs font-bold transition-colors hover:text-primary ${
-                      category === item ? "text-primary underline underline-offset-4" : "text-muted-foreground"
-                    }`}
-                  >
-                    {item}
-                  </button>
+                  <li key={`${group.name}-${item}`}>
+                    <button
+                      type="button"
+                      onClick={() => handleFilterClick(item)}
+                      className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors text-left"
+                    >
+                      {item}
+                    </button>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="flex flex-col lg:flex-row gap-4 items-center justify-between bg-card p-4 rounded-2xl border border-border">
-        <div className="relative w-full lg:w-96">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <Input 
-            placeholder="Search for atta, dal, sabun..." 
-            className="pl-10 text-base font-medium h-12"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-wrap gap-2 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0">
-          <Button 
-            variant={category === "" ? "default" : "outline"} 
-            size="sm"
-            onClick={() => setCategory("")}
-            className="rounded-full"
-          >
-            All Items
-          </Button>
-          {categories.map(c => (
-            <Button 
-              key={c}
-              variant={category === c ? "default" : "outline"} 
-              size="sm"
-              onClick={() => setCategory(c)}
-              className="rounded-full"
-            >
-              {c}
-            </Button>
-          ))}
-        </div>
-      </section>
-
+      {/* Carousels */}
       {visibleProducts.length > 0 && (
-        <div className="space-y-10">
+        <div className="space-y-16">
           <ProductCarousel
-            eyebrow="Deal of the day"
-            title={`Everything Under ${formatPrice(10)}`}
-            products={visibleProducts.filter((product) => product.price <= 10)}
-            onAdd={handleAddToCart}
-            onViewAll={() => document.getElementById("all-products")?.scrollIntoView({ behavior: "smooth" })}
-          />
-          <ProductCarousel
-            eyebrow="Picked for you"
             title="Customer Favourites"
             products={visibleProducts.filter((product) => product.featured)}
             onAdd={handleAddToCart}
-            onViewAll={() => document.getElementById("all-products")?.scrollIntoView({ behavior: "smooth" })}
+            onViewAll={() => handleFilterClick("All")}
           />
           <ProductCarousel
-            eyebrow="Moving fast"
-            title="Last Chance Clearance"
-            products={visibleProducts.filter(
-              (product) =>
-                product.badge === "Last Chance" ||
-                (product.compareAtPrice != null && product.compareAtPrice > product.price),
-            )}
+            title="Deals Under £10"
+            products={visibleProducts.filter((product) => product.price <= 10)}
             onAdd={handleAddToCart}
-            onViewAll={() => document.getElementById("all-products")?.scrollIntoView({ behavior: "smooth" })}
+            onViewAll={() => handleFilterClick("Under £10")}
           />
         </div>
       )}
 
-      {/* Product Grid */}
-      {visibleProducts.length === 0 ? (
-        <div className="text-center py-24 bg-card rounded-2xl border border-border">
-          <Tag className="h-16 w-16 mx-auto text-muted-foreground mb-4 opacity-50" />
-          <h2 className="text-2xl font-bold">No items found</h2>
-          <p className="text-muted-foreground mt-2">Try searching for something else.</p>
+      {/* Main Grid Header & Filters */}
+      <div id="all-products" className="scroll-mt-32 border-t border-border pt-12">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+          <div>
+            <h2 className="font-display font-bold text-3xl mb-2">All Products</h2>
+            <p className="text-muted-foreground font-medium">
+              {visibleProducts.length} {visibleProducts.length === 1 ? "item" : "items"} available
+            </p>
+          </div>
+          
+          <div className="flex items-center w-full md:w-auto gap-3">
+            <div className="relative w-full md:w-72">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input 
+                placeholder="Search products..." 
+                className="pl-9 h-11 bg-muted/50 border-transparent focus-visible:border-primary focus-visible:ring-0 rounded-full"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {visibleProducts.map(product => (
-            <div key={product.id} className="bg-card rounded-2xl p-4 flex flex-col border border-border group hover:shadow-lg transition-shadow duration-300">
-              <div className="relative aspect-square mb-4 rounded-xl overflow-hidden bg-muted">
+
+        {/* Product Grid */}
+        {visibleProducts.length === 0 ? (
+          <div className="text-center py-32 bg-muted/30 rounded-2xl border border-border border-dashed">
+            <Tag className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
+            <h3 className="text-xl font-bold mb-2">No items found</h3>
+            <p className="text-muted-foreground">Try adjusting your search or filters to find what you're looking for.</p>
+            <Button variant="outline" className="mt-6 font-semibold" onClick={() => handleFilterClick("All")}>
+              Clear Filters
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+            {visibleProducts.map(product => (
+              <article key={product.id} className="retail-card group flex flex-col relative animate-slide-down">
                 {product.badge && (
-                  <Badge variant="accent" className="absolute top-2 right-2 z-10 px-2 py-1 text-xs">
-                    {product.badge}
-                  </Badge>
-                )}
-                {product.imageUrl ? (
-                  <img src={product.imageUrl} alt={product.name} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground font-display font-bold text-4xl">
-                    {product.name.charAt(0)}
+                  <div className="absolute top-3 left-3 z-10">
+                    <Badge className="bg-accent text-accent-foreground font-bold tracking-wide rounded-sm px-2 py-0.5 pointer-events-none">
+                      {product.badge}
+                    </Badge>
                   </div>
                 )}
-              </div>
-              
-              <div className="flex-1 flex flex-col">
-                <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">
-                  {product.category}
-                </div>
-                <h3 className="font-bold text-lg leading-tight mb-2 line-clamp-2 flex-1">
-                  {product.name}
-                </h3>
-                
-                <div className="flex items-end gap-2 mb-4">
-                  <span className="font-display font-black text-2xl text-primary flex items-center">
-                    {formatPrice(product.price)}
-                  </span>
-                  {product.compareAtPrice && product.compareAtPrice > product.price && (
-                    <span className="text-sm font-bold text-muted-foreground line-through flex items-center mb-1">
-                      {formatPrice(product.compareAtPrice)}
-                    </span>
+                <div className="relative aspect-[4/3] bg-muted overflow-hidden flex items-center justify-center p-4">
+                  {product.imageUrl ? (
+                    <img 
+                      src={product.imageUrl} 
+                      alt={product.name} 
+                      className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" 
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground/30 font-display font-bold text-4xl">
+                      {product.name.charAt(0)}
+                    </div>
                   )}
                 </div>
                 
-                <Button 
-                  onClick={() => handleAddToCart(product)}
-                  className="w-full font-bold group-active:scale-95"
-                  disabled={product.inventory === 0}
-                >
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  {product.inventory === 0 ? "Out of Stock" : "Add to Cart"}
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+                <div className="flex-1 flex flex-col p-5">
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2">
+                    {product.category}
+                  </p>
+                  <h3 className="font-semibold text-base leading-snug mb-4 line-clamp-2 flex-1 group-hover:text-primary transition-colors">
+                    {product.name}
+                  </h3>
+                  
+                  <div className="flex items-end justify-between mt-auto pt-4 border-t border-border/50">
+                    <div>
+                      <span className="font-display font-bold text-xl block">
+                        {formatPrice(product.price)}
+                      </span>
+                      {product.compareAtPrice && product.compareAtPrice > product.price && (
+                        <span className="text-xs font-medium text-muted-foreground line-through block mt-1">
+                          RRP {formatPrice(product.compareAtPrice)}
+                        </span>
+                      )}
+                    </div>
+                    
+                    <Button 
+                      onClick={() => handleAddToCart(product)}
+                      className={`h-10 w-10 rounded-full transition-colors ${product.inventory === 0 ? "bg-muted text-muted-foreground pointer-events-none" : "bg-black hover:bg-primary text-white"}`}
+                      size="icon"
+                      disabled={product.inventory === 0}
+                      title={product.inventory === 0 ? "Out of Stock" : "Add to Basket"}
+                    >
+                      <ShoppingCart className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
     </main>
   )
 }
