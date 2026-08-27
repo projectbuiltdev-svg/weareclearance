@@ -78,8 +78,8 @@ function ProductCarousel({
       <div className="relative">
         <Carousel opts={{ align: "start", loop: false }} className="w-full">
           <CarouselContent className="-ml-6">
-            {products.map((product) => (
-              <CarouselItem key={`${title}-${product.id}`} className="pl-6 basis-[85%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+            {products.map((product, index) => (
+              <CarouselItem key={`${title}-${product.id}-${index}`} className="pl-6 basis-[85%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
                 <article className="retail-card group h-full flex flex-col relative bg-white pb-5">
                   {product.badge && (
                     <div className="absolute top-4 left-4 z-10">

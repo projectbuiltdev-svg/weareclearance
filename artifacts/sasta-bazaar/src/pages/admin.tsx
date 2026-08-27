@@ -24,10 +24,11 @@ import {
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useCurrency } from "@/lib/currency"
-import { Show, useAuth, useClerk } from "@clerk/react"
-import { Redirect } from "wouter"
+import { Show, SignIn, useAuth, useClerk } from "@clerk/react"
 import { CsvImport } from "@/components/admin/csv-import"
 import { ImageUpload } from "@/components/admin/image-upload"
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "")
 
 type AdminAccess = {
   isOwner: boolean
@@ -700,9 +701,32 @@ export default function Admin() {
         <AdminAccessGate />
       </Show>
       <Show when="signed-out">
-        <Redirect to="/sign-in?redirect_url=/admin" />
+        <AdminSignIn />
       </Show>
     </>
+  )
+}
+
+function AdminSignIn() {
+  return (
+    <main className="container mx-auto flex min-h-[70vh] max-w-3xl items-center justify-center px-4 py-12">
+      <section className="w-full border border-border bg-[#fbfaf7] px-4 py-8 md:px-8 md:py-10">
+        <div className="mb-8 text-center">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-700">Private access</p>
+          <h1 className="mt-3 font-display text-3xl text-foreground md:text-4xl">Administrator sign in</h1>
+          <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted-foreground">
+            Enter your approved email address and password to access the We Are Clearance dashboard.
+          </p>
+        </div>
+        <div className="flex justify-center">
+          <SignIn
+            routing="hash"
+            signUpUrl={`${basePath}/sign-up`}
+            fallbackRedirectUrl={`${basePath}/admin`}
+          />
+        </div>
+      </section>
+    </main>
   )
 }
 

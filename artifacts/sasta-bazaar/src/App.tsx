@@ -140,6 +140,7 @@ function Router() {
             <Route path="/collections/:collection" component={Storefront} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/admin" component={Admin} />
+            <Route path="/admin/" component={Admin} />
             <Route path="/products/:slug" component={ProductDetail} />
             <Route path="/sign-in/*?" component={SignInPage} />
             <Route path="/sign-up/*?" component={SignUpPage} />
