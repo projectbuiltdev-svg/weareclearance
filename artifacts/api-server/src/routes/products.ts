@@ -157,7 +157,7 @@ const starterProducts = [
     description: "A versatile non-stick pan for quick family meals.",
     badge: "Hot Deal",
     featured: true,
-    imageUrl: "https://images.unsplash.com/photo-1584990347449-ae6c2e0e6a87?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?auto=format&fit=crop&w=900&q=80",
   },
   {
     name: "Mini Electric Chopper",

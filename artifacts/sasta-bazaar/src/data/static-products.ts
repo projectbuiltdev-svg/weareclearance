@@ -275,7 +275,7 @@ export const staticProducts: Product[] = [
     "category": "Cookware",
     "price": 7.49,
     "compareAtPrice": 11.99,
-    "imageUrl": "https://images.unsplash.com/photo-1584990347449-ae6c2e0e6a87?auto=format&fit=crop&w=900&q=80",
+    "imageUrl": "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?auto=format&fit=crop&w=900&q=80",
     "badge": "Hot Deal",
     "featured": true,
     "inventory": 103,
