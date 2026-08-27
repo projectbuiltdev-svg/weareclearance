@@ -87,7 +87,7 @@ const starterProducts = [
     description: "Two soft-touch cushions to add an easy colour refresh.",
     badge: "Save 40%",
     featured: true,
-    imageUrl: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=80",
   },
   {
     name: "Cloud Comfort Pillow",
@@ -247,7 +247,7 @@ const starterProducts = [
     description: "Absorbent kitchen roll for everyday spills and cleaning.",
     badge: "Multibuy",
     featured: false,
-    imageUrl: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1584556812952-905ffd0c611a?auto=format&fit=crop&w=900&q=80",
   },
   {
     name: "Strong Tie Bin Bags",

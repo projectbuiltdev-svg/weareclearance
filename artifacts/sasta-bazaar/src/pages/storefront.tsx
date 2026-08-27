@@ -4,7 +4,7 @@ import { useCart } from "@/lib/cart"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Search, Tag, ShoppingBag, ArrowRight } from "lucide-react"
+import { Search, Tag, ShoppingBag, ArrowRight, Star } from "lucide-react"
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
 import { staticCategories, staticProducts } from "@/data/static-products"
@@ -78,7 +78,12 @@ function ProductCarousel({
                         src={product.imageUrl}
                         alt={product.name}
                         className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
+                        onError={(event) => {
+                          event.currentTarget.style.display = "none"
+                          event.currentTarget.nextElementSibling?.classList.remove("hidden")
+                        }}
                       />
+                      <span className="hidden font-display text-4xl italic text-blue-700/25" aria-hidden="true">WAC</span>
                     ) : (
                       <span className="font-display italic text-4xl text-muted-foreground/30">C</span>
                     )}
@@ -223,11 +228,11 @@ export default function Storefront() {
             className="w-full h-full object-cover object-[center_30%]"
             onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
-          <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-black/20 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/55 via-slate-900/15 to-transparent" />
         </div>
         
-        <div className="relative z-10 px-8 md:px-16 lg:px-24 max-w-3xl text-white">
+        <div className="relative z-10 mx-6 max-w-2xl border border-white/30 bg-slate-950/45 p-8 text-white shadow-[0_30px_80px_-28px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,255,255,0.24)] backdrop-blur-xl md:mx-12 md:p-12 lg:mx-20 lg:p-14">
           <p className="text-sm md:text-sm font-semibold uppercase tracking-[0.3em] mb-6 text-white/90">
             The Spring Edit
           </p>
@@ -288,6 +293,64 @@ export default function Storefront() {
               </div>
               <span className="absolute bottom-0 left-0 h-1 w-0 bg-white transition-all duration-500 group-hover:w-full" />
             </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Google-style testimonial row */}
+      <section className="border border-border bg-[#fbfaf7] px-6 py-8 md:px-10">
+        <div className="mb-7 flex flex-col justify-between gap-4 border-b border-border pb-6 sm:flex-row sm:items-end">
+          <div>
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.24em] text-blue-700">Customer notes</p>
+            <h2 className="font-display text-3xl text-foreground">Loved by discerning shoppers</h2>
+          </div>
+          <div className="text-left sm:text-right">
+            <div className="flex items-center gap-1 sm:justify-end">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <Star key={index} className="h-4 w-4 fill-[#f4b400] text-[#f4b400]" />
+              ))}
+            </div>
+            <p className="mt-1 text-xs font-semibold text-muted-foreground">Sample Google-style testimonials</p>
+          </div>
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-3 md:divide-x md:divide-border">
+          {[
+            {
+              quote: "Beautiful quality for the price. The parcel arrived quickly and everything felt far more premium than expected.",
+              name: "Sophie M.",
+              detail: "Home & Living customer",
+            },
+            {
+              quote: "A genuinely well-curated range. I found elegant kitchen pieces without paying department-store prices.",
+              name: "Daniel R.",
+              detail: "Kitchen & Dining customer",
+            },
+            {
+              quote: "Easy ordering, clear updates and lovely products. I have already recommended the store to family.",
+              name: "Aisling K.",
+              detail: "Returning customer",
+            },
+          ].map((review) => (
+            <article key={review.name} className="md:px-8 first:md:pl-0 last:md:pr-0">
+              <div className="mb-5 flex items-center justify-between">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <Star key={index} className="h-3.5 w-3.5 fill-[#f4b400] text-[#f4b400]" />
+                  ))}
+                </div>
+                <span className="font-bold tracking-tight text-blue-700">Google</span>
+              </div>
+              <blockquote className="font-display text-xl italic leading-relaxed text-foreground">
+                “{review.quote}”
+              </blockquote>
+              <footer className="mt-6">
+                <p className="text-sm font-bold text-foreground">{review.name}</p>
+                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                  {review.detail}
+                </p>
+              </footer>
+            </article>
           ))}
         </div>
       </section>
@@ -396,7 +459,12 @@ export default function Storefront() {
                       src={product.imageUrl} 
                       alt={product.name} 
                       className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-out" 
+                      onError={(event) => {
+                        event.currentTarget.style.display = "none"
+                        event.currentTarget.nextElementSibling?.classList.remove("hidden")
+                      }}
                     />
+                    <span className="hidden font-display text-4xl italic text-blue-700/25" aria-hidden="true">WAC</span>
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-muted-foreground/30 font-display italic text-4xl">
                       C
