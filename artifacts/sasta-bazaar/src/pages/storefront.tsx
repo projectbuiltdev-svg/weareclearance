@@ -19,6 +19,7 @@ import {
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
 import { staticCategories, staticProducts } from "@/data/static-products"
+import { FcGoogle } from "react-icons/fc"
 import {
   Carousel,
   CarouselContent,
@@ -451,7 +452,7 @@ export default function Storefront() {
                     <Star key={index} className="h-3.5 w-3.5 fill-[#f4b400] text-[#f4b400]" />
                   ))}
                 </div>
-                <span className="font-bold tracking-tight text-blue-700">Google</span>
+                <FcGoogle className="h-5 w-5" aria-label="Google" />
               </div>
               <blockquote className="font-display text-xl italic leading-relaxed text-foreground">
                 “{review.quote}”
