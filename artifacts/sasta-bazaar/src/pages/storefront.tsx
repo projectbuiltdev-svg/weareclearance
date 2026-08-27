@@ -509,14 +509,22 @@ export default function Storefront() {
             <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-blue-700">Shopping with us</p>
             <h2 className="mt-3 font-display text-3xl md:text-4xl">Clearance shopping questions</h2>
           </div>
-          <div className="grid gap-px border border-border bg-border md:grid-cols-2">
+          <div className="grid gap-px border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
             {[
               ["What products does We Are Clearance sell?", "We Are Clearance sells clearance homeware, kitchen and dining essentials, affordable gifts, accessories and everyday household products."],
               ["Do you deliver across the UK and Ireland?", "Yes. We Are Clearance serves customers across the United Kingdom and Ireland, with delivery information confirmed during checkout."],
               ["Are the original and sale prices shown clearly?", "Yes. Discounted products show the current sale price beside the struck-through original price, along with the calculated percentage saving."],
               ["Can clearance products sell out?", "Yes. Clearance quantities are limited and product pages display current stock availability, so popular items may sell out quickly."],
+              ["How do I find a specific clearance product?", "Use the search and collection filters to browse by product name, category, price range or department, then open a product card for full details."],
+              ["Are clearance products new?", "Yes. Our clearance range consists of new products offered at reduced prices, unless a product page clearly states otherwise."],
+              ["Can I change or cancel my order?", "Contact us as soon as possible after placing your order. We will try to help before the parcel enters fulfilment, but changes cannot be guaranteed."],
+              ["What payment methods can I use?", "Payment options are shown securely during checkout. Your order is only confirmed after the checkout process has completed successfully."],
+              ["How can I check product availability?", "Each product page shows its current stock status. Limited clearance quantities can change quickly as orders are completed."],
+              ["Do sale prices include the discount saving?", "Yes. Where an original price is available, the product page shows the sale price, the original price and the calculated percentage saving."],
+              ["How do I contact We Are Clearance?", "Use the customer service details provided on the store or contact page and include your order number when asking about an existing purchase."],
+              ["Why do clearance quantities vary?", "Clearance stock is sourced in limited quantities, so availability varies by product and popular items may not be replenished once sold out."],
             ].map(([question, answer]) => (
-              <details key={question} className="group bg-white p-6 open:bg-[#fbfaf7]">
+              <details key={question} className="group min-h-40 bg-white p-6 open:bg-[#fbfaf7]">
                 <summary className="cursor-pointer list-none pr-8 text-sm font-semibold leading-relaxed marker:hidden">{question}</summary>
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">{answer}</p>
               </details>
