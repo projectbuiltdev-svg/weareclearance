@@ -3,23 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>We are Clearance | Great finds. Less spend.</title>
-    <meta name="description" content="Shop useful home, kitchen, gift, garden, clothing, and everyday essentials at clearance prices. Great finds, less spend." />
+    <title>We Are Clearance | Premium Finds at Clearance Prices</title>
+    <meta name="description" content="Discover affordable homeware, kitchen, gifts and everyday essentials at We Are Clearance. Premium-style finds at refreshingly accessible prices." />
     <meta name="robots" content="index, follow" />
-    <meta property="og:site_name" content="We are Clearance" />
-    <meta property="og:title" content="We are Clearance | Great finds. Less spend." />
-    <meta property="og:description" content="Shop useful home, kitchen, gift, garden, clothing, and everyday essentials at clearance prices. Great finds, less spend." />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="canonical" href="https://weareclearance.com/" />
+    <meta property="og:site_name" content="We Are Clearance" />
+    <meta property="og:title" content="We Are Clearance | Premium Finds at Clearance Prices" />
+    <meta property="og:description" content="Shop curated homeware, kitchen, gifts and everyday essentials at refreshingly accessible clearance prices." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://weareclearance.com/" />
+    <meta property="og:image" content="https://weareclearance.com/we-are-clearance-og.jpg" />
+    <meta property="og:image:secure_url" content="https://weareclearance.com/we-are-clearance-og.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="576" />
+    <meta property="og:image:alt" content="We Are Clearance logo" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="We are Clearance | Great finds. Less spend." />
-    <meta name="twitter:description" content="Shop useful home, kitchen, gift, garden, clothing, and everyday essentials at clearance prices. Great finds, less spend." />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="twitter:title" content="We Are Clearance | Premium Finds at Clearance Prices" />
+    <meta name="twitter:description" content="Shop curated homeware, kitchen, gifts and everyday essentials at refreshingly accessible clearance prices." />
+    <meta name="twitter:image" content="https://weareclearance.com/we-are-clearance-og.jpg" />
+    <meta name="twitter:image:alt" content="We Are Clearance logo" />
+    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+    <link rel="shortcut icon" href="/favicon.jpg" />
+    <link rel="apple-touch-icon" href="/favicon.jpg" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://weareclearance.com/#organization",
+            "name": "We Are Clearance",
+            "url": "https://weareclearance.com/",
+            "logo": "https://weareclearance.com/favicon.jpg"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://weareclearance.com/#website",
+            "url": "https://weareclearance.com/",
+            "name": "We Are Clearance",
+            "publisher": { "@id": "https://weareclearance.com/#organization" },
+            "inLanguage": "en-GB"
+          },
+          {
+            "@type": "OnlineStore",
+            "@id": "https://weareclearance.com/#store",
+            "name": "We Are Clearance",
+            "url": "https://weareclearance.com/",
+            "image": "https://weareclearance.com/we-are-clearance-og.jpg",
+            "description": "Curated homeware, kitchen, gifts and everyday essentials at accessible clearance prices.",
+            "currenciesAccepted": ["GBP", "EUR"],
+            "areaServed": ["GB", "IE"],
+            "parentOrganization": { "@id": "https://weareclearance.com/#organization" }
+          }
+        ]
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--ssr-outlet--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

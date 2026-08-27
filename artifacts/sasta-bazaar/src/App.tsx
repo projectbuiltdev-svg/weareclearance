@@ -37,12 +37,12 @@ function RoutedErrorBoundary({ children }: { children: React.ReactNode }) {
   return <ErrorBoundary resetKey={location}>{children}</ErrorBoundary>
 }
 
-function App() {
+function App({ ssrPath }: { ssrPath?: string } = {}) {
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         <CurrencyProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')} ssrPath={ssrPath}>
             <Router />
           </WouterRouter>
           <Toaster />

@@ -15,18 +15,24 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(() => {
-    try {
-      const stored = localStorage.getItem('sasta-bazaar-cart');
-      return stored ? JSON.parse(stored) : [];
-    } catch (e) {
-      return [];
-    }
-  });
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [storageReady, setStorageReady] = useState(false);
 
   useEffect(() => {
+    try {
+      const stored = localStorage.getItem('sasta-bazaar-cart');
+      if (stored) setItems(JSON.parse(stored));
+    } catch {
+      setItems([]);
+    } finally {
+      setStorageReady(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!storageReady) return;
     localStorage.setItem('sasta-bazaar-cart', JSON.stringify(items));
-  }, [items]);
+  }, [items, storageReady]);
 
   const addToCart = (product: Product, quantity = 1) => {
     setItems(current => {

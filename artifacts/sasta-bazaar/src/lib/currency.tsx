@@ -13,14 +13,18 @@ const CurrencyContext = createContext<CurrencyContextValue | undefined>(undefine
 const GBP_PER_EUR = 0.86
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
-  const [currency, setCurrency] = useState<Currency>(() => {
-    if (typeof window === "undefined") return "€"
-    return window.localStorage.getItem("sasta-bazaar-currency") === "£" ? "£" : "€"
-  })
+  const [currency, setCurrency] = useState<Currency>("€")
+  const [storageReady, setStorageReady] = useState(false)
 
   useEffect(() => {
+    setCurrency(window.localStorage.getItem("sasta-bazaar-currency") === "£" ? "£" : "€")
+    setStorageReady(true)
+  }, [])
+
+  useEffect(() => {
+    if (!storageReady) return
     window.localStorage.setItem("sasta-bazaar-currency", currency)
-  }, [currency])
+  }, [currency, storageReady])
 
   const convertPrice = (euroPrice: number) => (currency === "£" ? euroPrice * GBP_PER_EUR : euroPrice)
   const formatPrice = (euroPrice: number) =>

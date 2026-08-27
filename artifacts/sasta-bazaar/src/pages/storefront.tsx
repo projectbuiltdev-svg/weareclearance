@@ -130,7 +130,9 @@ function ProductCarousel({
 export default function Storefront() {
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState<string>("")
-  const [menuFilter, setMenuFilter] = useState(() => new URLSearchParams(window.location.search).get("menu") ?? "")
+  const [menuFilter, setMenuFilter] = useState(() =>
+    typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("menu") ?? ""
+  )
   
   const { data: apiProducts } = useListProducts(
     { search: search || undefined, category: category || undefined },
