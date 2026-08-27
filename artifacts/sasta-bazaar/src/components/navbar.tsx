@@ -181,28 +181,28 @@ export function Navbar() {
         </div>
 
         {/* Desktop Nav */}
-        <nav className="relative hidden flex-1 items-center justify-center gap-1 overflow-hidden rounded-2xl border border-white/15 bg-[linear-gradient(135deg,#05070d_0%,#0b1738_52%,#06102a_100%)] p-1.5 shadow-[0_18px_45px_-20px_rgba(3,15,45,0.8),inset_0_1px_0_rgba(255,255,255,0.18)] lg:flex">
-          <span className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent" />
-          <span className="pointer-events-none absolute -left-12 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full bg-blue-500/20 blur-2xl" />
-          <span className="pointer-events-none absolute -right-10 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full bg-red-500/20 blur-2xl" />
+        <nav className="relative hidden flex-1 items-center justify-center gap-1 overflow-hidden rounded-[22px] border border-blue-100/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.98)_0%,rgba(238,245,255,0.98)_48%,rgba(255,255,255,0.98)_100%)] p-1.5 shadow-[0_18px_50px_-26px_rgba(14,63,145,0.6),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(37,99,235,0.08)] lg:flex">
+          <span className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-blue-300/80 to-transparent" />
+          <span className="pointer-events-none absolute inset-x-20 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-600/35 to-transparent" />
+          <span className="pointer-events-none absolute left-1/3 top-1/2 h-20 w-40 -translate-y-1/2 rounded-full bg-blue-400/10 blur-3xl" />
           {navGroups.map(({ label, items: groupItems }) => (
             <DropdownMenu key={label}>
               <DropdownMenuTrigger asChild>
-                <button className="group relative z-10 inline-flex items-center rounded-xl border border-transparent px-5 py-3 text-[14px] font-extrabold uppercase tracking-[0.08em] text-white/90 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/10 hover:text-white hover:shadow-[0_10px_24px_-12px_rgba(255,255,255,0.65)] data-[state=open]:border-white/20 data-[state=open]:bg-white data-[state=open]:text-slate-950 data-[state=open]:shadow-xl">
-                  {label === "Deals" && <span className="mr-2 h-2 w-2 rounded-full bg-red-500 shadow-[0_0_12px_3px_rgba(239,68,68,0.7)]" />}
+                <button className="group relative z-10 inline-flex items-center rounded-2xl border border-transparent px-5 py-3 text-[14px] font-extrabold uppercase tracking-[0.075em] text-slate-800 transition-all duration-300 after:absolute after:inset-x-5 after:bottom-1 after:h-0.5 after:origin-center after:scale-x-0 after:rounded-full after:bg-blue-600 after:transition-transform after:duration-300 hover:-translate-y-0.5 hover:border-blue-100 hover:bg-white hover:text-blue-800 hover:shadow-[0_12px_28px_-18px_rgba(30,64,175,0.7)] hover:after:scale-x-100 data-[state=open]:border-blue-200 data-[state=open]:bg-blue-700 data-[state=open]:text-white data-[state=open]:shadow-[0_12px_28px_-14px_rgba(29,78,216,0.7)]">
+                  {label === "Deals" && <span className="mr-2 h-2 w-2 rounded-full bg-blue-600 shadow-[0_0_0_4px_rgba(37,99,235,0.12),0_0_12px_rgba(37,99,235,0.55)]" />}
                   {label}
                   <ChevronDown className="ml-2 h-3.5 w-3.5 opacity-70 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="min-w-72 overflow-hidden rounded-2xl border border-slate-200/80 bg-white/95 p-2.5 shadow-[0_28px_70px_-20px_rgba(2,12,35,0.55)] backdrop-blur-xl">
-                <div className="mb-2 rounded-xl bg-[linear-gradient(135deg,#080d1b,#102759)] px-4 py-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-white">
+              <DropdownMenuContent align="start" className="min-w-72 overflow-hidden rounded-[20px] border border-blue-100 bg-white/95 p-2.5 shadow-[0_28px_70px_-20px_rgba(23,65,145,0.42)] backdrop-blur-xl">
+                <div className="mb-2 rounded-2xl bg-[linear-gradient(135deg,#102a62,#174ea6_55%,#2563eb)] px-4 py-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]">
                   Explore {label}
                 </div>
                 {groupItems.map((item) => (
-                  <DropdownMenuItem key={item.menu} asChild className="group/item rounded-xl px-3.5 py-3 text-sm font-bold focus:bg-red-50 focus:text-primary">
+                  <DropdownMenuItem key={item.menu} asChild className="group/item rounded-xl px-3.5 py-3 text-sm font-bold focus:bg-blue-50 focus:text-blue-800">
                     <a href={`/?menu=${item.menu}#all-products`} className="flex items-center justify-between">
                       {item.label}
-                      <span className="h-1.5 w-1.5 rounded-full bg-slate-200 transition-all group-hover/item:bg-primary group-hover/item:shadow-[0_0_8px_rgba(229,16,29,0.55)]" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-blue-100 transition-all group-hover/item:bg-blue-600 group-hover/item:shadow-[0_0_8px_rgba(37,99,235,0.55)]" />
                     </a>
                   </DropdownMenuItem>
                 ))}
@@ -210,7 +210,7 @@ export function Navbar() {
             </DropdownMenu>
           ))}
           {directNavItems.map(({ label, menu }) => (
-            <a key={menu} href={`/?menu=${menu}#all-products`} className="relative z-10 ml-1 overflow-hidden rounded-xl border border-red-400/40 bg-[linear-gradient(135deg,#ff2333_0%,#d40717_55%,#a9000c_100%)] px-5 py-3 text-[14px] font-black uppercase tracking-[0.1em] text-white shadow-[0_10px_26px_-10px_rgba(220,10,25,0.85),inset_0_1px_0_rgba(255,255,255,0.35)] transition-all duration-300 before:absolute before:inset-y-0 before:-left-1/2 before:w-1/3 before:skew-x-[-20deg] before:bg-white/25 before:blur-sm before:transition-all before:duration-700 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-10px_rgba(220,10,25,0.95)] hover:before:left-[130%]">
+            <a key={menu} href={`/?menu=${menu}#all-products`} className="relative z-10 ml-1 overflow-hidden rounded-2xl border border-blue-400/50 bg-[linear-gradient(135deg,#0b2f70_0%,#1554b5_52%,#2878e8_100%)] px-5 py-3 text-[14px] font-black uppercase tracking-[0.1em] text-white shadow-[0_12px_28px_-13px_rgba(21,84,181,0.85),inset_0_1px_0_rgba(255,255,255,0.3)] transition-all duration-300 before:absolute before:inset-y-0 before:-left-1/2 before:w-1/3 before:skew-x-[-20deg] before:bg-white/30 before:blur-sm before:transition-all before:duration-700 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-13px_rgba(21,84,181,0.95)] hover:before:left-[130%]">
               {label}
             </a>
           ))}
