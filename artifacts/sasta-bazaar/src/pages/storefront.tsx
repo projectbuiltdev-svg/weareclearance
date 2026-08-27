@@ -250,7 +250,7 @@ export default function Storefront() {
         
         <div className="relative z-10 mx-4 max-w-2xl border border-white/50 bg-slate-950/10 p-6 text-white shadow-[0_24px_70px_-30px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-sm sm:mx-8 sm:bg-slate-950/[0.08] sm:p-8 md:mx-12 md:p-12 lg:mx-20 lg:p-14">
           <p className="text-sm md:text-sm font-semibold uppercase tracking-[0.3em] mb-6 text-white/90">
-            The Spring Edit
+            We Are Clearance
           </p>
           <h1 className="font-display mb-6 text-4xl leading-[1.03] !text-white sm:text-5xl md:mb-8 md:text-7xl">
             Elevated living,<br />
