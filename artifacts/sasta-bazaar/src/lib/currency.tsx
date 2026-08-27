@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
+import { apiFetch } from "@/lib/api"
 
 export type Currency = "£" | "€"
 
@@ -21,7 +22,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
 
   const refreshExchangeRate = async () => {
     try {
-      const response = await fetch("/api/store-settings")
+      const response = await apiFetch("/api/store-settings")
       if (!response.ok) return
       const settings = await response.json()
       if (typeof settings.gbpPerEur === "number" && settings.gbpPerEur > 0) setGbpPerEur(settings.gbpPerEur)

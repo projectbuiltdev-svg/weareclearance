@@ -11,6 +11,7 @@ import {
 } from "../middlewares/adminAuth";
 import {
   clearTestAccessCookie,
+  createTestAccessToken,
   hasValidTestAccess,
   isTestAccessConfigured,
   isValidTestPassword,
@@ -60,8 +61,9 @@ router.post("/admin/test-login", (req, res): void => {
     res.status(401).json({ error: "The temporary Administrator credentials are not valid." });
     return;
   }
-  setTestAccessCookie(res);
-  res.json({ ok: true });
+  const token = createTestAccessToken();
+  setTestAccessCookie(res, token);
+  res.json({ ok: true, token });
 });
 
 router.get("/admin/test-session", (req, res): void => {

@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Link, useLocation } from "wouter"
 import { Lock, ChevronRight, ShieldCheck, Minus, Plus, Loader2 } from "lucide-react"
 import { useCurrency } from "@/lib/currency"
+import { apiFetch } from "@/lib/api"
 import { useToast } from "@/hooks/use-toast"
 import { Separator } from "@/components/ui/separator"
 
@@ -28,7 +29,7 @@ export default function Checkout() {
 
     setIsSubmitting(true)
     try {
-      const response = await fetch("/api/orders/complete", {
+      const response = await apiFetch("/api/orders/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

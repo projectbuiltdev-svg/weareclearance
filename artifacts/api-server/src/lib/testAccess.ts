@@ -9,7 +9,9 @@ function getSecret() {
 }
 
 function getSigningKey() {
-  return process.env.SESSION_SECRET || "";
+  const sessionSecret = process.env.SESSION_SECRET || "";
+  const testPassword = getSecret();
+  return sessionSecret && testPassword ? `${sessionSecret}:${testPassword}` : "";
 }
 
 function sign(payload: string) {
@@ -33,15 +35,14 @@ export function isValidTestPassword(password: unknown) {
   return expected.length === received.length && timingSafeEqual(expected, received);
 }
 
-export function createTestAccessCookie() {
+export function createTestAccessToken() {
   const expiresAt = Date.now() + TEST_ACCESS_TTL_SECONDS * 1000;
   const payload = `owner|${expiresAt}`;
   return `${Buffer.from(payload).toString("base64url")}.${sign(payload)}`;
 }
 
-export function hasValidTestAccess(req: Request) {
+function isValidTestAccessToken(value: string | null) {
   if (!isTestAccessConfigured()) return false;
-  const value = readCookie(req);
   if (!value) return false;
 
   const [encodedPayload, receivedSignature] = value.split(".");
@@ -61,11 +62,17 @@ export function hasValidTestAccess(req: Request) {
   }
 }
 
-export function setTestAccessCookie(res: Response) {
+export function hasValidTestAccess(req: Request) {
+  const authorization = req.headers.authorization;
+  const bearerToken = authorization?.startsWith("Bearer ") ? authorization.slice(7) : null;
+  return isValidTestAccessToken(bearerToken) || isValidTestAccessToken(readCookie(req));
+}
+
+export function setTestAccessCookie(res: Response, token: string) {
   const secure = process.env.NODE_ENV === "production" ? "; Secure" : "";
   res.setHeader(
     "Set-Cookie",
-    `${TEST_ACCESS_COOKIE}=${createTestAccessCookie()}; Max-Age=${TEST_ACCESS_TTL_SECONDS}; Path=/; HttpOnly; SameSite=Lax${secure}`,
+    `${TEST_ACCESS_COOKIE}=${token}; Max-Age=${TEST_ACCESS_TTL_SECONDS}; Path=/; HttpOnly; SameSite=Lax${secure}`,
   );
 }
 

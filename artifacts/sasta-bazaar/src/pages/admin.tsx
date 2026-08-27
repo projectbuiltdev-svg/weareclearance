@@ -24,6 +24,12 @@ import {
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useCurrency } from "@/lib/currency"
+import {
+  apiFetch,
+  clearTemporaryAdminToken,
+  getTemporaryAdminToken,
+  setTemporaryAdminToken,
+} from "@/lib/api"
 import { Show, useAuth, useClerk } from "@clerk/react"
 import { CsvImport } from "@/components/admin/csv-import"
 import { ImageUpload } from "@/components/admin/image-upload"
@@ -69,7 +75,7 @@ function AdminContent({
 
   const loadPublishStatus = async () => {
     const token = await getToken()
-    const response = await fetch("/api/admin/publish-catalogue", {
+    const response = await apiFetch("/api/admin/publish-catalogue", {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })
     if (!response.ok) throw new Error("Could not load publishing status")
@@ -92,7 +98,7 @@ function AdminContent({
     setIsStartingPublish(true)
     try {
       const token = await getToken()
-      const response = await fetch("/api/admin/publish-catalogue", {
+      const response = await apiFetch("/api/admin/publish-catalogue", {
         method: "POST",
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       })
@@ -118,7 +124,7 @@ function AdminContent({
     setIsSavingRate(true)
     try {
       const token = await getToken()
-      const response = await fetch("/api/admin/store-settings", {
+      const response = await apiFetch("/api/admin/store-settings", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -141,7 +147,7 @@ function AdminContent({
     setIsUpdatingAdmins(true)
     try {
       const token = await getToken()
-      const response = await fetch("/api/admin/access", {
+      const response = await apiFetch("/api/admin/access", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -166,7 +172,7 @@ function AdminContent({
     setIsUpdatingAdmins(true)
     try {
       const token = await getToken()
-      const response = await fetch(`/api/admin/access/${encodeURIComponent(email)}`, {
+      const response = await apiFetch(`/api/admin/access/${encodeURIComponent(email)}`, {
         method: "DELETE",
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       })
@@ -721,7 +727,7 @@ function AdminSignIn() {
     setError(null)
     setIsSubmitting(true)
     try {
-      const response = await fetch("/api/admin/test-login", {
+      const response = await apiFetch("/api/admin/test-login", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -729,6 +735,8 @@ function AdminSignIn() {
       })
       const body = await response.json()
       if (!response.ok) throw new Error(body.error || "Could not sign in.")
+      if (typeof body.token !== "string") throw new Error("The temporary Administrator session could not be created.")
+      setTemporaryAdminToken(body.token)
       window.location.reload()
     } catch (loginError) {
       setError(loginError instanceof Error ? loginError.message : "Could not sign in.")
@@ -787,10 +795,16 @@ function AdminSignedOutEntry() {
   const [testSessionState, setTestSessionState] = useState<"checking" | "active" | "inactive">("checking")
 
   useEffect(() => {
-    fetch("/api/admin/test-session", { credentials: "include" })
+    apiFetch("/api/admin/test-session")
       .then((response) => response.json())
-      .then((body) => setTestSessionState(body.authenticated ? "active" : "inactive"))
-      .catch(() => setTestSessionState("inactive"))
+      .then((body) => {
+        if (!body.authenticated) clearTemporaryAdminToken()
+        setTestSessionState(body.authenticated ? "active" : "inactive")
+      })
+      .catch(() => {
+        clearTemporaryAdminToken()
+        setTestSessionState("inactive")
+      })
   }, [])
 
   if (testSessionState === "active") return <AdminAccessGate temporarySession />
@@ -814,8 +828,9 @@ function AdminAccessGate({ temporarySession = false }: { temporarySession?: bool
   const [error, setError] = useState<string | null>(null)
 
   const handleSignOut = async () => {
-    if (temporarySession) {
-      await fetch("/api/admin/test-logout", { method: "POST", credentials: "include" }).catch(() => undefined)
+    if (temporarySession || getTemporaryAdminToken()) {
+      await apiFetch("/api/admin/test-logout", { method: "POST" }).catch(() => undefined)
+      clearTemporaryAdminToken()
     }
     await signOut({ redirectUrl: import.meta.env.BASE_URL.replace(/\/$/, "") || "/" })
   }
@@ -825,7 +840,7 @@ function AdminAccessGate({ temporarySession = false }: { temporarySession?: bool
     const loadAccess = async () => {
       try {
         const token = await getToken()
-        const response = await fetch("/api/admin/access", {
+        const response = await apiFetch("/api/admin/access", {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         })
         const body = await response.json()

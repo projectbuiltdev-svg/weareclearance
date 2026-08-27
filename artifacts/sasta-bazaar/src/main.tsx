@@ -1,10 +1,15 @@
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import type { ErrorInfo } from 'react';
+import { setAuthTokenGetter, setBaseUrl } from '@workspace/api-client-react';
 
 import App from './App';
 import { ErrorBoundary } from '@/components/error-boundary';
+import { API_BASE_URL, getTemporaryAdminToken } from '@/lib/api';
 
 import './index.css';
+
+setBaseUrl(API_BASE_URL || null);
+setAuthTokenGetter(getTemporaryAdminToken);
 
 const root = document.getElementById('root')!;
 const app = (
