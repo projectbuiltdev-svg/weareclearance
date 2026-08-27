@@ -135,6 +135,7 @@ function AdminContent() {
     query: { queryKey: getListProductsQueryKey(listParams) } 
   })
   const { data: categories = [] } = useListCategories()
+  const lowStockProducts = (products ?? []).filter((product) => product.inventory < 10)
   
   const createProduct = useCreateProduct()
   const updateProduct = useUpdateProduct()
@@ -342,6 +343,31 @@ function AdminContent() {
             <AlertTriangle className="h-6 w-6 absolute top-8 right-8 text-destructive/50 group-hover:text-destructive transition-colors" />
           </div>
         </div>
+      )}
+
+      {lowStockProducts.length > 0 && (
+        <section className="border border-amber-300 bg-amber-50 p-6 md:p-8" aria-labelledby="low-stock-heading">
+          <div className="flex items-start gap-4">
+            <AlertTriangle className="mt-1 h-6 w-6 shrink-0 text-amber-700" />
+            <div className="min-w-0 flex-1">
+              <h2 id="low-stock-heading" className="font-display text-2xl text-amber-950">Low stock alert</h2>
+              <p className="mt-2 text-sm text-amber-900/70">These products have fewer than 10 units remaining.</p>
+              <div className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                {lowStockProducts.map((product) => (
+                  <button
+                    key={product.id}
+                    type="button"
+                    onClick={() => handleOpenDialog(product)}
+                    className="flex items-center justify-between border border-amber-200 bg-white px-4 py-3 text-left hover:border-amber-500"
+                  >
+                    <span className="truncate pr-4 text-sm font-medium">{product.name}</span>
+                    <span className="shrink-0 text-xs font-bold text-amber-800">{product.inventory} left</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
       )}
       
       {/* Search Bar */}

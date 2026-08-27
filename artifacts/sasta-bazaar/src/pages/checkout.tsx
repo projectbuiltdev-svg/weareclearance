@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link, useLocation } from "wouter"
-import { Lock, ChevronRight, ShieldCheck, Minus, Plus } from "lucide-react"
+import { Lock, ChevronRight, ShieldCheck, Minus, Plus, Loader2 } from "lucide-react"
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
 import { Separator } from "@/components/ui/separator"
@@ -20,17 +20,39 @@ export default function Checkout() {
   const [address, setAddress] = useState("")
   const [city, setCity] = useState("")
   const [postcode, setPostcode] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleCheckout = (e: React.FormEvent) => {
+  const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (items.length === 0) return
-    
-    toast({
-      title: "Order Placed Successfully",
-      description: "Thank you for shopping with We Are Clearance. Your demo order has been received.",
-    })
-    clearCart()
-    setLocation("/")
+    if (items.length === 0 || isSubmitting) return
+
+    setIsSubmitting(true)
+    try {
+      const response = await fetch("/api/orders/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((item) => ({ productId: item.id, quantity: item.quantity })),
+        }),
+      })
+      const body = await response.json()
+      if (!response.ok) throw new Error(body.error || "Could not complete the order")
+
+      toast({
+        title: "Order Placed Successfully",
+        description: "Thank you for shopping with We Are Clearance. Your demo order has been received.",
+      })
+      clearCart()
+      setLocation("/")
+    } catch (error) {
+      toast({
+        title: "Order could not be completed",
+        description: error instanceof Error ? error.message : "Please review your bag and try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (items.length === 0) {
@@ -163,8 +185,9 @@ export default function Checkout() {
                   </div>
                 </div>
                 
-                <Button type="submit" form="checkout-form" size="lg" className="w-full text-xs uppercase tracking-widest font-semibold h-14 rounded-none bg-primary hover:bg-primary/90 text-white shadow-none">
-                  Complete Order
+                <Button type="submit" form="checkout-form" size="lg" disabled={isSubmitting} className="w-full text-xs uppercase tracking-widest font-semibold h-14 rounded-none bg-primary hover:bg-primary/90 text-white shadow-none">
+                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {isSubmitting ? "Completing Order" : "Complete Order"}
                 </Button>
               </div>
 

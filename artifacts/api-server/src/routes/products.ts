@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, ilike, sql } from "drizzle-orm";
+import { and, asc, desc, eq, gte, ilike, sql } from "drizzle-orm";
 import { Router, type IRouter } from "express";
 import {
   CreateProductBody,
@@ -463,6 +463,50 @@ router.get("/categories", async (_req, res): Promise<void> => {
   await seedIfEmpty();
   const rows = await db.selectDistinct({ category: productsTable.category }).from(productsTable).orderBy(asc(productsTable.category));
   res.json(ListCategoriesResponse.parse(rows.map((row) => row.category)));
+});
+
+router.post("/orders/complete", async (req, res): Promise<void> => {
+  const items = req.body?.items;
+  if (
+    !Array.isArray(items) ||
+    items.length === 0 ||
+    items.length > 100 ||
+    !items.every((item) => Number.isInteger(item?.productId) && Number.isInteger(item?.quantity) && item.quantity > 0)
+  ) {
+    res.status(400).json({ error: "Order items must contain valid product IDs and quantities." });
+    return;
+  }
+
+  try {
+    const updatedProducts = await db.transaction(async (transaction) => {
+      const updated = [];
+      for (const item of items as Array<{ productId: number; quantity: number }>) {
+        const [product] = await transaction
+          .update(productsTable)
+          .set({
+            inventory: sql`${productsTable.inventory} - ${item.quantity}`,
+            updatedAt: new Date(),
+          })
+          .where(and(eq(productsTable.id, item.productId), gte(productsTable.inventory, item.quantity)))
+          .returning();
+        if (!product) throw new Error("INSUFFICIENT_STOCK");
+        updated.push(toProduct(product));
+      }
+      return updated;
+    });
+
+    res.json({
+      success: true,
+      lowStockProducts: updatedProducts.filter((product) => product.inventory < 10),
+    });
+  } catch (error) {
+    if (error instanceof Error && error.message === "INSUFFICIENT_STOCK") {
+      res.status(409).json({ error: "One or more products no longer have enough stock. Please review your bag." });
+      return;
+    }
+    req.log.error({ err: error }, "Could not complete order inventory update");
+    res.status(500).json({ error: "Could not complete the order." });
+  }
 });
 
 router.use(requireAdmin);
