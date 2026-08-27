@@ -1,4 +1,5 @@
-import { Link } from "wouter"
+import { useEffect, useState } from "react"
+import { Link, useLocation } from "wouter"
 import {
   Menu,
   ShoppingBag,
@@ -13,7 +14,6 @@ import { useCurrency } from "@/lib/currency"
 import { Button } from "./ui/button"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -80,6 +80,23 @@ export function Navbar() {
   const { items } = useCart()
   const itemCount = items.reduce((acc, item) => acc + item.quantity, 0)
   const { currency, setCurrency } = useCurrency()
+  const [location] = useLocation()
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  useEffect(() => {
+    setMobileOpen(false)
+  }, [location])
+
+  useEffect(() => {
+    if (mobileOpen) return
+
+    const frame = window.requestAnimationFrame(() => {
+      document.body.style.removeProperty("overflow")
+      document.body.style.removeProperty("pointer-events")
+    })
+
+    return () => window.cancelAnimationFrame(frame)
+  }, [mobileOpen])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-white text-black">
@@ -108,42 +125,48 @@ export function Navbar() {
 
       <div className="container mx-auto flex h-24 items-center justify-between gap-4 px-4 pb-1 pt-3 lg:gap-8">
         <div className="flex items-center gap-4">
-          <Sheet>
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden -ml-2 text-foreground">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] p-0 bg-white">
-              <SheetHeader className="p-4 border-b border-border text-left">
+            <SheetContent side="left" className="flex h-[100dvh] w-[min(88vw,340px)] flex-col overflow-hidden bg-white p-0">
+              <SheetHeader className="shrink-0 border-b border-border p-4 text-left">
                 <img src={clearanceLogo} alt="We are Clearance" className="h-16 max-w-full object-contain" />
                 <SheetTitle className="sr-only">Menu</SheetTitle>
               </SheetHeader>
-              <div className="py-4 flex flex-col gap-1">
+              <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain py-4 pb-[max(1rem,env(safe-area-inset-bottom))] [-webkit-overflow-scrolling:touch]">
                 {navGroups.map(({ label, items: groupItems }) => (
-                  <div key={label} className="border-b border-border px-6 py-4">
-                    <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-secondary">{label}</p>
-                    <div className="grid gap-1">
+                  <details key={label} className="group border-b border-border px-5">
+                    <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-slate-900 marker:hidden">
+                      {label}
+                      <ChevronDown className="h-4 w-4 text-blue-700 transition-transform duration-200 group-open:rotate-180" />
+                    </summary>
+                    <div className="grid gap-1 pb-4">
                       {groupItems.map((item) => (
-                        <SheetClose key={item.menu} asChild>
-                          <a
-                            href={`/?menu=${item.menu}#all-products`}
-                            className="rounded-md px-2 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-primary"
-                          >
-                            {item.label}
-                          </a>
-                        </SheetClose>
+                        <a
+                          key={item.menu}
+                          href={`/?menu=${item.menu}#all-products`}
+                          onClick={() => setMobileOpen(false)}
+                          className="border-l-2 border-blue-100 px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:border-blue-700 hover:bg-blue-50 hover:text-blue-800"
+                        >
+                          {item.label}
+                        </a>
                       ))}
                     </div>
-                  </div>
+                  </details>
                 ))}
                 {directNavItems.map(({ label, menu }) => (
-                  <SheetClose key={menu} asChild>
-                    <a href={`/?menu=${menu}#all-products`} className="px-6 py-4 text-lg font-bold text-primary transition-colors hover:bg-muted">
-                      {label}
-                    </a>
-                  </SheetClose>
+                  <a
+                    key={menu}
+                    href={`/?menu=${menu}#all-products`}
+                    onClick={() => setMobileOpen(false)}
+                    className="mx-5 mt-3 bg-blue-700 px-5 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-white transition-colors hover:bg-blue-800"
+                  >
+                    {label}
+                  </a>
                 ))}
                 
                 <div className="px-6 py-4 mt-4 border-t border-border">
@@ -186,7 +209,7 @@ export function Navbar() {
           <span className="pointer-events-none absolute inset-x-20 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-600/35 to-transparent" />
           <span className="pointer-events-none absolute left-1/3 top-1/2 h-20 w-40 -translate-y-1/2 rounded-full bg-blue-400/10 blur-3xl" />
           {navGroups.map(({ label, items: groupItems }) => (
-            <DropdownMenu key={label}>
+            <DropdownMenu key={label} modal={false}>
               <DropdownMenuTrigger asChild>
                 <button className="group relative z-10 inline-flex items-center rounded-2xl border border-transparent px-5 py-3 text-[14px] font-extrabold uppercase tracking-[0.075em] text-slate-800 transition-all duration-300 after:absolute after:inset-x-5 after:bottom-1 after:h-0.5 after:origin-center after:scale-x-0 after:rounded-full after:bg-blue-600 after:transition-transform after:duration-300 hover:-translate-y-0.5 hover:border-blue-100 hover:bg-white hover:text-blue-800 hover:shadow-[0_12px_28px_-18px_rgba(30,64,175,0.7)] hover:after:scale-x-100 data-[state=open]:border-blue-200 data-[state=open]:bg-blue-700 data-[state=open]:text-white data-[state=open]:shadow-[0_12px_28px_-14px_rgba(29,78,216,0.7)]">
                   {label === "Deals" && <span className="mr-2 h-2 w-2 rounded-full bg-blue-600 shadow-[0_0_0_4px_rgba(37,99,235,0.12),0_0_12px_rgba(37,99,235,0.55)]" />}
