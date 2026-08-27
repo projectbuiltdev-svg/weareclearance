@@ -1,4 +1,4 @@
-import { and, asc, eq, ilike, sql } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, sql } from "drizzle-orm";
 import { Router, type IRouter } from "express";
 import {
   CreateProductBody,
@@ -455,7 +455,7 @@ router.get("/products", async (req, res): Promise<void> => {
     )`);
   }
 
-  const rows = await db.select().from(productsTable).where(conditions.length ? and(...conditions) : undefined).orderBy(asc(productsTable.id));
+  const rows = await db.select().from(productsTable).where(conditions.length ? and(...conditions) : undefined).orderBy(desc(productsTable.id));
   res.json(ListProductsResponse.parse(rows.map(toProduct)));
 });
 

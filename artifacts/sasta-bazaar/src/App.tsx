@@ -20,7 +20,7 @@ import { shadcn } from '@clerk/themes';
 const queryClient = new QueryClient()
 
 const clerkPubKey = publishableKeyFromHost(
-  typeof window !== 'undefined' ? window.location.hostname : '',
+  typeof window !== 'undefined' ? window.location.hostname : 'weareclearance.com',
   import.meta.env.VITE_CLERK_PUBLISHABLE_KEY,
 );
 const clerkProxyUrl = import.meta.env.VITE_CLERK_PROXY_URL;

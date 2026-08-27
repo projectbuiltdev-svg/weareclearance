@@ -31,16 +31,70 @@ export default function ProductDetail() {
 
   useEffect(() => {
     if (product) {
-      document.title = `${product.name} | We Are Clearance`
+      const seoTitle = `${product.name} Clearance Deal | We Are Clearance`
+      const seoDescription = `${product.shortDescription} Shop this ${product.category.toLowerCase()} clearance deal at We Are Clearance while stock lasts.`.slice(0, 160)
+      document.title = seoTitle
       const meta = document.querySelector('meta[name="description"]')
       if (meta) {
-        meta.setAttribute("content", product.shortDescription)
+        meta.setAttribute("content", seoDescription)
       } else {
         const newMeta = document.createElement('meta')
         newMeta.name = "description"
-        newMeta.content = product.shortDescription
+        newMeta.content = seoDescription
         document.head.appendChild(newMeta)
       }
+      const canonicalUrl = `https://weareclearance.com/products/${product.slug}`
+      const setMeta = (selector: string, attribute: "name" | "property", key: string, content: string) => {
+        let element = document.querySelector<HTMLMetaElement>(selector)
+        if (!element) {
+          element = document.createElement("meta")
+          element.setAttribute(attribute, key)
+          document.head.appendChild(element)
+        }
+        element.content = content
+      }
+      setMeta('meta[property="og:title"]', "property", "og:title", seoTitle)
+      setMeta('meta[property="og:description"]', "property", "og:description", seoDescription)
+      setMeta('meta[property="og:type"]', "property", "og:type", "product")
+      setMeta('meta[property="og:image"]', "property", "og:image", product.imageUrl)
+      setMeta('meta[property="og:url"]', "property", "og:url", canonicalUrl)
+      setMeta('meta[name="twitter:title"]', "name", "twitter:title", seoTitle)
+      setMeta('meta[name="twitter:description"]', "name", "twitter:description", seoDescription)
+      setMeta('meta[name="twitter:image"]', "name", "twitter:image", product.imageUrl)
+
+      let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]')
+      if (!canonical) {
+        canonical = document.createElement("link")
+        canonical.rel = "canonical"
+        document.head.appendChild(canonical)
+      }
+      canonical.href = canonicalUrl
+
+      const schemaId = "product-runtime-schema"
+      document.getElementById(schemaId)?.remove()
+      const schema = document.createElement("script")
+      schema.id = schemaId
+      schema.type = "application/ld+json"
+      schema.text = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: product.name,
+        description: product.longDescription || product.description,
+        image: [product.imageUrl],
+        sku: product.sku,
+        category: product.category,
+        brand: { "@type": "Brand", name: "We Are Clearance" },
+        offers: {
+          "@type": "Offer",
+          url: canonicalUrl,
+          priceCurrency: "EUR",
+          price: product.price.toFixed(2),
+          availability: product.inventory > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+          itemCondition: "https://schema.org/NewCondition",
+        },
+      })
+      document.head.appendChild(schema)
+      return () => schema.remove()
     } else if (!isLoading) {
       document.title = "Product Not Found | We Are Clearance"
     }
@@ -82,6 +136,9 @@ export default function ProductDetail() {
     .slice(0, 4)
 
   const isOutOfStock = product.inventory === 0
+  const discountPercent = product.compareAtPrice && product.compareAtPrice > product.price
+    ? Math.round((1 - product.price / product.compareAtPrice) * 100)
+    : 0
 
   const handleAddToCart = () => {
     if (isOutOfStock) return
@@ -149,9 +206,14 @@ export default function ProductDetail() {
               {formatPrice(product.price)}
             </span>
             {product.compareAtPrice && product.compareAtPrice > product.price && (
-              <span className="text-sm font-medium text-muted-foreground line-through mb-1">
-                {formatPrice(product.compareAtPrice)}
-              </span>
+              <>
+                <span className="text-sm font-medium text-muted-foreground line-through mb-1">
+                  {formatPrice(product.compareAtPrice)}
+                </span>
+                <span className="mb-1 bg-blue-700 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
+                  {discountPercent}% off
+                </span>
+              </>
             )}
           </div>
 

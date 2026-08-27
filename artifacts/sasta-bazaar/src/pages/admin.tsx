@@ -23,7 +23,7 @@ import {
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useCurrency } from "@/lib/currency"
-import { Show, useClerk } from "@clerk/react"
+import { Show, useAuth, useClerk } from "@clerk/react"
 import { Redirect } from "wouter"
 import { CsvImport } from "@/components/admin/csv-import"
 import { ImageUpload } from "@/components/admin/image-upload"
@@ -31,13 +31,45 @@ import { ImageUpload } from "@/components/admin/image-upload"
 function AdminContent() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
-  const { formatPrice } = useCurrency()
+  const { formatPrice, gbpPerEur, refreshExchangeRate } = useCurrency()
   const { signOut } = useClerk()
+  const { getToken } = useAuth()
   
   const { data: summary, isLoading: isLoadingSummary } = useGetAdminSummary({ query: { queryKey: ["/api/admin/summary"] } })
   
   const [searchInputValue, setSearchInputValue] = useState("")
   const [debouncedSearch, setDebouncedSearch] = useState("")
+  const [exchangeRate, setExchangeRate] = useState("")
+  const [isSavingRate, setIsSavingRate] = useState(false)
+
+  useEffect(() => setExchangeRate(String(gbpPerEur)), [gbpPerEur])
+
+  const saveExchangeRate = async () => {
+    const rate = Number(exchangeRate)
+    if (!Number.isFinite(rate) || rate <= 0) {
+      toast({ title: "Enter a valid GBP rate", variant: "destructive" })
+      return
+    }
+    setIsSavingRate(true)
+    try {
+      const token = await getToken()
+      const response = await fetch("/api/admin/store-settings", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ gbpPerEur: rate }),
+      })
+      if (!response.ok) throw new Error("Could not save the exchange rate")
+      await refreshExchangeRate()
+      toast({ title: "Exchange rate updated" })
+    } catch (error) {
+      toast({ title: error instanceof Error ? error.message : "Could not save the exchange rate", variant: "destructive" })
+    } finally {
+      setIsSavingRate(false)
+    }
+  }
   
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -166,6 +198,24 @@ function AdminContent() {
           </Button>
         </div>
       </div>
+
+      <section className="border border-border bg-white p-6 md:p-8">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 className="font-display text-2xl">Currency conversion</h2>
+            <p className="mt-2 text-sm text-muted-foreground">Set how many British pounds equal €1. Product prices are entered once in EUR and converted automatically.</p>
+          </div>
+          <div className="flex w-full items-end gap-3 md:w-auto">
+            <div className="flex-1 space-y-2 md:w-52">
+              <Label htmlFor="gbp-rate" className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">GBP per EUR</Label>
+              <Input id="gbp-rate" type="number" min="0.01" max="10" step="0.0001" value={exchangeRate} onChange={(event) => setExchangeRate(event.target.value)} className="rounded-none" />
+            </div>
+            <Button type="button" onClick={saveExchangeRate} disabled={isSavingRate} className="rounded-none">
+              {isSavingRate ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save rate"}
+            </Button>
+          </div>
+        </div>
+      </section>
 
       {/* Stats */}
       {isLoadingSummary ? (
@@ -308,12 +358,12 @@ function AdminContent() {
               </div>
 
               <div className="space-y-3">
-                 <Label className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Price</Label>
+                 <Label className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Sale Price (EUR)</Label>
                 <Input type="number" required min="0" step="0.01" value={form.price} onChange={e => setForm({...form, price: e.target.value})} className="h-11 bg-transparent border-b border-0 border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base" />
               </div>
               
               <div className="space-y-3">
-                 <Label className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Compare At Price <span className="font-normal opacity-50">(Optional)</span></Label>
+                  <Label className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Original Price (EUR) <span className="font-normal opacity-50">(Optional)</span></Label>
                 <Input type="number" min="0" step="0.01" value={form.compareAtPrice} onChange={e => setForm({...form, compareAtPrice: e.target.value})} className="h-11 bg-transparent border-b border-0 border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base placeholder:text-muted-foreground/30" />
               </div>
 

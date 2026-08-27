@@ -663,6 +663,28 @@ export default function Storefront() {
           </div>
         )}
       </div>
+
+      <section className="border-t border-border bg-muted/20">
+        <div className="container mx-auto px-4 py-16 md:px-8 md:py-20">
+          <div className="mb-10 max-w-2xl">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-blue-700">Shopping with us</p>
+            <h2 className="mt-3 font-display text-3xl md:text-4xl">Clearance shopping questions</h2>
+          </div>
+          <div className="grid gap-px border border-border bg-border md:grid-cols-2">
+            {[
+              ["What products does We Are Clearance sell?", "We Are Clearance sells clearance homeware, kitchen and dining essentials, affordable gifts, accessories and everyday household products."],
+              ["Do you deliver across the UK and Ireland?", "Yes. We Are Clearance serves customers across the United Kingdom and Ireland, with delivery information confirmed during checkout."],
+              ["Are the original and sale prices shown clearly?", "Yes. Discounted products show the current sale price beside the struck-through original price, along with the calculated percentage saving."],
+              ["Can clearance products sell out?", "Yes. Clearance quantities are limited and product pages display current stock availability, so popular items may sell out quickly."],
+            ].map(([question, answer]) => (
+              <details key={question} className="group bg-white p-6 open:bg-[#fbfaf7]">
+                <summary className="cursor-pointer list-none pr-8 text-sm font-semibold leading-relaxed marker:hidden">{question}</summary>
+                <p className="mt-4 text-sm leading-7 text-muted-foreground">{answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   )
 }

@@ -606,7 +606,7 @@ const legacyStaticProducts = [
 
 export const staticProducts: Product[] = legacyStaticProducts.map((product) => ({
   ...product,
-  shortDescription: "shortDescription" in product ? product.shortDescription : product.description,
+  shortDescription: ("shortDescription" in product ? product.shortDescription : undefined) ?? product.description,
   longDescription: product.description,
 }))
 
