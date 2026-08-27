@@ -351,7 +351,8 @@ const legacyStaticProducts = [
     "sku": "SKU-25",
     "name": "Scented Candle Trio",
     "slug": "scented-candle-trio-18",
-    "description": "Three softly scented candles ready for gifting.",
+    "shortDescription": "Three softly scented candles ready for gifting.",
+    "description": "Create a warm, welcoming atmosphere with this beautifully coordinated trio of scented candles. Each candle offers a complementary fragrance designed to be enjoyed individually or burned together for a softly layered scent throughout your home. Presented as a ready-to-gift set, they make a thoughtful choice for birthdays, housewarmings, thank-you gifts or a relaxing evening in. Place them across a living room, bedroom or bathroom to add a gentle glow and inviting fragrance. Always place candles on a stable, heat-resistant surface, trim the wick before lighting and never leave a burning candle unattended.",
     "category": "Gifts for Her",
     "price": 6.99,
     "compareAtPrice": 10.99,
@@ -605,7 +606,7 @@ const legacyStaticProducts = [
 
 export const staticProducts: Product[] = legacyStaticProducts.map((product) => ({
   ...product,
-  shortDescription: product.description,
+  shortDescription: "shortDescription" in product ? product.shortDescription : product.description,
   longDescription: product.description,
 }))
 
