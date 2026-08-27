@@ -61,7 +61,7 @@ export function Footer() {
               <img
                 src={clearanceLogo}
                 alt="We are Clearance"
-                 className="h-24 sm:h-28 w-auto object-contain"
+                 className="h-20 w-auto object-contain sm:h-24"
               />
               <p className="text-sm leading-relaxed text-muted-foreground max-w-sm">
                 Your trusted destination for clearance deals across the UK and Ireland. 

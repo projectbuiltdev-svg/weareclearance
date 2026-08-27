@@ -154,9 +154,30 @@ export default function Storefront() {
       return product.badge === "Last Chance" || (product.compareAtPrice != null && product.compareAtPrice > product.price)
     }
     const departmentCategories: Record<string, string[]> = {
-      bedroom: ["Bedroom", "Duvet Covers & Bed Sets", "Pillows", "Sheets"],
-      cookware: ["Cookware", "Appliances", "Glassware & Drinkware", "Kitchen Accessories", "Food Storage"],
-      "gifts-for-her": ["Gifts for Her", "Gifts for Him", "Home Gifts", "Gift Sets"],
+      bedroom: ["Bedroom"],
+      pillows: ["Pillows"],
+      duvet: ["Duvet Covers & Bed Sets"],
+      sheets: ["Sheets"],
+      bathroom: ["Bathroom"],
+      towels: ["Towels"],
+      bathrobes: ["Bathrobes"],
+      storage: ["Storage"],
+      cookware: ["Cookware"],
+      appliances: ["Appliances"],
+      "food-storage": ["Food Storage"],
+      glassware: ["Glassware & Drinkware"],
+      "kitchen-accessories": ["Kitchen Accessories"],
+      "gifts-for-her": ["Gifts for Her"],
+      "gifts-for-him": ["Gifts for Him"],
+      "home-gifts": ["Home Gifts"],
+      "gift-sets": ["Gift Sets"],
+      cleaning: ["Cleaning"],
+      "paper-products": ["Paper Products"],
+      "bin-bags": ["Bin Bags"],
+      "household-essentials": ["Household Essentials"],
+      "garden-furniture": ["Garden Furniture"],
+      "garden-accessories": ["Garden Accessories"],
+      "camping-outdoor": ["Camping & Outdoor"],
     }
     return departmentCategories[menuFilter]?.includes(product.category) ?? true
   })

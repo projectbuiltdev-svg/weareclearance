@@ -27,12 +27,53 @@ import {
 } from "./ui/dropdown-menu"
 import clearanceLogo from "@/assets/logo.jpg"
 
-const mainNavItems = [
-  { label: "Deals", menu: "under-10" },
-  { label: "Home & Living", menu: "bedroom" },
-  { label: "Kitchen & Dining", menu: "cookware" },
-  { label: "Gifts", menu: "gifts-for-her" },
-  { label: "Last Chance", menu: "last-chance", isHighlight: true },
+const navGroups = [
+  {
+    label: "Deals",
+    items: [
+      { label: "£5 & Under", menu: "under-5" },
+      { label: "£10 & Under", menu: "under-10" },
+      { label: "£20 & Under", menu: "under-20" },
+      { label: "Multibuy Deals", menu: "multibuy" },
+      { label: "Bulk Buys", menu: "bulk" },
+    ],
+  },
+  {
+    label: "Home & Living",
+    items: [
+      { label: "Bedroom", menu: "bedroom" },
+      { label: "Pillows", menu: "pillows" },
+      { label: "Duvet Covers & Bed Sets", menu: "duvet" },
+      { label: "Sheets", menu: "sheets" },
+      { label: "Bathroom", menu: "bathroom" },
+      { label: "Towels", menu: "towels" },
+      { label: "Bathrobes", menu: "bathrobes" },
+      { label: "Storage & Organisation", menu: "storage" },
+    ],
+  },
+  {
+    label: "Kitchen & Dining",
+    items: [
+      { label: "Cookware", menu: "cookware" },
+      { label: "Kitchen Appliances", menu: "appliances" },
+      { label: "Food Storage", menu: "food-storage" },
+      { label: "Glassware & Drinkware", menu: "glassware" },
+      { label: "Kitchen Accessories", menu: "kitchen-accessories" },
+    ],
+  },
+  {
+    label: "Gifts",
+    items: [
+      { label: "Gifts for Her", menu: "gifts-for-her" },
+      { label: "Gifts for Him", menu: "gifts-for-him" },
+      { label: "Home Gifts", menu: "home-gifts" },
+      { label: "Gift Sets", menu: "gift-sets" },
+    ],
+  },
+]
+
+const directNavItems = [
+  { label: "Last Chance", menu: "last-chance" },
 ]
 
 export function Navbar() {
@@ -79,18 +120,30 @@ export function Navbar() {
             </SheetTrigger>
             <SheetContent side="left" className="w-[300px] p-0 bg-white">
               <SheetHeader className="p-4 border-b border-border text-left">
-                <img src={clearanceLogo} alt="We are Clearance" className="h-12 w-auto object-contain" />
+                <img src={clearanceLogo} alt="We are Clearance" className="h-16 max-w-full object-contain" />
                 <SheetTitle className="sr-only">Menu</SheetTitle>
               </SheetHeader>
               <div className="py-4 flex flex-col gap-1">
-                {mainNavItems.map(({ label, menu, isHighlight }) => (
-                  <SheetClose key={label} asChild>
-                    <a
-                      href={`/?menu=${menu}#all-products`}
-                      className={`px-6 py-3 text-lg font-medium transition-colors hover:bg-muted ${
-                        isHighlight ? "text-primary font-bold" : "text-foreground"
-                      }`}
-                    >
+                {navGroups.map(({ label, items: groupItems }) => (
+                  <div key={label} className="border-b border-border px-6 py-4">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-secondary">{label}</p>
+                    <div className="grid gap-1">
+                      {groupItems.map((item) => (
+                        <SheetClose key={item.menu} asChild>
+                          <a
+                            href={`/?menu=${item.menu}#all-products`}
+                            className="rounded-md px-2 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-primary"
+                          >
+                            {item.label}
+                          </a>
+                        </SheetClose>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                {directNavItems.map(({ label, menu }) => (
+                  <SheetClose key={menu} asChild>
+                    <a href={`/?menu=${menu}#all-products`} className="px-6 py-4 text-lg font-bold text-primary transition-colors hover:bg-muted">
                       {label}
                     </a>
                   </SheetClose>
@@ -121,25 +174,36 @@ export function Navbar() {
             </SheetContent>
           </Sheet>
 
-          <Link href="/" className="flex items-center shrink-0">
+          <Link href="/" className="flex h-[68px] shrink-0 items-center sm:h-[72px] lg:h-[76px]">
             <img
               src={clearanceLogo}
               alt="We are Clearance"
-               className="h-20 sm:h-24 lg:h-28 w-auto object-contain"
+              className="h-full max-h-full w-auto object-contain"
             />
           </Link>
         </div>
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-1 justify-center flex-1">
-          {mainNavItems.map(({ label, menu, isHighlight }) => (
-            <a
-              key={label}
-              href={`/?menu=${menu}#all-products`}
-              className={`px-4 py-2 text-sm font-semibold rounded-md transition-colors hover:bg-muted ${
-                isHighlight ? "text-primary" : "text-foreground"
-              }`}
-            >
+          {navGroups.map(({ label, items: groupItems }) => (
+            <DropdownMenu key={label}>
+              <DropdownMenuTrigger asChild>
+                <button className="inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-muted hover:text-primary">
+                  {label}
+                  <ChevronDown className="ml-1.5 h-4 w-4" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="min-w-60 rounded-xl border border-border bg-white p-2 shadow-xl">
+                {groupItems.map((item) => (
+                  <DropdownMenuItem key={item.menu} asChild className="rounded-lg px-3 py-2.5 text-sm font-medium focus:bg-muted focus:text-primary">
+                    <a href={`/?menu=${item.menu}#all-products`}>{item.label}</a>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ))}
+          {directNavItems.map(({ label, menu }) => (
+            <a key={menu} href={`/?menu=${menu}#all-products`} className="rounded-md px-4 py-2 text-sm font-bold text-primary transition-colors hover:bg-primary/5">
               {label}
             </a>
           ))}
