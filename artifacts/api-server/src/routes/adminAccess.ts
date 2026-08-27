@@ -9,6 +9,13 @@ import {
   requireOwner,
   type AdminAccessRecord,
 } from "../middlewares/adminAuth";
+import {
+  clearTestAccessCookie,
+  hasValidTestAccess,
+  isTestAccessConfigured,
+  isValidTestPassword,
+  setTestAccessCookie,
+} from "../lib/testAccess";
 
 const router: IRouter = Router();
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,6 +53,25 @@ async function getAccessResponse(access: AdminAccessRecord) {
     admins: rows,
   };
 }
+
+router.post("/admin/test-login", (req, res): void => {
+  const email = normalizeEmail(req.body?.email);
+  if (!isTestAccessConfigured() || email !== PRIMARY_OWNER_EMAIL || !isValidTestPassword(req.body?.password)) {
+    res.status(401).json({ error: "The temporary Administrator credentials are not valid." });
+    return;
+  }
+  setTestAccessCookie(res);
+  res.json({ ok: true });
+});
+
+router.get("/admin/test-session", (req, res): void => {
+  res.json({ authenticated: hasValidTestAccess(req) });
+});
+
+router.post("/admin/test-logout", (req, res): void => {
+  clearTestAccessCookie(res);
+  res.json({ ok: true });
+});
 
 router.use(requireAdmin);
 
