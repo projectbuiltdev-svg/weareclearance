@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link, useLocation } from "wouter"
-import { Lock, ChevronRight, ShieldCheck } from "lucide-react"
+import { Lock, ChevronRight, ShieldCheck, Minus, Plus } from "lucide-react"
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
 import { Separator } from "@/components/ui/separator"
@@ -190,7 +190,31 @@ export default function Checkout() {
                         </div>
                         <div className="flex-1 min-w-0 py-1 flex flex-col">
                           <h4 className="font-medium text-sm leading-relaxed mb-1" title={item.name}>{item.name}</h4>
-                          <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-auto">Qty: {item.quantity}</p>
+                          <div className="mb-auto mt-2 flex items-center gap-3">
+                            <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Qty</span>
+                            <div className="flex items-center border border-border">
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                className="flex h-8 w-8 items-center justify-center text-foreground transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-40"
+                                aria-label={`Decrease quantity of ${item.name}`}
+                                disabled={item.quantity <= 1}
+                              >
+                                <Minus className="h-3 w-3" />
+                              </button>
+                              <span className="flex h-8 min-w-8 items-center justify-center border-x border-border text-xs font-semibold" aria-live="polite">
+                                {item.quantity}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                className="flex h-8 w-8 items-center justify-center text-foreground transition-colors hover:bg-muted"
+                                aria-label={`Increase quantity of ${item.name}`}
+                              >
+                                <Plus className="h-3 w-3" />
+                              </button>
+                            </div>
+                          </div>
                           <div className="flex items-center justify-between mt-4">
                             <span className="font-display text-lg">{formatPrice(item.price)}</span>
                             <button 

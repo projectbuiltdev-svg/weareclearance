@@ -21,6 +21,7 @@ function Router() {
         <RoutedErrorBoundary>
           <Switch>
             <Route path="/" component={Storefront} />
+            <Route path="/collections/:collection" component={Storefront} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/admin" component={Admin} />
             <Route component={NotFound} />

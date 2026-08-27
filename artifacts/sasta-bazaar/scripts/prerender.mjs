@@ -35,6 +35,19 @@ const routes = [
     description: "Manage the We Are Clearance product catalogue.",
     robots: "noindex, nofollow",
   },
+  ...[
+    ["deals", "Deals", "Shop accessible luxuries under £10 and clearance offers at We Are Clearance."],
+    ["home-living", "Home & Living", "Shop clearance bedroom, bathroom, storage and home essentials at We Are Clearance."],
+    ["kitchen-dining", "Kitchen & Dining", "Shop clearance cookware, appliances, food storage and dining essentials at We Are Clearance."],
+    ["gifts", "Gifts", "Discover affordable clearance gifts and gift sets at We Are Clearance."],
+    ["last-chance", "Last Chance", "Shop final clearance offers before they are gone at We Are Clearance."],
+  ].map(([slug, name, description]) => ({
+    path: `/collections/${slug}`,
+    output: path.join(projectRoot, `dist/public/collections/${slug}/index.html`),
+    title: `${name} | We Are Clearance`,
+    description,
+    robots: "index, follow",
+  })),
 ]
 
 for (const route of routes) {

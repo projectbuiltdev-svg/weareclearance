@@ -148,7 +148,7 @@ export function Navbar() {
                       {groupItems.map((item) => (
                         <a
                           key={item.menu}
-                          href={`/?menu=${item.menu}#all-products`}
+                          href={`/collections/${item.menu}`}
                           onClick={() => setMobileOpen(false)}
                           className="border-l-2 border-blue-100 px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:border-blue-700 hover:bg-blue-50 hover:text-blue-800"
                         >
@@ -161,7 +161,7 @@ export function Navbar() {
                 {directNavItems.map(({ label, menu }) => (
                   <a
                     key={menu}
-                    href={`/?menu=${menu}#all-products`}
+                    href={`/collections/${menu}`}
                     onClick={() => setMobileOpen(false)}
                     className="mx-5 mt-3 bg-blue-700 px-5 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-white transition-colors hover:bg-blue-800"
                   >
@@ -223,7 +223,7 @@ export function Navbar() {
                 </div>
                 {groupItems.map((item) => (
                   <DropdownMenuItem key={item.menu} asChild className="group/item rounded-xl px-3.5 py-3 text-sm font-bold focus:bg-blue-50 focus:text-blue-800">
-                    <a href={`/?menu=${item.menu}#all-products`} className="flex items-center justify-between">
+                    <a href={`/collections/${item.menu}`} className="flex items-center justify-between">
                       {item.label}
                       <span className="h-1.5 w-1.5 rounded-full bg-blue-100 transition-all group-hover/item:bg-blue-600 group-hover/item:shadow-[0_0_8px_rgba(37,99,235,0.55)]" />
                     </a>
@@ -233,7 +233,7 @@ export function Navbar() {
             </DropdownMenu>
           ))}
           {directNavItems.map(({ label, menu }) => (
-            <a key={menu} href={`/?menu=${menu}#all-products`} className="relative z-10 ml-1 overflow-hidden rounded-2xl border border-blue-400/50 bg-[linear-gradient(135deg,#0b2f70_0%,#1554b5_52%,#2878e8_100%)] px-5 py-3 text-[14px] font-black uppercase tracking-[0.1em] text-white shadow-[0_12px_28px_-13px_rgba(21,84,181,0.85),inset_0_1px_0_rgba(255,255,255,0.3)] transition-all duration-300 before:absolute before:inset-y-0 before:-left-1/2 before:w-1/3 before:skew-x-[-20deg] before:bg-white/30 before:blur-sm before:transition-all before:duration-700 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-13px_rgba(21,84,181,0.95)] hover:before:left-[130%]">
+            <a key={menu} href={`/collections/${menu}`} className="relative z-10 ml-1 overflow-hidden rounded-2xl border border-blue-400/50 bg-[linear-gradient(135deg,#0b2f70_0%,#1554b5_52%,#2878e8_100%)] px-5 py-3 text-[14px] font-black uppercase tracking-[0.1em] text-white shadow-[0_12px_28px_-13px_rgba(21,84,181,0.85),inset_0_1px_0_rgba(255,255,255,0.3)] transition-all duration-300 before:absolute before:inset-y-0 before:-left-1/2 before:w-1/3 before:skew-x-[-20deg] before:bg-white/30 before:blur-sm before:transition-all before:duration-700 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-13px_rgba(21,84,181,0.95)] hover:before:left-[130%]">
               {label}
             </a>
           ))}

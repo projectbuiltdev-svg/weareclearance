@@ -5,4 +5,9 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url><loc>https://weareclearance.com/collections/deals</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://weareclearance.com/collections/home-living</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://weareclearance.com/collections/kitchen-dining</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://weareclearance.com/collections/gifts</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://weareclearance.com/collections/last-chance</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
 </urlset>

@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useLocation } from "wouter"
 import { useListProducts, useListCategories } from "@workspace/api-client-react"
 import { useCart } from "@/lib/cart"
 import { Button } from "@/components/ui/button"
@@ -52,12 +53,12 @@ function ProductCarousel({
   title,
   products,
   onAdd,
-  onViewAll,
+  viewAllHref,
 }: {
   title: string
   products: any[]
   onAdd: (product: any) => void
-  onViewAll: () => void
+  viewAllHref: string
 }) {
   const { formatPrice } = useCurrency()
   if (products.length === 0) return null
@@ -66,8 +67,10 @@ function ProductCarousel({
     <section className="space-y-8" aria-label={title}>
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border pb-4">
         <h2 className="font-display text-3xl md:text-4xl text-foreground italic">{title}</h2>
-        <Button variant="link" className="font-semibold text-primary hover:text-primary/80 px-0 h-auto pb-1 uppercase tracking-widest text-xs" onClick={onViewAll}>
-          Discover Collection <ArrowRight className="ml-2 h-3 w-3" />
+        <Button asChild variant="link" className="h-auto px-0 pb-1 text-xs font-semibold uppercase tracking-widest text-primary hover:text-primary/80">
+          <a href={viewAllHref}>
+            Discover Collection <ArrowRight className="ml-2 h-3 w-3" />
+          </a>
         </Button>
       </div>
 
@@ -142,11 +145,21 @@ function ProductCarousel({
 }
 
 export default function Storefront() {
+  const [location] = useLocation()
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState<string>("")
-  const [menuFilter, setMenuFilter] = useState(() =>
-    typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("menu") ?? ""
-  )
+  const [menuFilter, setMenuFilter] = useState(() => {
+    const collectionSlug = location.match(/^\/collections\/([^/?#]+)/)?.[1]
+    if (collectionSlug) return collectionSlug
+    return typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("menu") ?? ""
+  })
+
+  useEffect(() => {
+    const collectionSlug = location.match(/^\/collections\/([^/?#]+)/)?.[1]
+    setMenuFilter(collectionSlug ?? new URLSearchParams(window.location.search).get("menu") ?? "")
+    setCategory("")
+    setSearch("")
+  }, [location])
   
   const { data: apiProducts } = useListProducts(
     { search: search || undefined, category: category || undefined },
@@ -171,13 +184,19 @@ export default function Storefront() {
     if (menuFilter === "under-5") return product.price <= 5
     if (menuFilter === "under-10") return product.price <= 10
     if (menuFilter === "under-20") return product.price <= 20
-    if (menuFilter === "deals" || menuFilter === "multibuy" || menuFilter === "bulk") {
+    if (menuFilter === "deals") {
+      return product.price <= 10 || (product.compareAtPrice != null && product.compareAtPrice > product.price)
+    }
+    if (menuFilter === "multibuy" || menuFilter === "bulk") {
       return product.compareAtPrice != null && product.compareAtPrice > product.price
     }
     if (menuFilter === "last-chance") {
       return product.badge === "Last Chance" || (product.compareAtPrice != null && product.compareAtPrice > product.price)
     }
     const departmentCategories: Record<string, string[]> = {
+      "home-living": ["Bedroom", "Pillows", "Duvet Covers & Bed Sets", "Sheets", "Bathroom", "Towels", "Bathrobes", "Storage", "Household Essentials", "For the Home"],
+      "kitchen-dining": ["Cookware", "Appliances", "Food Storage", "Glassware & Drinkware", "Kitchen Accessories"],
+      gifts: ["Gifts for Her", "Gifts for Him", "Home Gifts", "Gift Sets"],
       bedroom: ["Bedroom"],
       pillows: ["Pillows"],
       duvet: ["Duvet Covers & Bed Sets"],
@@ -260,20 +279,11 @@ export default function Storefront() {
             Discover our curated collection of premium home, kitchen, and lifestyle essentials. Distinctive design without the typical premium price tag.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-5">
-            <Button 
-              size="lg" 
-              className="h-13 w-full rounded-none bg-white px-7 text-xs font-semibold uppercase tracking-widest text-black hover:bg-gray-100 sm:h-14 sm:w-auto sm:px-10" 
-              onClick={() => handleFilterClick('All')}
-            >
-              Explore Collection
+            <Button asChild size="lg" className="h-13 w-full rounded-none bg-white px-7 text-xs font-semibold uppercase tracking-widest text-black hover:bg-gray-100 sm:h-14 sm:w-auto sm:px-10">
+              <a href="/?#all-products">Explore Collection</a>
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="h-13 w-full rounded-none border-white/60 bg-white/5 px-7 text-xs font-semibold uppercase tracking-widest text-white hover:bg-white/15 hover:text-white sm:h-14 sm:w-auto sm:px-10" 
-              onClick={() => handleFilterClick('Last Chance Clearance')}
-            >
-              The Archive
+            <Button asChild size="lg" variant="outline" className="h-13 w-full rounded-none border-white/60 bg-white/5 px-7 text-xs font-semibold uppercase tracking-widest text-white hover:bg-white/15 hover:text-white sm:h-14 sm:w-auto sm:px-10">
+              <a href="/collections/last-chance">The Archive</a>
             </Button>
           </div>
         </div>
@@ -289,7 +299,7 @@ export default function Storefront() {
               (product.compareAtPrice != null && product.compareAtPrice > product.price),
           )}
           onAdd={handleAddToCart}
-          onViewAll={() => handleFilterClick("Under £10")}
+          viewAllHref="/collections/deals"
         />
 
         <ProductCarousel
@@ -300,7 +310,7 @@ export default function Storefront() {
               (product.compareAtPrice != null && product.compareAtPrice > product.price),
           )}
           onAdd={handleAddToCart}
-          onViewAll={() => handleFilterClick("Last Chance Clearance")}
+          viewAllHref="/collections/last-chance"
         />
 
         <ProductCarousel
@@ -320,11 +330,7 @@ export default function Storefront() {
             ].includes(product.category),
           )}
           onAdd={handleAddToCart}
-          onViewAll={() => {
-            setSearch("")
-            setCategory("")
-            setMenuFilter("bedroom")
-          }}
+          viewAllHref="/collections/home-living"
         />
 
         <ProductCarousel
@@ -339,11 +345,7 @@ export default function Storefront() {
             ].includes(product.category),
           )}
           onAdd={handleAddToCart}
-          onViewAll={() => {
-            setSearch("")
-            setCategory("")
-            setMenuFilter("cookware")
-          }}
+          viewAllHref="/collections/kitchen-dining"
         />
 
         <ProductCarousel
@@ -352,11 +354,7 @@ export default function Storefront() {
             ["Gifts for Her", "Gifts for Him", "Home Gifts", "Gift Sets"].includes(product.category),
           )}
           onAdd={handleAddToCart}
-          onViewAll={() => {
-            setSearch("")
-            setCategory("")
-            setMenuFilter("gifts-for-her")
-          }}
+          viewAllHref="/collections/gifts"
         />
 
         <div className="mx-auto max-w-2xl border-y border-border py-8">
@@ -380,21 +378,55 @@ export default function Storefront() {
       <section aria-label="Featured shopping categories" className="order-3 border-y border-border bg-white">
         <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-5">
           {[
-            { Icon: BadgePercent, title: "Deals", subtitle: "Accessible Luxuries Under £10", menu: "under-10" },
-            { Icon: House, title: "Home & Living", menu: "bedroom" },
-            { Icon: CookingPot, title: "Kitchen & Dining", menu: "cookware" },
-            { Icon: Gift, title: "Gifts", menu: "gifts-for-her" },
-            { Icon: Clock3, title: "Last Chance", menu: "last-chance" },
+            {
+              Icon: BadgePercent,
+              title: "Deals",
+              subtitle: "Accessible Luxuries Under £10",
+              image: products.find((product) => product.price <= 10)?.imageUrl,
+            },
+            {
+              Icon: House,
+              title: "Home & Living",
+              image: products.find((product) => ["Bedroom", "Bathroom", "Storage", "Household Essentials", "For the Home"].includes(product.category))?.imageUrl,
+            },
+            {
+              Icon: CookingPot,
+              title: "Kitchen & Dining",
+              image: products.find((product) => ["Cookware", "Appliances", "Food Storage", "Glassware & Drinkware", "Kitchen Accessories"].includes(product.category))?.imageUrl,
+            },
+            {
+              Icon: Gift,
+              title: "Gifts",
+              image: products.find((product) => ["Gifts for Her", "Gifts for Him", "Home Gifts", "Gift Sets"].includes(product.category))?.imageUrl,
+            },
+            {
+              Icon: Clock3,
+              title: "Last Chance",
+              image: products.find((product) => product.badge === "Last Chance" || (product.compareAtPrice != null && product.compareAtPrice > product.price))?.imageUrl,
+            },
           ].map((item) => (
             <a
               key={item.title}
-              href={`/?menu=${item.menu}#all-products`}
-              className="group relative flex min-h-36 flex-col justify-between overflow-hidden px-6 py-7 transition-colors duration-300 hover:bg-blue-700"
+              href={`/collections/${item.title === "Home & Living" ? "home-living" : item.title === "Kitchen & Dining" ? "kitchen-dining" : item.title === "Last Chance" ? "last-chance" : item.title.toLowerCase()}`}
+              className="group relative flex min-h-72 flex-col overflow-hidden bg-white transition-colors duration-300 hover:bg-blue-700"
             >
-              <div className="flex h-10 w-10 items-center justify-center border border-blue-200 text-blue-700 transition-all duration-300 group-hover:border-white/40 group-hover:bg-white/10 group-hover:text-white">
-                <item.Icon className="h-5 w-5 stroke-[1.5]" />
+              <div className="relative h-40 overflow-hidden bg-muted/30">
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt=""
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="h-full w-full bg-gradient-to-br from-blue-50 to-slate-100" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/25 to-transparent" />
+                <div className="absolute bottom-4 left-4 flex h-10 w-10 items-center justify-center border border-white/70 bg-white/90 text-blue-700 shadow-sm backdrop-blur-sm">
+                  <item.Icon className="h-5 w-5 stroke-[1.5]" />
+                </div>
               </div>
-              <div>
+              <div className="flex flex-1 flex-col justify-end px-6 py-6">
                 <h2 className="font-display text-2xl leading-tight text-foreground transition-colors group-hover:text-white">
                   {item.title}
                 </h2>
@@ -510,14 +542,14 @@ export default function Storefront() {
             title="Curator's Selection"
             products={visibleProducts.filter((product) => product.featured)}
             onAdd={handleAddToCart}
-            onViewAll={() => handleFilterClick("All")}
+            viewAllHref="/?#all-products"
           />
           <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
           <ProductCarousel
             title="Accessible Luxuries Under £10"
             products={visibleProducts.filter((product) => product.price <= 10)}
             onAdd={handleAddToCart}
-            onViewAll={() => handleFilterClick("Under £10")}
+            viewAllHref="/collections/deals"
           />
         </div>
       )}

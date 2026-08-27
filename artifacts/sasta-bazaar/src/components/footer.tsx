@@ -75,8 +75,8 @@ export function Footer() {
             <div className="lg:col-span-2 space-y-6">
               <h3 className="font-sans font-semibold uppercase tracking-[0.15em] text-xs mb-6 text-foreground">The Collections</h3>
               <ul className="space-y-4 text-sm text-muted-foreground font-light">
-                <li><Link href="/?menu=under-10" className="hover:text-primary transition-colors">Under £10 Edit</Link></li>
-                <li><Link href="/?menu=last-chance" className="hover:text-primary transition-colors">The Archive</Link></li>
+                <li><Link href="/collections/deals" className="hover:text-primary transition-colors">Under £10 Edit</Link></li>
+                <li><Link href="/collections/last-chance" className="hover:text-primary transition-colors">The Archive</Link></li>
                 <li><Link href="/#departments" className="hover:text-primary transition-colors">All Departments</Link></li>
                 <li><Link href="/checkout" className="hover:text-primary transition-colors">Your Bag</Link></li>
               </ul>
