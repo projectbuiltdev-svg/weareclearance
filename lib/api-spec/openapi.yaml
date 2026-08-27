@@ -134,6 +134,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProductImportResult"
+  /storage/uploads/request-url:
+    post:
+      operationId: requestUploadUrl
+      tags: [admin]
+      summary: Request a protected product image upload URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadRequest"
+      responses:
+        "200":
+          description: Upload URL
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadResponse"
   /categories:
     get:
       operationId: listCategories
@@ -171,12 +189,15 @@ components:
         - status
     Product:
       type: object
-      required: [id, name, slug, description, category, price, compareAtPrice, imageUrl, badge, featured, inventory, createdAt]
+      required: [id, sku, name, slug, shortDescription, description, longDescription, category, price, compareAtPrice, imageUrl, badge, featured, inventory, createdAt]
       properties:
         id: { type: number }
+        sku: { type: string }
         name: { type: string }
         slug: { type: string }
+        shortDescription: { type: string }
         description: { type: string }
+        longDescription: { type: string }
         category: { type: string }
         price: { type: number }
         compareAtPrice: { type: ["number", "null"] }
@@ -187,10 +208,13 @@ components:
         createdAt: { type: string, format: date-time }
     ProductInput:
       type: object
-      required: [name, description, category, price, imageUrl]
+      required: [name, shortDescription, longDescription, category, price, imageUrl]
       properties:
+        sku: { type: string, minLength: 1 }
         name: { type: string, minLength: 1 }
+        shortDescription: { type: string, minLength: 1, maxLength: 240 }
         description: { type: string }
+        longDescription: { type: string, minLength: 1 }
         category: { type: string, minLength: 1 }
         price: { type: number, minimum: 0 }
         compareAtPrice: { type: ["number", "null"], minimum: 0 }
@@ -201,8 +225,11 @@ components:
     ProductUpdate:
       type: object
       properties:
+        sku: { type: string, minLength: 1 }
         name: { type: string, minLength: 1 }
+        shortDescription: { type: string, minLength: 1, maxLength: 240 }
         description: { type: string }
+        longDescription: { type: string, minLength: 1 }
         category: { type: string, minLength: 1 }
         price: { type: number, minimum: 0 }
         compareAtPrice: { type: ["number", "null"], minimum: 0 }
@@ -237,4 +264,20 @@ components:
         featuredProducts: { type: number }
         lowStockProducts: { type: number }
         categories: { type: number }
+    UploadRequest:
+      type: object
+      required: [name, size, contentType]
+      properties:
+        name: { type: string, minLength: 1 }
+        size: { type: number, minimum: 1, maximum: 10485760 }
+        contentType:
+          type: string
+          enum: [image/jpeg, image/png, image/webp]
+    UploadResponse:
+      type: object
+      required: [uploadURL, objectPath, imageUrl]
+      properties:
+        uploadURL: { type: string }
+        objectPath: { type: string }
+        imageUrl: { type: string }
 

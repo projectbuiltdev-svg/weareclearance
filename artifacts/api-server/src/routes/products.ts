@@ -15,6 +15,7 @@ import {
   UpdateProductResponse,
 } from "@workspace/api-zod";
 import { db, productsTable, type Product } from "@workspace/db";
+import { requireAdmin } from "../middlewares/adminAuth";
 
 const router: IRouter = Router();
 
@@ -367,9 +368,40 @@ function slugify(name: string, suffix: number): string {
   return `${base}-${suffix}`;
 }
 
+function normalizeSku(value: string): string {
+  return value.trim().toUpperCase().replace(/[^A-Z0-9-]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+function categoryCode(category: string): string {
+  const compact = category.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  return (compact.slice(0, 3) || "GEN").padEnd(3, "X");
+}
+
+async function uniqueSku(category: string): Promise<string> {
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const token = crypto.randomUUID().replace(/-/g, "").slice(0, 8).toUpperCase();
+    const sku = `WAC-${categoryCode(category)}-${token}`;
+    const [existing] = await db.select({ id: productsTable.id }).from(productsTable).where(eq(productsTable.sku, sku)).limit(1);
+    if (!existing) return sku;
+  }
+  throw new Error("Could not generate a unique SKU");
+}
+
+async function ensureSkus(): Promise<void> {
+  const rows = await db.select({ id: productsTable.id, category: productsTable.category, sku: productsTable.sku }).from(productsTable);
+  for (const row of rows) {
+    if (!row.sku) {
+      await db.update(productsTable).set({ sku: await uniqueSku(row.category) }).where(eq(productsTable.id, row.id));
+    }
+  }
+}
+
 function toProduct(row: Product) {
   return {
     ...row,
+    sku: row.sku || "SKU-PENDING",
+    shortDescription: row.shortDescription || row.description,
+    longDescription: row.description,
     createdAt: row.createdAt,
     compareAtPrice: row.compareAtPrice ?? null,
     badge: row.badge ?? null,
@@ -387,6 +419,8 @@ async function seedIfEmpty(): Promise<void> {
     await db.insert(productsTable).values(
       missingProducts.map((product, index) => ({
         ...product,
+        shortDescription: product.description,
+        sku: `WAC-${categoryCode(product.category)}-${String(starterProducts.indexOf(product) + 1).padStart(5, "0")}`,
         slug: slugify(product.name, starterProducts.indexOf(product) + 1),
         inventory: 12 + starterProducts.indexOf(product) * 7,
       })),
@@ -407,12 +441,18 @@ router.get("/products", async (req, res): Promise<void> => {
   }
 
   await seedIfEmpty();
+  await ensureSkus();
   const conditions = [];
   if (query.data.category) conditions.push(eq(productsTable.category, query.data.category));
   if (query.data.featured) conditions.push(eq(productsTable.featured, true));
   if (query.data.search) {
     const term = `%${query.data.search}%`;
-    conditions.push(sql`(${ilike(productsTable.name, term)} OR ${ilike(productsTable.description, term)})`);
+    conditions.push(sql`(
+      ${ilike(productsTable.name, term)}
+      OR ${ilike(productsTable.description, term)}
+      OR ${ilike(productsTable.category, term)}
+      OR ${ilike(productsTable.sku, term)}
+    )`);
   }
 
   const rows = await db.select().from(productsTable).where(conditions.length ? and(...conditions) : undefined).orderBy(asc(productsTable.id));
@@ -425,8 +465,11 @@ router.get("/categories", async (_req, res): Promise<void> => {
   res.json(ListCategoriesResponse.parse(rows.map((row) => row.category)));
 });
 
+router.use(requireAdmin);
+
 router.get("/admin/summary", async (_req, res): Promise<void> => {
   await seedIfEmpty();
+  await ensureSkus();
   const rows = await db.select().from(productsTable);
   const categories = new Set(rows.map((row) => row.category));
   res.json(
@@ -446,11 +489,18 @@ router.post("/products", async (req, res): Promise<void> => {
     return;
   }
 
-  const [product] = await db
-    .insert(productsTable)
-    .values({ ...parsed.data, slug: slugify(parsed.data.name, Date.now()) })
-    .returning();
-  res.status(201).json(CreateProductResponse.parse(toProduct(product)));
+  try {
+    const sku = parsed.data.sku ? normalizeSku(parsed.data.sku) : await uniqueSku(parsed.data.category);
+    const { longDescription, description: _legacyDescription, ...input } = parsed.data;
+    const [product] = await db
+      .insert(productsTable)
+      .values({ ...input, description: longDescription, sku, slug: slugify(parsed.data.name, Date.now()) })
+      .returning();
+    res.status(201).json(CreateProductResponse.parse(toProduct(product)));
+  } catch (error) {
+    req.log.warn({ err: error }, "Could not create product");
+    res.status(409).json({ error: "SKU already exists" });
+  }
 });
 
 router.patch("/products/:id", async (req, res): Promise<void> => {
@@ -465,7 +515,13 @@ router.patch("/products/:id", async (req, res): Promise<void> => {
     return;
   }
 
-  const [product] = await db.update(productsTable).set(body.data).where(eq(productsTable.id, params.data.id)).returning();
+  const { longDescription, description: _legacyDescription, ...bodyData } = body.data;
+  const update = {
+    ...bodyData,
+    ...(longDescription !== undefined ? { description: longDescription } : {}),
+    ...(body.data.sku ? { sku: normalizeSku(body.data.sku) } : {}),
+  };
+  const [product] = await db.update(productsTable).set(update).where(eq(productsTable.id, params.data.id)).returning();
   if (!product) {
     res.status(404).json({ error: "Product not found" });
     return;
@@ -495,11 +551,24 @@ router.post("/products/import", async (req, res): Promise<void> => {
     return;
   }
 
+  const products: Product[] = [];
   const stamp = Date.now();
-  const products = await db
-    .insert(productsTable)
-    .values(parsed.data.products.map((product, index) => ({ ...product, slug: slugify(product.name, stamp + index) })))
-    .returning();
+  for (const [index, input] of parsed.data.products.entries()) {
+    const sku = input.sku ? normalizeSku(input.sku) : await uniqueSku(input.category);
+    const { longDescription, description: _legacyDescription, ...productInput } = input;
+    const values = { ...productInput, description: longDescription, sku };
+    const [existing] = await db.select().from(productsTable).where(eq(productsTable.sku, sku)).limit(1);
+    if (existing) {
+      const [updated] = await db.update(productsTable).set(values).where(eq(productsTable.id, existing.id)).returning();
+      products.push(updated);
+    } else {
+      const [created] = await db.insert(productsTable).values({
+        ...values,
+        slug: slugify(input.name, stamp + index),
+      }).returning();
+      products.push(created);
+    }
+  }
   res.status(201).json(ImportProductsResponse.parse({ imported: products.length, products: products.map(toProduct) }));
 });
 

@@ -11,9 +11,12 @@ export interface HealthStatus {
 
 export interface Product {
   id: number;
+  sku: string;
   name: string;
   slug: string;
+  shortDescription: string;
   description: string;
+  longDescription: string;
   category: string;
   price: number;
   /** @nullable */
@@ -28,8 +31,17 @@ export interface Product {
 
 export interface ProductInput {
   /** @minLength 1 */
+  sku?: string;
+  /** @minLength 1 */
   name: string;
-  description: string;
+  /**
+     * @minLength 1
+     * @maxLength 240
+     */
+  shortDescription: string;
+  description?: string;
+  /** @minLength 1 */
+  longDescription: string;
   /** @minLength 1 */
   category: string;
   /** @minimum 0 */
@@ -50,8 +62,17 @@ export interface ProductInput {
 
 export interface ProductUpdate {
   /** @minLength 1 */
+  sku?: string;
+  /** @minLength 1 */
   name?: string;
+  /**
+     * @minLength 1
+     * @maxLength 240
+     */
+  shortDescription?: string;
   description?: string;
+  /** @minLength 1 */
+  longDescription?: string;
   /** @minLength 1 */
   category?: string;
   /** @minimum 0 */
@@ -88,6 +109,32 @@ export interface AdminSummary {
   featuredProducts: number;
   lowStockProducts: number;
   categories: number;
+}
+
+export type UploadRequestContentType = typeof UploadRequestContentType[keyof typeof UploadRequestContentType];
+
+
+export const UploadRequestContentType = {
+  'image/jpeg': 'image/jpeg',
+  'image/png': 'image/png',
+  'image/webp': 'image/webp',
+} as const;
+
+export interface UploadRequest {
+  /** @minLength 1 */
+  name: string;
+  /**
+     * @minimum 1
+     * @maximum 10485760
+     */
+  size: number;
+  contentType: UploadRequestContentType;
+}
+
+export interface UploadResponse {
+  uploadURL: string;
+  objectPath: string;
+  imageUrl: string;
 }
 
 export type ListProductsParams = {

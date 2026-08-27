@@ -14,3 +14,6 @@ export * from './productImportInput';
 export * from './productImportResult';
 export * from './productInput';
 export * from './productUpdate';
+export * from './uploadRequest';
+export * from './uploadRequestContentType';
+export * from './uploadResponse';

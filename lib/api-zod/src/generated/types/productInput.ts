@@ -8,8 +8,17 @@
 
 export interface ProductInput {
   /** @minLength 1 */
+  sku?: string;
+  /** @minLength 1 */
   name: string;
-  description: string;
+  /**
+     * @minLength 1
+     * @maxLength 240
+     */
+  shortDescription: string;
+  description?: string;
+  /** @minLength 1 */
+  longDescription: string;
   /** @minLength 1 */
   category: string;
   /** @minimum 0 */

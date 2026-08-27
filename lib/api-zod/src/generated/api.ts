@@ -28,9 +28,12 @@ export const ListProductsQueryParams = zod.object({
 
 export const ListProductsResponseItem = zod.object({
   "id": zod.number(),
+  "sku": zod.string(),
   "name": zod.string(),
   "slug": zod.string(),
+  "shortDescription": zod.string(),
   "description": zod.string(),
+  "longDescription": zod.string(),
   "category": zod.string(),
   "price": zod.number(),
   "compareAtPrice": zod.number().nullable(),
@@ -48,6 +51,10 @@ export const ListProductsResponse = zod.array(ListProductsResponseItem)
  */
 
 
+export const createProductBodyShortDescriptionMax = 240;
+
+
+
 export const createProductBodyPriceMin = 0;
 
 export const createProductBodyCompareAtPriceMin = 0;
@@ -60,8 +67,11 @@ export const createProductBodyInventoryMin = 0;
 
 
 export const CreateProductBody = zod.object({
+  "sku": zod.string().min(1).optional(),
   "name": zod.string().min(1),
-  "description": zod.string(),
+  "shortDescription": zod.string().min(1).max(createProductBodyShortDescriptionMax),
+  "description": zod.string().optional(),
+  "longDescription": zod.string().min(1),
   "category": zod.string().min(1),
   "price": zod.number().min(createProductBodyPriceMin),
   "compareAtPrice": zod.number().min(createProductBodyCompareAtPriceMin).nullish(),
@@ -73,9 +83,12 @@ export const CreateProductBody = zod.object({
 
 export const CreateProductResponse = zod.object({
   "id": zod.number(),
+  "sku": zod.string(),
   "name": zod.string(),
   "slug": zod.string(),
+  "shortDescription": zod.string(),
   "description": zod.string(),
+  "longDescription": zod.string(),
   "category": zod.string(),
   "price": zod.number(),
   "compareAtPrice": zod.number().nullable(),
@@ -96,6 +109,10 @@ export const UpdateProductParams = zod.object({
 
 
 
+export const updateProductBodyShortDescriptionMax = 240;
+
+
+
 export const updateProductBodyPriceMin = 0;
 
 export const updateProductBodyCompareAtPriceMin = 0;
@@ -106,8 +123,11 @@ export const updateProductBodyInventoryMin = 0;
 
 
 export const UpdateProductBody = zod.object({
+  "sku": zod.string().min(1).optional(),
   "name": zod.string().min(1).optional(),
+  "shortDescription": zod.string().min(1).max(updateProductBodyShortDescriptionMax).optional(),
   "description": zod.string().optional(),
+  "longDescription": zod.string().min(1).optional(),
   "category": zod.string().min(1).optional(),
   "price": zod.number().min(updateProductBodyPriceMin).optional(),
   "compareAtPrice": zod.number().min(updateProductBodyCompareAtPriceMin).nullish(),
@@ -119,9 +139,12 @@ export const UpdateProductBody = zod.object({
 
 export const UpdateProductResponse = zod.object({
   "id": zod.number(),
+  "sku": zod.string(),
   "name": zod.string(),
   "slug": zod.string(),
+  "shortDescription": zod.string(),
   "description": zod.string(),
+  "longDescription": zod.string(),
   "category": zod.string(),
   "price": zod.number(),
   "compareAtPrice": zod.number().nullable(),
@@ -148,6 +171,10 @@ export const DeleteProductResponse = zod.void()
  */
 
 
+export const importProductsBodyProductsItemShortDescriptionMax = 240;
+
+
+
 export const importProductsBodyProductsItemPriceMin = 0;
 
 export const importProductsBodyProductsItemCompareAtPriceMin = 0;
@@ -163,8 +190,11 @@ export const importProductsBodyProductsMax = 500;
 
 export const ImportProductsBody = zod.object({
   "products": zod.array(zod.object({
+  "sku": zod.string().min(1).optional(),
   "name": zod.string().min(1),
-  "description": zod.string(),
+  "shortDescription": zod.string().min(1).max(importProductsBodyProductsItemShortDescriptionMax),
+  "description": zod.string().optional(),
+  "longDescription": zod.string().min(1),
   "category": zod.string().min(1),
   "price": zod.number().min(importProductsBodyProductsItemPriceMin),
   "compareAtPrice": zod.number().min(importProductsBodyProductsItemCompareAtPriceMin).nullish(),
@@ -179,9 +209,12 @@ export const ImportProductsResponse = zod.object({
   "imported": zod.number(),
   "products": zod.array(zod.object({
   "id": zod.number(),
+  "sku": zod.string(),
   "name": zod.string(),
   "slug": zod.string(),
+  "shortDescription": zod.string(),
   "description": zod.string(),
+  "longDescription": zod.string(),
   "category": zod.string(),
   "price": zod.number(),
   "compareAtPrice": zod.number().nullable(),
@@ -191,6 +224,27 @@ export const ImportProductsResponse = zod.object({
   "inventory": zod.number(),
   "createdAt": zod.coerce.date()
 }))
+})
+
+
+/**
+ * @summary Request a protected product image upload URL
+ */
+
+export const requestUploadUrlBodySizeMax = 10485760;
+
+
+
+export const RequestUploadUrlBody = zod.object({
+  "name": zod.string().min(1),
+  "size": zod.number().min(1).max(requestUploadUrlBodySizeMax),
+  "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp'])
+})
+
+export const RequestUploadUrlResponse = zod.object({
+  "uploadURL": zod.string(),
+  "objectPath": zod.string(),
+  "imageUrl": zod.string()
 })
 
 

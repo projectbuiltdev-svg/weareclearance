@@ -4,8 +4,10 @@ export const productsTable = pgTable(
   "products",
   {
     id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+    sku: text("sku"),
     name: text("name").notNull(),
     slug: text("slug").notNull(),
+    shortDescription: text("short_description"),
     description: text("description").notNull(),
     category: text("category").notNull(),
     price: real("price").notNull(),
@@ -17,7 +19,10 @@ export const productsTable = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
   },
-  (table) => [uniqueIndex("products_slug_unique").on(table.slug)],
+  (table) => [
+    uniqueIndex("products_slug_unique").on(table.slug),
+    uniqueIndex("products_sku_unique").on(table.sku),
+  ],
 );
 
 export type Product = typeof productsTable.$inferSelect;

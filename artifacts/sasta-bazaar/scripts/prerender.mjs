@@ -5,9 +5,14 @@ import { fileURLToPath } from "node:url"
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const clientHtmlPath = path.join(projectRoot, "dist/public/index.html")
 const serverEntryPath = path.join(projectRoot, "dist/server/entry-server.js")
+const staticProductsPath = path.join(projectRoot, "src/data/static-products.ts")
 
 const template = await readFile(clientHtmlPath, "utf8")
 const { render } = await import(serverEntryPath)
+const staticProductsSource = await readFile(staticProductsPath, "utf8")
+const productMetadata = [...staticProductsSource.matchAll(
+  /"name":\s*"([^"]+)",\s*"slug":\s*"([^"]+)",\s*"description":\s*"([^"]+)"/g,
+)].map(([, name, slug, description]) => ({ name, slug, description }))
 
 if (!template.includes("<!--ssr-outlet-->")) {
   throw new Error("SSR outlet marker was not found in the client HTML")
@@ -48,6 +53,13 @@ const routes = [
     description,
     robots: "index, follow",
   })),
+  ...productMetadata.map(({ slug, name, description }) => ({
+    path: `/products/${slug}`,
+    output: path.join(projectRoot, `dist/public/products/${slug}/index.html`),
+    title: `${name} | We Are Clearance`,
+    description,
+    robots: "index, follow",
+  })),
 ]
 
 for (const route of routes) {
@@ -63,3 +75,10 @@ for (const route of routes) {
   await mkdir(path.dirname(route.output), { recursive: true })
   await writeFile(route.output, routeHtml)
 }
+
+const productSitemapEntries = productMetadata
+  .map(({ slug }) => `  <url><loc>https://weareclearance.com/products/${slug}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`)
+  .join("\n")
+const sitemapPath = path.join(projectRoot, "dist/public/sitemap.xml")
+const sitemap = await readFile(sitemapPath, "utf8")
+await writeFile(sitemapPath, sitemap.replace("</urlset>", `${productSitemapEntries}\n</urlset>`))

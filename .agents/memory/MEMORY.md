@@ -1,1 +1,2 @@
 - [Generated validation schemas](generated-validation.md) — this workspace's Orval/Zod setup does not accept OpenAPI integer schemas; use numeric schemas with minimum constraints.
+- [Admin ownership bootstrap](admin-ownership.md) — the first authenticated Admin visitor claims the single owner slot; later authenticated accounts are denied.

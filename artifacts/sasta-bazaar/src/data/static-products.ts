@@ -1,8 +1,9 @@
 import type { Product } from "@workspace/api-client-react"
 
-export const staticProducts: Product[] = [
+const legacyStaticProducts = [
   {
     "id": 1,
+    "sku": "SKU-1",
     "name": "Stainless Steel Water Bottle",
     "slug": "smart-steel-bottle-1",
     "description": "A durable everyday bottle with a leak-resistant lid.",
@@ -17,6 +18,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 3,
+    "sku": "SKU-3",
     "name": "Cotton Towel Set",
     "slug": "cloud-soft-towel-set-2",
     "description": "Two soft, quick-dry towels for an easy bathroom refresh.",
@@ -31,6 +33,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 4,
+    "sku": "SKU-4",
     "name": "Portable Bluetooth Speaker",
     "slug": "mini-bluetooth-speaker-3",
     "description": "Compact wireless sound for kitchens, gardens, and weekends away.",
@@ -45,6 +48,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 5,
+    "sku": "SKU-5",
     "name": "Relaxed Cotton T-Shirt",
     "slug": "cotton-oversized-tee-4",
     "description": "A soft cotton staple in an easy, relaxed fit.",
@@ -59,6 +63,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 6,
+    "sku": "SKU-6",
     "name": "Glass Food Storage Box",
     "slug": "glass-storage-box-5",
     "description": "A simple glass container for prepping, packing, and storing.",
@@ -73,6 +78,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 7,
+    "sku": "SKU-7",
     "name": "Table Lamp",
     "slug": "glow-table-lamp-6",
     "description": "A warm, compact lamp for bedside tables and reading corners.",
@@ -87,6 +93,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 8,
+    "sku": "SKU-8",
     "name": "Stainless Steel Water Bottle",
     "slug": "stainless-steel-water-bottle-1",
     "description": "A durable everyday bottle with a leak-resistant lid.",
@@ -101,6 +108,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 9,
+    "sku": "SKU-9",
     "name": "Cotton Towel Set",
     "slug": "cotton-towel-set-2",
     "description": "Two soft, quick-dry towels for an easy bathroom refresh.",
@@ -115,6 +123,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 10,
+    "sku": "SKU-10",
     "name": "Portable Bluetooth Speaker",
     "slug": "portable-bluetooth-speaker-3",
     "description": "Compact wireless sound for kitchens, gardens, and weekends away.",
@@ -129,6 +138,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 11,
+    "sku": "SKU-11",
     "name": "Relaxed Cotton T-Shirt",
     "slug": "relaxed-cotton-t-shirt-4",
     "description": "A soft cotton staple in an easy, relaxed fit.",
@@ -143,6 +153,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 12,
+    "sku": "SKU-12",
     "name": "Glass Food Storage Box",
     "slug": "glass-food-storage-box-5",
     "description": "A simple glass container for prepping, packing, and storing.",
@@ -157,6 +168,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 13,
+    "sku": "SKU-13",
     "name": "Table Lamp",
     "slug": "table-lamp-6",
     "description": "A warm, compact lamp for bedside tables and reading corners.",
@@ -171,6 +183,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 14,
+    "sku": "SKU-14",
     "name": "Velvet Cushion Pair",
     "slug": "velvet-cushion-pair-7",
     "description": "Two soft-touch cushions to add an easy colour refresh.",
@@ -185,6 +198,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 15,
+    "sku": "SKU-15",
     "name": "Cloud Comfort Pillow",
     "slug": "cloud-comfort-pillow-8",
     "description": "A plump, comfortable pillow for a better night's sleep.",
@@ -199,6 +213,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 16,
+    "sku": "SKU-16",
     "name": "King Duvet Cover Set",
     "slug": "king-duvet-cover-set-9",
     "description": "A simple, washable duvet cover set in a neutral finish.",
@@ -213,6 +228,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 17,
+    "sku": "SKU-17",
     "name": "Easy-Care Fitted Sheet",
     "slug": "easy-care-fitted-sheet-10",
     "description": "Soft easy-care bedding with a secure elasticated edge.",
@@ -227,6 +243,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 18,
+    "sku": "SKU-18",
     "name": "Quick-Dry Bath Towel",
     "slug": "quick-dry-bath-towel-11",
     "description": "A generously sized quick-dry towel for everyday use.",
@@ -241,6 +258,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 19,
+    "sku": "SKU-19",
     "name": "Cosy Fleece Bathrobe",
     "slug": "cosy-fleece-bathrobe-12",
     "description": "A warm fleece robe for slow mornings and cosy evenings.",
@@ -255,6 +273,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 20,
+    "sku": "SKU-20",
     "name": "Stackable Storage Basket",
     "slug": "stackable-storage-basket-13",
     "description": "A practical basket for shelves, cupboards, and quick tidying.",
@@ -269,6 +288,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 21,
+    "sku": "SKU-21",
     "name": "Non-Stick Frying Pan",
     "slug": "non-stick-frying-pan-14",
     "description": "A versatile non-stick pan for quick family meals.",
@@ -283,6 +303,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 22,
+    "sku": "SKU-22",
     "name": "Mini Electric Chopper",
     "slug": "mini-electric-chopper-15",
     "description": "Compact chopping power for herbs, onions, and sauces.",
@@ -297,6 +318,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 23,
+    "sku": "SKU-23",
     "name": "Stemless Glass Set",
     "slug": "stemless-glass-set-16",
     "description": "Four modern glasses for everyday drinks and entertaining.",
@@ -311,6 +333,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 24,
+    "sku": "SKU-24",
     "name": "Bamboo Utensil Set",
     "slug": "bamboo-utensil-set-17",
     "description": "A handy set of lightweight bamboo tools for the kitchen.",
@@ -325,6 +348,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 25,
+    "sku": "SKU-25",
     "name": "Scented Candle Trio",
     "slug": "scented-candle-trio-18",
     "description": "Three softly scented candles ready for gifting.",
@@ -339,6 +363,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 26,
+    "sku": "SKU-26",
     "name": "Travel Grooming Kit",
     "slug": "travel-grooming-kit-19",
     "description": "A compact grooming kit for weekends and travel.",
@@ -353,6 +378,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 27,
+    "sku": "SKU-27",
     "name": "Reed Diffuser Gift Set",
     "slug": "reed-diffuser-gift-set-20",
     "description": "A stylish home fragrance set for an easy thoughtful gift.",
@@ -367,6 +393,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 28,
+    "sku": "SKU-28",
     "name": "Build-Your-Day Gift Box",
     "slug": "build-your-day-gift-box-21",
     "description": "A cheerful ready-to-wrap selection of small treats.",
@@ -381,6 +408,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 29,
+    "sku": "SKU-29",
     "name": "Multi-Surface Cleaning Spray",
     "slug": "multi-surface-cleaning-spray-22",
     "description": "A fresh-scented everyday spray for hard surfaces.",
@@ -395,6 +423,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 30,
+    "sku": "SKU-30",
     "name": "Kitchen Roll 4 Pack",
     "slug": "kitchen-roll-4-pack-23",
     "description": "Absorbent kitchen roll for everyday spills and cleaning.",
@@ -409,6 +438,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 31,
+    "sku": "SKU-31",
     "name": "Strong Tie Bin Bags",
     "slug": "strong-tie-bin-bags-24",
     "description": "A pack of strong tie-top bags for household clear-outs.",
@@ -423,6 +453,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 32,
+    "sku": "SKU-32",
     "name": "Laundry Sorter Basket",
     "slug": "laundry-sorter-basket-25",
     "description": "A lightweight sorter to keep laundry day organised.",
@@ -437,6 +468,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 33,
+    "sku": "SKU-33",
     "name": "Foldable Garden Chair",
     "slug": "foldable-garden-chair-26",
     "description": "A handy foldaway chair for patios, picnics, and camping.",
@@ -451,6 +483,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 34,
+    "sku": "SKU-34",
     "name": "Garden Grow Pot Set",
     "slug": "garden-grow-pot-set-27",
     "description": "A simple set of pots for herbs, flowers, and seedlings.",
@@ -465,6 +498,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 35,
+    "sku": "SKU-35",
     "name": "Two-Person Festival Tent",
     "slug": "two-person-festival-tent-28",
     "description": "A compact two-person tent for weekends outdoors.",
@@ -479,6 +513,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 36,
+    "sku": "SKU-36",
     "name": "Everyday Cotton Socks 5 Pack",
     "slug": "everyday-cotton-socks-5-pack-29",
     "description": "Five pairs of comfortable cotton-rich everyday socks.",
@@ -493,6 +528,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 37,
+    "sku": "SKU-37",
     "name": "Classic Men's Hoodie",
     "slug": "classic-men-s-hoodie-30",
     "description": "A relaxed everyday hoodie with a soft brushed finish.",
@@ -507,6 +543,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 38,
+    "sku": "SKU-38",
     "name": "Fresh Fragrance Mist",
     "slug": "fresh-fragrance-mist-31",
     "description": "A light, fresh fragrance mist for everyday use.",
@@ -521,6 +558,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 39,
+    "sku": "SKU-39",
     "name": "Hand and Body Care Set",
     "slug": "hand-and-body-care-set-32",
     "description": "A gentle hand and body care set for a little daily luxury.",
@@ -535,6 +573,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 40,
+    "sku": "SKU-40",
     "name": "Rechargeable LED Torch",
     "slug": "rechargeable-led-torch-33",
     "description": "A bright rechargeable torch for home, car, and camping.",
@@ -549,6 +588,7 @@ export const staticProducts: Product[] = [
   },
   {
     "id": 41,
+    "sku": "SKU-41",
     "name": "Soft Washable Runner Rug",
     "slug": "soft-washable-runner-rug-34",
     "description": "A soft, easy-care runner to add warmth to hallways and rooms.",
@@ -562,5 +602,11 @@ export const staticProducts: Product[] = [
     "createdAt": "2026-08-19T12:50:25.720Z"
   }
 ]
+
+export const staticProducts: Product[] = legacyStaticProducts.map((product) => ({
+  ...product,
+  shortDescription: product.description,
+  longDescription: product.description,
+}))
 
 export const staticCategories = [...new Set(staticProducts.map((product) => product.category))].sort()

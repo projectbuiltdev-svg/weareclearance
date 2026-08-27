@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useLocation } from "wouter"
+import { Link, useLocation } from "wouter"
 import { useListProducts, useListCategories } from "@workspace/api-client-react"
 import { useCart } from "@/lib/cart"
 import { Button } from "@/components/ui/button"
@@ -87,7 +87,7 @@ function ProductCarousel({
                       </Badge>
                     </div>
                   )}
-                  <div className="relative aspect-[4/5] overflow-hidden bg-muted/30 flex items-center justify-center p-6 border-b border-border/50">
+                  <Link href={`/products/${product.slug}`} className="relative aspect-[4/5] overflow-hidden bg-muted/30 flex items-center justify-center p-6 border-b border-border/50">
                     {product.imageUrl ? (
                       <>
                       <img
@@ -104,14 +104,17 @@ function ProductCarousel({
                     ) : (
                       <span className="font-display italic text-4xl text-muted-foreground/30">C</span>
                     )}
-                  </div>
+                  </Link>
                   <div className="flex flex-1 flex-col px-5 pt-5 text-center">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
                       {product.category}
                     </p>
-                    <h3 className="line-clamp-2 text-sm md:text-base font-medium leading-relaxed mb-4 flex-1">
-                      {product.name}
-                    </h3>
+                    <Link href={`/products/${product.slug}`} className="hover:text-primary transition-colors">
+                      <h3 className="line-clamp-2 text-sm md:text-base font-medium leading-relaxed">
+                        {product.name}
+                      </h3>
+                    </Link>
+                    <p className="mt-2 mb-4 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{product.shortDescription}</p>
                     <div className="flex flex-col items-center justify-end mt-auto gap-4">
                       <div className="flex items-baseline gap-2 justify-center">
                         <span className="font-display text-xl text-foreground block">
@@ -598,7 +601,7 @@ export default function Storefront() {
                     </Badge>
                   </div>
                 )}
-                <div className="relative aspect-[4/5] bg-muted/30 overflow-hidden flex items-center justify-center p-6 border-b border-border/50">
+                <Link href={`/products/${product.slug}`} className="relative aspect-[4/5] bg-muted/30 overflow-hidden flex items-center justify-center p-6 border-b border-border/50">
                   {product.imageUrl ? (
                     <>
                     <img 
@@ -631,15 +634,18 @@ export default function Storefront() {
                       {product.inventory === 0 ? "Out of Stock" : "Quick Add"}
                     </Button>
                   </div>
-                </div>
+                </Link>
                 
                 <div className="flex-1 flex flex-col px-5 pt-5 text-center">
                   <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-[0.2em] mb-2">
                     {product.category}
                   </p>
-                  <h3 className="font-medium text-sm md:text-base leading-relaxed mb-4 line-clamp-2 flex-1">
-                    {product.name}
-                  </h3>
+                  <Link href={`/products/${product.slug}`} className="hover:text-primary transition-colors">
+                    <h3 className="font-medium text-sm md:text-base leading-relaxed line-clamp-2">
+                      {product.name}
+                    </h3>
+                  </Link>
+                  <p className="mt-2 mb-4 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{product.shortDescription}</p>
                   
                   <div className="flex items-baseline justify-center gap-2 mt-auto">
                     <span className="font-display text-xl block">
