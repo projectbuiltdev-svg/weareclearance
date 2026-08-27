@@ -59,8 +59,7 @@ export function Footer() {
                  className="h-20 w-auto object-contain sm:h-24 mix-blend-multiply"
               />
               <p className="text-sm leading-relaxed text-muted-foreground max-w-sm font-light">
-                Your destination for curated clearance edits across the UK and Ireland. 
-                Premium design and exceptional quality, made accessible.
+                Your online destination for curated clearance across the UK and Ireland. Free next or priority delivery for orders over €50 (£50) on the island of Ireland.
               </p>
               <div className="flex gap-4 pt-2">
                 <a href="#" aria-label="Facebook" className="h-10 w-10 border border-border flex items-center justify-center text-foreground hover:bg-primary hover:border-primary hover:text-white transition-all rounded-none">

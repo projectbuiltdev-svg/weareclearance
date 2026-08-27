@@ -524,9 +524,9 @@ export default function Storefront() {
               ["How do I contact We Are Clearance?", "Use the customer service details provided on the store or contact page and include your order number when asking about an existing purchase."],
               ["Why do clearance quantities vary?", "Clearance stock is sourced in limited quantities, so availability varies by product and popular items may not be replenished once sold out."],
             ].map(([question, answer]) => (
-              <details key={question} className="group min-h-40 bg-white p-6 open:bg-[#fbfaf7]">
-                <summary className="cursor-pointer list-none pr-8 text-sm font-semibold leading-relaxed marker:hidden">{question}</summary>
-                <p className="mt-4 text-sm leading-7 text-muted-foreground">{answer}</p>
+              <details key={question} className="group min-h-28 bg-white p-4 open:bg-[#fbfaf7] md:p-5">
+                <summary className="cursor-pointer list-none pr-8 text-sm font-semibold leading-snug marker:hidden">{question}</summary>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">{answer}</p>
               </details>
             ))}
           </div>
