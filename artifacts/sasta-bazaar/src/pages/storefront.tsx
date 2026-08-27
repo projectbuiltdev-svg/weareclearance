@@ -236,33 +236,33 @@ export default function Storefront() {
     <main className="container mx-auto flex flex-col gap-20 px-4 py-8 md:gap-28 md:py-16">
       
       {/* Hero Banner */}
-      <section className="order-1 relative overflow-hidden bg-white min-h-[500px] md:min-h-[600px] flex items-center border border-border">
+      <section className="order-1 relative flex min-h-[680px] items-center overflow-hidden border border-border bg-white sm:min-h-[580px] md:min-h-[600px]">
         <div className="absolute inset-0 z-0">
           <img 
             src={heroImage} 
             alt="European Department Store" 
-            className="w-full h-full object-cover object-[center_30%]"
+            className="h-full w-full object-cover object-[68%_center] sm:object-[60%_center] md:object-[center_30%]"
             onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
-          <div className="absolute inset-0 bg-black/20 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/55 via-slate-900/15 to-transparent" />
+          <div className="absolute inset-0 bg-black/10 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/35 via-slate-900/10 to-transparent" />
         </div>
         
-        <div className="relative z-10 mx-6 max-w-2xl border border-white/30 bg-slate-950/45 p-8 text-white shadow-[0_30px_80px_-28px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,255,255,0.24)] backdrop-blur-xl md:mx-12 md:p-12 lg:mx-20 lg:p-14">
+        <div className="relative z-10 mx-4 max-w-2xl border border-white/45 bg-slate-950/25 p-6 text-white shadow-[0_30px_80px_-28px_rgba(0,0,0,0.78),inset_0_1px_0_rgba(255,255,255,0.3)] backdrop-blur-md sm:mx-8 sm:bg-slate-950/22 sm:p-8 md:mx-12 md:p-12 lg:mx-20 lg:p-14">
           <p className="text-sm md:text-sm font-semibold uppercase tracking-[0.3em] mb-6 text-white/90">
             The Spring Edit
           </p>
-          <h1 className="font-display mb-8 text-5xl leading-[1.05] !text-white md:text-7xl">
+          <h1 className="font-display mb-6 text-4xl leading-[1.03] !text-white sm:text-5xl md:mb-8 md:text-7xl">
             Elevated living,<br />
             <span className="font-light italic !text-white">accessible elegance.</span>
           </h1>
-          <p className="text-lg text-white/80 font-light mb-10 max-w-lg leading-relaxed">
+          <p className="mb-8 max-w-lg text-base font-light leading-relaxed text-white/90 sm:text-lg md:mb-10">
             Discover our curated collection of premium home, kitchen, and lifestyle essentials. Distinctive design without the typical premium price tag.
           </p>
-          <div className="flex flex-wrap gap-5">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-5">
             <Button 
               size="lg" 
-              className="bg-white text-black hover:bg-gray-100 uppercase tracking-widest text-xs font-semibold px-10 h-14 rounded-none" 
+              className="h-13 w-full rounded-none bg-white px-7 text-xs font-semibold uppercase tracking-widest text-black hover:bg-gray-100 sm:h-14 sm:w-auto sm:px-10" 
               onClick={() => handleFilterClick('All')}
             >
               Explore Collection
@@ -270,7 +270,7 @@ export default function Storefront() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-white border-white/50 hover:bg-white/10 hover:text-white uppercase tracking-widest text-xs font-semibold px-10 h-14 rounded-none bg-transparent" 
+              className="h-13 w-full rounded-none border-white/60 bg-white/5 px-7 text-xs font-semibold uppercase tracking-widest text-white hover:bg-white/15 hover:text-white sm:h-14 sm:w-auto sm:px-10" 
               onClick={() => handleFilterClick('Last Chance Clearance')}
             >
               The Archive
