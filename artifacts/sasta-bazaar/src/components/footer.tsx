@@ -88,7 +88,6 @@ export function Footer() {
                 <li><a href="#" className="hover:text-primary transition-colors">Concierge</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Delivery Information</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Returns & Exchanges</a></li>
-                <li><Link href="/admin" className="hover:text-primary transition-colors">Store Administration</Link></li>
               </ul>
             </div>
 

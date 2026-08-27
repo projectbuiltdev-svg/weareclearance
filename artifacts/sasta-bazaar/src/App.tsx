@@ -106,7 +106,12 @@ function ClerkQueryClientCacheInvalidator() {
 function SignInPage() {
   return (
     <div className="flex min-h-[calc(100dvh-140px)] items-center justify-center bg-background px-4 py-12">
-      <SignIn routing="path" path={`${basePath}/sign-in`} signUpUrl={`${basePath}/sign-up`} />
+      <SignIn
+        routing="path"
+        path={`${basePath}/sign-in`}
+        signUpUrl={`${basePath}/sign-up`}
+        fallbackRedirectUrl={`${basePath}/admin`}
+      />
     </div>
   );
 }
@@ -114,7 +119,12 @@ function SignInPage() {
 function SignUpPage() {
   return (
     <div className="flex min-h-[calc(100dvh-140px)] items-center justify-center bg-background px-4 py-12">
-      <SignUp routing="path" path={`${basePath}/sign-up`} signInUrl={`${basePath}/sign-in`} />
+      <SignUp
+        routing="path"
+        path={`${basePath}/sign-up`}
+        signInUrl={`${basePath}/sign-in`}
+        fallbackRedirectUrl={`${basePath}/admin`}
+      />
     </div>
   );
 }

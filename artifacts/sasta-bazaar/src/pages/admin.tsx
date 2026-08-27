@@ -29,7 +29,14 @@ import { Redirect } from "wouter"
 import { CsvImport } from "@/components/admin/csv-import"
 import { ImageUpload } from "@/components/admin/image-upload"
 
-function AdminContent() {
+type AdminAccess = {
+  isOwner: boolean
+  ownerEmail: string
+  maxAdditionalAdmins: number
+  admins: Array<{ email: string; createdAt: string }>
+}
+
+function AdminContent({ initialAdminAccess }: { initialAdminAccess: AdminAccess }) {
   type PublishStatus = {
     state: "idle" | "preparing" | "pushed" | "deploying" | "live" | "failed"
     message: string
@@ -52,6 +59,9 @@ function AdminContent() {
   const [isSavingRate, setIsSavingRate] = useState(false)
   const [publishStatus, setPublishStatus] = useState<PublishStatus | null>(null)
   const [isStartingPublish, setIsStartingPublish] = useState(false)
+  const [adminAccess, setAdminAccess] = useState(initialAdminAccess)
+  const [newAdminEmail, setNewAdminEmail] = useState("")
+  const [isUpdatingAdmins, setIsUpdatingAdmins] = useState(false)
 
   const loadPublishStatus = async () => {
     const token = await getToken()
@@ -119,6 +129,51 @@ function AdminContent() {
       toast({ title: error instanceof Error ? error.message : "Could not save the exchange rate", variant: "destructive" })
     } finally {
       setIsSavingRate(false)
+    }
+  }
+
+  const addAdministrator = async (event: React.FormEvent) => {
+    event.preventDefault()
+    setIsUpdatingAdmins(true)
+    try {
+      const token = await getToken()
+      const response = await fetch("/api/admin/access", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ email: newAdminEmail }),
+      })
+      const body = await response.json()
+      if (!response.ok) throw new Error(body.error || "Could not add Administrator")
+      setAdminAccess(body)
+      setNewAdminEmail("")
+      toast({ title: "Administrator access added" })
+    } catch (error) {
+      toast({ title: error instanceof Error ? error.message : "Could not add Administrator", variant: "destructive" })
+    } finally {
+      setIsUpdatingAdmins(false)
+    }
+  }
+
+  const removeAdministrator = async (email: string) => {
+    if (!window.confirm(`Remove Administrator access for ${email}?`)) return
+    setIsUpdatingAdmins(true)
+    try {
+      const token = await getToken()
+      const response = await fetch(`/api/admin/access/${encodeURIComponent(email)}`, {
+        method: "DELETE",
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
+      const body = await response.json()
+      if (!response.ok) throw new Error(body.error || "Could not remove Administrator")
+      setAdminAccess(body)
+      toast({ title: "Administrator access removed" })
+    } catch (error) {
+      toast({ title: error instanceof Error ? error.message : "Could not remove Administrator", variant: "destructive" })
+    } finally {
+      setIsUpdatingAdmins(false)
     }
   }
   
@@ -313,6 +368,87 @@ function AdminContent() {
             </Button>
           </div>
         </div>
+      </section>
+
+      <section className="border border-border bg-white p-6 md:p-8" aria-labelledby="admin-access-heading">
+        <div className="flex flex-col gap-4 border-b border-border pb-6 md:flex-row md:items-start md:justify-between">
+          <div>
+            <h2 id="admin-access-heading" className="font-display text-2xl">Administrator access</h2>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+              Every Administrator signs in with their own account. The primary owner controls who can access this dashboard.
+            </p>
+          </div>
+          <div className="border border-border bg-muted/20 px-4 py-3 text-sm">
+            <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Primary owner</span>
+            <span className="mt-1 block font-medium">{adminAccess.ownerEmail}</span>
+          </div>
+        </div>
+
+        {adminAccess.isOwner ? (
+          <div className="mt-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h3 className="font-medium">Approved Administrators</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {adminAccess.admins.length} of {adminAccess.maxAdditionalAdmins} additional Admin accounts in use. Add an email first; that person can then sign in at <span className="font-medium">/admin</span>.
+                </p>
+              </div>
+            </div>
+
+            <form onSubmit={addAdministrator} className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <div className="flex-1">
+                <Label htmlFor="new-admin-email" className="sr-only">Administrator email address</Label>
+                <Input
+                  id="new-admin-email"
+                  type="email"
+                  required
+                  value={newAdminEmail}
+                  onChange={(event) => setNewAdminEmail(event.target.value)}
+                  placeholder="admin@example.com"
+                  className="rounded-none"
+                  disabled={isUpdatingAdmins || adminAccess.admins.length >= adminAccess.maxAdditionalAdmins}
+                />
+              </div>
+              <Button
+                type="submit"
+                className="rounded-none"
+                disabled={isUpdatingAdmins || !newAdminEmail.trim() || adminAccess.admins.length >= adminAccess.maxAdditionalAdmins}
+              >
+                {isUpdatingAdmins ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Plus className="mr-2 h-4 w-4" />}
+                Add Administrator
+              </Button>
+            </form>
+
+            {adminAccess.admins.length === 0 ? (
+              <p className="mt-6 border border-dashed border-border p-4 text-sm text-muted-foreground">No additional Administrators have been approved yet.</p>
+            ) : (
+              <ul className="mt-6 divide-y divide-border border border-border">
+                {adminAccess.admins.map((administrator) => (
+                  <li key={administrator.email} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="font-medium">{administrator.email}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">Can manage products, stock, settings, and catalogue publishing.</p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="rounded-none border-destructive text-destructive hover:bg-destructive hover:text-white"
+                      onClick={() => removeAdministrator(administrator.email)}
+                      disabled={isUpdatingAdmins}
+                    >
+                      Remove access
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ) : (
+          <p className="mt-6 border border-border bg-muted/20 p-4 text-sm text-muted-foreground">
+            You have Administrator access for catalogue operations. Only the primary owner can add or remove Administrators.
+          </p>
+        )}
       </section>
 
       {/* Stats */}
@@ -557,11 +693,63 @@ export default function Admin() {
   return (
     <>
       <Show when="signed-in">
-        <AdminContent />
+        <AdminAccessGate />
       </Show>
       <Show when="signed-out">
-        <Redirect to="/sign-in" />
+        <Redirect to="/sign-in?redirect_url=/admin" />
       </Show>
     </>
+  )
+}
+
+function AdminAccessGate() {
+  const { getToken } = useAuth()
+  const { signOut } = useClerk()
+  const [adminAccess, setAdminAccess] = useState<AdminAccess | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let active = true
+    const loadAccess = async () => {
+      try {
+        const token = await getToken()
+        const response = await fetch("/api/admin/access", {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        })
+        const body = await response.json()
+        if (!response.ok) throw new Error(body.error || "This account does not have Administrator access.")
+        if (active) setAdminAccess(body)
+      } catch (loadError) {
+        if (active) setError(loadError instanceof Error ? loadError.message : "Administrator access could not be verified.")
+      }
+    }
+    loadAccess()
+    return () => {
+      active = false
+    }
+  }, [getToken])
+
+  if (adminAccess) return <AdminContent initialAdminAccess={adminAccess} />
+
+  return (
+    <main className="container mx-auto flex min-h-[60vh] max-w-2xl items-center px-4 py-12">
+      <section className="w-full border border-border bg-white p-8 md:p-12">
+        {error ? (
+          <>
+            <h1 className="font-display text-3xl">Administrator access required</h1>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">{error}</p>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">Ask the primary owner to add your email address before signing in again.</p>
+            <Button className="mt-8 rounded-none" onClick={() => signOut({ redirectUrl: import.meta.env.BASE_URL.replace(/\/$/, "") || "/" })}>
+              Sign out
+            </Button>
+          </>
+        ) : (
+          <div className="flex items-center gap-3 text-sm text-muted-foreground">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            Checking Administrator access…
+          </div>
+        )}
+      </section>
+    </main>
   )
 }

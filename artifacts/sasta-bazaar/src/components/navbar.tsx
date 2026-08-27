@@ -4,7 +4,6 @@ import {
   Menu,
   ShoppingBag,
   Search,
-  User,
   PoundSterling,
   Euro,
   ChevronDown
@@ -245,12 +244,6 @@ export function Navbar() {
             <Search className="h-5 w-5" />
           </Button>
           
-          <Link href="/admin" className="hidden sm:block">
-            <Button variant="ghost" size="icon" className="text-foreground hover:bg-muted">
-              <User className="h-5 w-5" />
-            </Button>
-          </Link>
-
           <Link href="/checkout">
             <Button 
               variant="default" 
