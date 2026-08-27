@@ -1,0 +1,26 @@
+# We Are Clearance
+
+> We Are Clearance is an online clearance store serving shoppers in the United Kingdom and Ireland with curated homeware, kitchen, gifts, lifestyle products, and everyday essentials at accessible prices.
+
+Canonical website: https://weareclearance.com/
+
+## Main collections
+
+- Deals and accessible luxuries under £10
+- Home & Living
+- Kitchen & Dining
+- Gifts
+- Last Chance clearance
+
+## Shopping features
+
+- Product catalogue with search and department filters
+- Prices displayed in GBP and EUR
+- Basket and checkout experience
+- Regular clearance and last-chance offers
+
+## Crawling
+
+- Public storefront: https://weareclearance.com/
+- Sitemap: https://weareclearance.com/sitemap.xml
+- Social preview image: https://weareclearance.com/we-are-clearance-og.jpg

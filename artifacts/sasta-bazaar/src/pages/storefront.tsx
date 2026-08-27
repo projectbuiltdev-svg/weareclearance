@@ -221,10 +221,10 @@ export default function Storefront() {
   }
 
   return (
-    <main className="container mx-auto px-4 py-8 md:py-16 space-y-20 md:space-y-28">
+    <main className="container mx-auto flex flex-col gap-20 px-4 py-8 md:gap-28 md:py-16">
       
       {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-white min-h-[500px] md:min-h-[600px] flex items-center border border-border">
+      <section className="order-1 relative overflow-hidden bg-white min-h-[500px] md:min-h-[600px] flex items-center border border-border">
         <div className="absolute inset-0 z-0">
           <img 
             src={heroImage} 
@@ -267,8 +267,105 @@ export default function Storefront() {
         </div>
       </section>
 
+      {/* Product-first department sections */}
+      <div id="all-products" className="order-2 scroll-mt-32 space-y-24">
+        <ProductCarousel
+          title="Deals"
+          products={visibleProducts.filter(
+            (product) =>
+              product.price <= 10 ||
+              (product.compareAtPrice != null && product.compareAtPrice > product.price),
+          )}
+          onAdd={handleAddToCart}
+          onViewAll={() => handleFilterClick("Under £10")}
+        />
+
+        <ProductCarousel
+          title="Last Chance to Buy"
+          products={visibleProducts.filter(
+            (product) =>
+              product.badge === "Last Chance" ||
+              (product.compareAtPrice != null && product.compareAtPrice > product.price),
+          )}
+          onAdd={handleAddToCart}
+          onViewAll={() => handleFilterClick("Last Chance Clearance")}
+        />
+
+        <ProductCarousel
+          title="Home & Living"
+          products={visibleProducts.filter((product) =>
+            [
+              "Bedroom",
+              "Pillows",
+              "Duvet Covers & Bed Sets",
+              "Sheets",
+              "Bathroom",
+              "Towels",
+              "Bathrobes",
+              "Storage",
+              "Household Essentials",
+              "For the Home",
+            ].includes(product.category),
+          )}
+          onAdd={handleAddToCart}
+          onViewAll={() => {
+            setSearch("")
+            setCategory("")
+            setMenuFilter("bedroom")
+          }}
+        />
+
+        <ProductCarousel
+          title="Kitchen & Dining"
+          products={visibleProducts.filter((product) =>
+            [
+              "Cookware",
+              "Appliances",
+              "Food Storage",
+              "Glassware & Drinkware",
+              "Kitchen Accessories",
+            ].includes(product.category),
+          )}
+          onAdd={handleAddToCart}
+          onViewAll={() => {
+            setSearch("")
+            setCategory("")
+            setMenuFilter("cookware")
+          }}
+        />
+
+        <ProductCarousel
+          title="Gifts"
+          products={visibleProducts.filter((product) =>
+            ["Gifts for Her", "Gifts for Him", "Home Gifts", "Gift Sets"].includes(product.category),
+          )}
+          onAdd={handleAddToCart}
+          onViewAll={() => {
+            setSearch("")
+            setCategory("")
+            setMenuFilter("gifts-for-her")
+          }}
+        />
+
+        <div className="mx-auto max-w-2xl border-y border-border py-8">
+          <label htmlFor="collection-search" className="mb-3 block text-center text-[10px] font-bold uppercase tracking-[0.22em] text-blue-700">
+            Search all collections
+          </label>
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              id="collection-search"
+              placeholder="What are you looking for?"
+              className="h-14 rounded-none border-border bg-white pl-12 text-sm focus-visible:border-blue-700 focus-visible:ring-blue-700/20"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Featured category row */}
-      <section aria-label="Featured shopping categories" className="border-y border-border bg-white">
+      <section aria-label="Featured shopping categories" className="order-3 border-y border-border bg-white">
         <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-5">
           {[
             { number: "01", title: "Deals", subtitle: "Accessible Luxuries Under £10", menu: "under-10" },
@@ -302,7 +399,7 @@ export default function Storefront() {
       </section>
 
       {/* Google-style testimonial row */}
-      <section className="border border-border bg-[#fbfaf7] px-6 py-8 md:px-10">
+      <section className="order-5 border border-border bg-[#fbfaf7] px-6 py-8 md:px-10">
         <div className="mb-7 flex flex-col justify-between gap-4 border-b border-border pb-6 sm:flex-row sm:items-end">
           <div>
             <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.24em] text-blue-700">Customer notes</p>
@@ -360,7 +457,7 @@ export default function Storefront() {
       </section>
 
       {/* Directory / Categories */}
-      <section className="bg-white border border-border p-8 md:p-12 lg:p-16 relative">
+      <section className="hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-border to-transparent" />
         <div className="text-center mb-12">
           <h2 className="font-display italic text-3xl md:text-4xl mb-4">
@@ -395,7 +492,7 @@ export default function Storefront() {
       </section>
 
       {/* Carousels */}
-      {visibleProducts.length > 0 && (
+      {false && visibleProducts.length > 0 && (
         <div className="space-y-24">
           <ProductCarousel
             title="Curator's Selection"
@@ -414,7 +511,7 @@ export default function Storefront() {
       )}
 
       {/* Main Grid Header & Filters */}
-      <div id="all-products" className="scroll-mt-32 pt-16">
+      <div className="hidden">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 border-b border-border pb-8">
           <div>
             <h2 className="font-display italic text-4xl mb-3">The Complete Collection</h2>
