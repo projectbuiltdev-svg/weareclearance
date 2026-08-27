@@ -33,7 +33,7 @@ type AdminAccess = {
   isOwner: boolean
   ownerEmail: string
   maxAdditionalAdmins: number
-  admins: Array<{ email: string; createdAt: string }>
+  admins: Array<{ email: string; clerkUserId: string | null; createdAt: string }>
 }
 
 function AdminContent({ initialAdminAccess }: { initialAdminAccess: AdminAccess }) {
@@ -149,7 +149,7 @@ function AdminContent({ initialAdminAccess }: { initialAdminAccess: AdminAccess 
       if (!response.ok) throw new Error(body.error || "Could not add Administrator")
       setAdminAccess(body)
       setNewAdminEmail("")
-      toast({ title: "Administrator access added" })
+      toast({ title: "Invitation email sent", description: "They can set their own password, then sign in with this email." })
     } catch (error) {
       toast({ title: error instanceof Error ? error.message : "Could not add Administrator", variant: "destructive" })
     } finally {
@@ -390,7 +390,7 @@ function AdminContent({ initialAdminAccess }: { initialAdminAccess: AdminAccess 
               <div>
                 <h3 className="font-medium">Approved Administrators</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  {adminAccess.admins.length} of {adminAccess.maxAdditionalAdmins} additional Admin accounts in use. Add an email first; that person can then sign in at <span className="font-medium">/admin</span>.
+                  {adminAccess.admins.length} of {adminAccess.maxAdditionalAdmins} additional Admin accounts in use. Adding an email sends a secure invitation so that person can set their own password and sign in with that email.
                 </p>
               </div>
             </div>
@@ -427,7 +427,11 @@ function AdminContent({ initialAdminAccess }: { initialAdminAccess: AdminAccess 
                   <li key={administrator.email} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                       <p className="font-medium">{administrator.email}</p>
-                      <p className="mt-1 text-xs text-muted-foreground">Can manage products, stock, settings, and catalogue publishing.</p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {administrator.clerkUserId
+                          ? "Can manage products, stock, settings, and catalogue publishing."
+                          : "Invitation sent — access activates when they accept it and sign in with this email."}
+                      </p>
                     </div>
                     <Button
                       type="button"

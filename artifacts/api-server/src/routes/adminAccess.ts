@@ -1,5 +1,6 @@
 import { Router, type IRouter } from "express";
 import { and, eq, ne } from "drizzle-orm";
+import { clerkClient } from "@clerk/express";
 import { db, adminAccessTable } from "@workspace/db";
 import {
   MAX_ADDITIONAL_ADMINS,
@@ -29,7 +30,11 @@ async function getAccessResponse(access: AdminAccessRecord) {
   }
 
   const rows = await db
-    .select({ email: adminAccessTable.email, createdAt: adminAccessTable.createdAt })
+    .select({
+      email: adminAccessTable.email,
+      clerkUserId: adminAccessTable.clerkUserId,
+      createdAt: adminAccessTable.createdAt,
+    })
     .from(adminAccessTable)
     .where(ne(adminAccessTable.slot, 1))
     .orderBy(adminAccessTable.createdAt);
@@ -61,6 +66,7 @@ router.post("/admin/access", requireOwner, async (req, res): Promise<void> => {
   }
 
   const currentAccess = res.locals.adminAccess as AdminAccessRecord;
+  let createdAccess: { slot: number; email: string } | undefined;
   for (let slot = 2; slot <= MAX_ADDITIONAL_ADMINS + 1; slot += 1) {
     const [created] = await db
       .insert(adminAccessTable)
@@ -69,8 +75,8 @@ router.post("/admin/access", requireOwner, async (req, res): Promise<void> => {
       .returning();
 
     if (created) {
-      res.status(201).json(await getAccessResponse(currentAccess));
-      return;
+      createdAccess = created;
+      break;
     }
 
     const [existing] = await db
@@ -84,7 +90,30 @@ router.post("/admin/access", requireOwner, async (req, res): Promise<void> => {
     }
   }
 
-  res.status(409).json({ error: `You can add up to ${MAX_ADDITIONAL_ADMINS} additional Administrators.` });
+  if (!createdAccess) {
+    res.status(409).json({ error: `You can add up to ${MAX_ADDITIONAL_ADMINS} additional Administrators.` });
+    return;
+  }
+
+  try {
+    const invitation = await clerkClient.invitations.createInvitation({
+      emailAddress: email,
+      notify: true,
+      ignoreExisting: true,
+      redirectUrl: "/admin",
+    });
+    await db
+      .update(adminAccessTable)
+      .set({ clerkInvitationId: invitation.id })
+      .where(and(eq(adminAccessTable.slot, createdAccess.slot), eq(adminAccessTable.email, email)));
+    res.status(201).json(await getAccessResponse(currentAccess));
+  } catch (error) {
+    await db
+      .delete(adminAccessTable)
+      .where(and(eq(adminAccessTable.slot, createdAccess.slot), eq(adminAccessTable.email, email)));
+    req.log.warn({ err: error }, "Could not send Administrator invitation");
+    res.status(502).json({ error: "Administrator access was not added because the invitation email could not be sent." });
+  }
 });
 
 router.delete("/admin/access/:email", requireOwner, async (req, res): Promise<void> => {
@@ -94,13 +123,27 @@ router.delete("/admin/access/:email", requireOwner, async (req, res): Promise<vo
     return;
   }
 
-  const [removed] = await db
-    .delete(adminAccessTable)
+  const [existing] = await db
+    .select({
+      slot: adminAccessTable.slot,
+      email: adminAccessTable.email,
+      clerkInvitationId: adminAccessTable.clerkInvitationId,
+    })
+    .from(adminAccessTable)
     .where(and(eq(adminAccessTable.email, email), ne(adminAccessTable.slot, 1)))
-    .returning({ email: adminAccessTable.email });
-  if (!removed) {
+    .limit(1);
+  if (!existing) {
     res.status(404).json({ error: "That Administrator was not found." });
     return;
+  }
+
+  await db.delete(adminAccessTable).where(eq(adminAccessTable.slot, existing.slot));
+  if (existing.clerkInvitationId) {
+    try {
+      await clerkClient.invitations.revokeInvitation(existing.clerkInvitationId);
+    } catch (error) {
+      req.log.warn({ err: error }, "Administrator access was removed but its Clerk invitation could not be revoked");
+    }
   }
 
   res.json(await getAccessResponse(res.locals.adminAccess as AdminAccessRecord));

@@ -17,6 +17,7 @@ export const adminAccessTable = pgTable(
     slot: integer("slot").primaryKey(),
     email: text("email").notNull(),
     clerkUserId: text("clerk_user_id"),
+    clerkInvitationId: text("clerk_invitation_id"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [
