@@ -39,6 +39,7 @@ jobs:
         run: pnpm --filter @workspace/sasta-bazaar run build
         env:
           VITE_API_BASE_URL: https://weareclearance.replit.app
+          VITE_CLERK_PROXY_URL: https://weareclearance.replit.app/api/__clerk
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
