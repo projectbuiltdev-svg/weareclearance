@@ -16,6 +16,7 @@ import {
   CookingPot,
   Gift,
   Clock3,
+  ChevronDown,
 } from "lucide-react"
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
@@ -151,6 +152,7 @@ export default function Storefront() {
   const [location] = useLocation()
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState<string>("")
+  const [openFaq, setOpenFaq] = useState<string | null>(null)
   const [menuFilter, setMenuFilter] = useState(() => {
     const collectionSlug = location.match(/^\/collections\/([^/?#]+)/)?.[1]
     if (collectionSlug) return collectionSlug
@@ -509,7 +511,7 @@ export default function Storefront() {
             <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-blue-700">Shopping with us</p>
             <h2 className="mt-3 font-display text-3xl md:text-4xl">Clearance shopping questions</h2>
           </div>
-          <div className="grid gap-px border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid items-start gap-px border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
             {[
               ["What products does We Are Clearance sell?", "We Are Clearance sells clearance homeware, kitchen and dining essentials, affordable gifts, accessories and everyday household products."],
               ["Do you deliver across the UK and Ireland?", "Yes. We Are Clearance serves customers across the United Kingdom and Ireland, with delivery information confirmed during checkout."],
@@ -523,11 +525,27 @@ export default function Storefront() {
               ["Do sale prices include the discount saving?", "Yes. Where an original price is available, the product page shows the sale price, the original price and the calculated percentage saving."],
               ["How do I contact We Are Clearance?", "Use the customer service details provided on the store or contact page and include your order number when asking about an existing purchase."],
               ["Why do clearance quantities vary?", "Clearance stock is sourced in limited quantities, so availability varies by product and popular items may not be replenished once sold out."],
-            ].map(([question, answer]) => (
-              <details key={question} className="group bg-white px-4 py-3 open:bg-[#fbfaf7] md:px-5">
-                <summary className="cursor-pointer list-none pr-8 text-sm font-semibold leading-snug marker:hidden">{question}</summary>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">{answer}</p>
-              </details>
+            ].map(([question, answer], index) => {
+              const isOpen = openFaq === question
+              return (
+                <div key={question} className={`self-start bg-white px-4 py-3 md:px-5 ${isOpen ? "bg-[#fbfaf7]" : ""}`}>
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${index}`}
+                    onClick={() => setOpenFaq(isOpen ? null : question)}
+                    className="flex w-full items-center justify-between gap-4 text-left text-sm font-semibold leading-snug"
+                  >
+                    <span>{question}</span>
+                    <ChevronDown className={`h-4 w-4 shrink-0 text-blue-700 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  {isOpen && (
+                    <p id={`faq-answer-${index}`} className="mt-3 text-sm leading-6 text-muted-foreground">
+                      {answer}
+                    </p>
+                  )}
+                </div>
+              )
             ))}
           </div>
         </div>
