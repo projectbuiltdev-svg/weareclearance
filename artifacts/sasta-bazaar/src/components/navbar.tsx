@@ -99,7 +99,7 @@ export function Navbar() {
   }, [mobileOpen])
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-white text-black">
+    <header className="sticky top-0 z-50 w-full max-w-full overflow-x-clip border-b border-border bg-white text-black">
       {/* Top utility bar */}
       <div className="hidden sm:flex items-center justify-between px-4 py-1.5 bg-secondary text-secondary-foreground text-xs font-medium">
         <div className="flex items-center gap-4">
