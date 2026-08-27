@@ -27,10 +27,8 @@ import { useCurrency } from "@/lib/currency"
 import {
   apiFetch,
   clearTemporaryAdminToken,
-  getTemporaryAdminToken,
   setTemporaryAdminToken,
 } from "@/lib/api"
-import { Show, useAuth, useClerk } from "@clerk/react"
 import { CsvImport } from "@/components/admin/csv-import"
 import { ImageUpload } from "@/components/admin/image-upload"
 
@@ -59,7 +57,6 @@ function AdminContent({
   const queryClient = useQueryClient()
   const { toast } = useToast()
   const { formatPrice, gbpPerEur, refreshExchangeRate } = useCurrency()
-  const { getToken } = useAuth()
   
   const { data: summary, isLoading: isLoadingSummary } = useGetAdminSummary({ query: { queryKey: ["/api/admin/summary"] } })
   
@@ -74,10 +71,7 @@ function AdminContent({
   const [isUpdatingAdmins, setIsUpdatingAdmins] = useState(false)
 
   const loadPublishStatus = async () => {
-    const token = await getToken()
-    const response = await apiFetch("/api/admin/publish-catalogue", {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    })
+    const response = await apiFetch("/api/admin/publish-catalogue")
     if (!response.ok) throw new Error("Could not load publishing status")
     setPublishStatus(await response.json())
   }
@@ -97,10 +91,8 @@ function AdminContent({
     if (!window.confirm("Publish the current products, prices, stock, images and currency rate to the live store?")) return
     setIsStartingPublish(true)
     try {
-      const token = await getToken()
       const response = await apiFetch("/api/admin/publish-catalogue", {
         method: "POST",
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
       })
       const body = await response.json()
       if (!response.ok) throw new Error(body.error || body.message || "Could not start publishing")
@@ -123,12 +115,10 @@ function AdminContent({
     }
     setIsSavingRate(true)
     try {
-      const token = await getToken()
       const response = await apiFetch("/api/admin/store-settings", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
         body: JSON.stringify({ gbpPerEur: rate }),
       })
@@ -146,12 +136,10 @@ function AdminContent({
     event.preventDefault()
     setIsUpdatingAdmins(true)
     try {
-      const token = await getToken()
       const response = await apiFetch("/api/admin/access", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
         body: JSON.stringify({ email: newAdminEmail }),
       })
@@ -171,10 +159,8 @@ function AdminContent({
     if (!window.confirm(`Remove Administrator access for ${email}?`)) return
     setIsUpdatingAdmins(true)
     try {
-      const token = await getToken()
       const response = await apiFetch(`/api/admin/access/${encodeURIComponent(email)}`, {
         method: "DELETE",
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
       })
       const body = await response.json()
       if (!response.ok) throw new Error(body.error || "Could not remove Administrator")
@@ -704,16 +690,7 @@ function AdminContent({
 }
 
 export default function Admin() {
-  return (
-    <>
-      <Show when="signed-in">
-        <AdminAccessGate />
-      </Show>
-      <Show when="signed-out">
-        <AdminSignedOutEntry />
-      </Show>
-    </>
-  )
+  return <AdminSignedOutEntry />
 }
 
 function AdminSignIn() {
@@ -807,7 +784,7 @@ function AdminSignedOutEntry() {
       })
   }, [])
 
-  if (testSessionState === "active") return <AdminAccessGate temporarySession />
+  if (testSessionState === "active") return <AdminAccessGate />
   if (testSessionState === "checking") {
     return (
       <main className="container mx-auto flex min-h-[60vh] max-w-2xl items-center justify-center px-4 py-12">
@@ -821,28 +798,21 @@ function AdminSignedOutEntry() {
   return <AdminSignIn />
 }
 
-function AdminAccessGate({ temporarySession = false }: { temporarySession?: boolean }) {
-  const { getToken } = useAuth()
-  const { signOut } = useClerk()
+function AdminAccessGate() {
   const [adminAccess, setAdminAccess] = useState<AdminAccess | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   const handleSignOut = async () => {
-    if (temporarySession || getTemporaryAdminToken()) {
-      await apiFetch("/api/admin/test-logout", { method: "POST" }).catch(() => undefined)
-      clearTemporaryAdminToken()
-    }
-    await signOut({ redirectUrl: import.meta.env.BASE_URL.replace(/\/$/, "") || "/" })
+    await apiFetch("/api/admin/test-logout", { method: "POST" }).catch(() => undefined)
+    clearTemporaryAdminToken()
+    window.location.reload()
   }
 
   useEffect(() => {
     let active = true
     const loadAccess = async () => {
       try {
-        const token = await getToken()
-        const response = await apiFetch("/api/admin/access", {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-        })
+        const response = await apiFetch("/api/admin/access")
         const body = await response.json()
         if (!response.ok) throw new Error(body.error || "This account does not have Administrator access.")
         if (active) setAdminAccess(body)
@@ -854,7 +824,7 @@ function AdminAccessGate({ temporarySession = false }: { temporarySession?: bool
     return () => {
       active = false
     }
-  }, [getToken])
+  }, [])
 
   if (adminAccess) return <AdminContent initialAdminAccess={adminAccess} onSignOut={handleSignOut} />
 

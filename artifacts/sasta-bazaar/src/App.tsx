@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { ErrorBoundary } from '@/components/error-boundary'
 import { Toaster } from '@/components/ui/toaster'
 import NotFound from '@/pages/not-found'
@@ -11,9 +10,9 @@ import Storefront from '@/pages/storefront'
 import Checkout from '@/pages/checkout'
 import Admin from '@/pages/admin'
 import ProductDetail from '@/pages/product-detail'
-import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import { ClerkProvider, SignIn, SignUp, useClerk } from '@clerk/react';
+import { ClerkProvider, SignIn, SignUp } from '@clerk/react';
 import { publishableKeyFromHost } from '@clerk/react/internal';
 import { shadcn } from '@clerk/themes';
 
@@ -81,28 +80,6 @@ const clerkAppearance = {
   },
 };
 
-function ClerkQueryClientCacheInvalidator() {
-  const { addListener } = useClerk();
-  const queryClient = useQueryClient();
-  const prevUserIdRef = useRef<string | null | undefined>(undefined);
-
-  useEffect(() => {
-    const unsubscribe = addListener(({ user }) => {
-      const userId = user?.id ?? null;
-      if (
-        prevUserIdRef.current !== undefined &&
-        prevUserIdRef.current !== userId
-      ) {
-        queryClient.clear();
-      }
-      prevUserIdRef.current = userId;
-    });
-    return unsubscribe;
-  }, [addListener, queryClient]);
-
-  return null;
-}
-
 function SignInPage() {
   return (
     <div className="flex min-h-[calc(100dvh-140px)] items-center justify-center bg-background px-4 py-12">
@@ -159,8 +136,21 @@ function RoutedErrorBoundary({ children }: { children: React.ReactNode }) {
 }
 
 function ClerkProviderWithRoutes() {
-  const [, setLocation] = useLocation();
-  
+  const [location, setLocation] = useLocation();
+  const clerkRoute = location.startsWith("/sign-in") || location.startsWith("/sign-up");
+  const content = (
+    <QueryClientProvider client={queryClient}>
+      <CartProvider>
+        <CurrencyProvider>
+          <Router />
+          <Toaster />
+        </CurrencyProvider>
+      </CartProvider>
+    </QueryClientProvider>
+  );
+
+  if (!clerkRoute) return content;
+
   return (
     <ClerkProvider
       publishableKey={clerkPubKey || ""}
@@ -179,15 +169,7 @@ function ClerkProviderWithRoutes() {
       routerPush={(to) => setLocation(stripBase(to))}
       routerReplace={(to) => setLocation(stripBase(to), { replace: true })}
     >
-      <QueryClientProvider client={queryClient}>
-        <ClerkQueryClientCacheInvalidator />
-        <CartProvider>
-          <CurrencyProvider>
-            <Router />
-            <Toaster />
-          </CurrencyProvider>
-        </CartProvider>
-      </QueryClientProvider>
+      {content}
     </ClerkProvider>
   )
 }
