@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -36,7 +36,7 @@
   --color-destructive-foreground: hsl(var(--destructive-foreground));
 
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", var(--font-sans);
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
   
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -44,73 +44,77 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* Light minimal retail */
+/* Premium Continental Retail Editorial */
 :root {
-  --background: 0 0% 100%;
+  /* Ivory / Warm-white background */
+  --background: 42 33% 98%;
+  /* Sharp black typography */
   --foreground: 0 0% 7%;
   
-  --border: 0 0% 92%;
-  --input: 0 0% 92%;
-  --ring: 0 100% 45%;
+  /* Subtle metallic-silver borders */
+  --border: 210 11% 87%;
+  --input: 210 11% 87%;
+  /* Cobalt/Sapphire focus ring */
+  --ring: 224 76% 48%;
   
+  /* Surfaces */
   --card: 0 0% 100%;
   --card-foreground: 0 0% 7%;
-  --card-border: 0 0% 92%;
+  --card-border: 210 11% 87%;
   
   --popover: 0 0% 100%;
   --popover-foreground: 0 0% 7%;
-  --popover-border: 0 0% 92%;
+  --popover-border: 210 11% 87%;
   
-  /* Red from logo */
-  --primary: 358 85% 48%;
+  /* Sapphire / Cobalt details */
+  --primary: 222 47% 25%;
   --primary-foreground: 0 0% 100%;
   
-  /* Sharp deep blue */
-  --secondary: 215 100% 25%;
-  --secondary-foreground: 0 0% 100%;
+  --secondary: 42 20% 92%;
+  --secondary-foreground: 0 0% 15%;
   
-  --muted: 0 0% 96%;
-  --muted-foreground: 0 0% 45%;
+  --muted: 42 15% 94%;
+  --muted-foreground: 0 0% 40%;
   
-  /* Bright blue accent */
-  --accent: 215 100% 50%;
+  /* Restrained red brand accents */
+  --accent: 355 75% 45%;
   --accent-foreground: 0 0% 100%;
   
-  --destructive: 0 84% 60%;
+  --destructive: 355 75% 45%;
   --destructive-foreground: 0 0% 100%;
   
-  --radius: 0.375rem;
+  --radius: 0;
 }
 
 .dark {
   --background: 0 0% 5%;
-  --foreground: 0 0% 98%;
+  --foreground: 42 33% 98%;
   
   --border: 0 0% 15%;
   --input: 0 0% 15%;
-  --ring: 358 85% 48%;
+  --ring: 224 76% 48%;
   
   --card: 0 0% 7%;
-  --card-foreground: 0 0% 98%;
+  --card-foreground: 42 33% 98%;
   --card-border: 0 0% 15%;
   
   --popover: 0 0% 7%;
-  --popover-foreground: 0 0% 98%;
+  --popover-foreground: 42 33% 98%;
   --popover-border: 0 0% 15%;
   
-  --primary: 358 90% 55%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 224 76% 65%;
+  --primary-foreground: 0 0% 10%;
   
-  --secondary: 215 50% 20%;
-  --secondary-foreground: 0 0% 100%;
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 42 33% 98%;
   
   --muted: 0 0% 12%;
   --muted-foreground: 0 0% 65%;
   
-  --accent: 215 100% 60%;
+  --accent: 355 75% 60%;
   --accent-foreground: 0 0% 100%;
   
-  --destructive: 0 70% 50%;
+  --destructive: 355 75% 60%;
   --destructive-foreground: 0 0% 100%;
 }
 
@@ -122,15 +126,15 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight font-bold text-foreground;
+    @apply font-display text-foreground font-normal tracking-tight;
   }
 }
 
 .retail-card {
-  @apply bg-card border border-border shadow-sm rounded-lg overflow-hidden transition-all duration-300;
+  @apply bg-card border border-border overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)];
 }
 .retail-card:hover {
-  @apply border-primary/20 shadow-md;
+  @apply border-primary/30;
 }
 
 @keyframes slideDown {
@@ -144,7 +148,7 @@
   }
 }
 .animate-slide-down {
-  animation: slideDown 0.3s ease-out forwards;
+  animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

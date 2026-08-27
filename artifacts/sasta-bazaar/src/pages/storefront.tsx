@@ -4,7 +4,7 @@ import { useCart } from "@/lib/cart"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Search, Tag, ShoppingCart, ArrowRight } from "lucide-react"
+import { Search, Tag, ShoppingBag, ArrowRight } from "lucide-react"
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
 import { staticCategories, staticProducts } from "@/data/static-products"
@@ -19,11 +19,11 @@ import heroImage from "@/assets/retail-hero.jpg"
 
 const categoryGroups = [
   {
-    name: "Shop by Price",
+    name: "Curated Edits",
     items: ["Under £5", "Under £10", "Under £20", "Last Chance Clearance"],
   },
   {
-    name: "Home & Living",
+    name: "Home & Sanctuary",
     items: ["Bedroom", "Bathroom", "Storage", "Household Essentials"],
   },
   {
@@ -31,7 +31,7 @@ const categoryGroups = [
     items: ["Cookware", "Appliances", "Glassware & Drinkware", "Kitchen Accessories"],
   },
   {
-    name: "Gifts & Seasonal",
+    name: "Gifting & Seasonal",
     items: ["Gifts for Her", "Gifts for Him", "Gift Sets", "Garden & Outdoor"],
   }
 ] as const
@@ -51,59 +51,62 @@ function ProductCarousel({
   if (products.length === 0) return null
 
   return (
-    <section className="space-y-6" aria-label={title}>
-      <div className="flex items-end justify-between gap-4 border-b border-border pb-4">
-        <h2 className="font-display font-bold text-2xl md:text-3xl text-foreground">{title}</h2>
-        <Button variant="link" size="sm" className="font-semibold text-primary hover:text-primary/80 px-0" onClick={onViewAll}>
-          View all <ArrowRight className="ml-1 h-4 w-4" />
+    <section className="space-y-8" aria-label={title}>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border pb-4">
+        <h2 className="font-display text-3xl md:text-4xl text-foreground italic">{title}</h2>
+        <Button variant="link" className="font-semibold text-primary hover:text-primary/80 px-0 h-auto pb-1 uppercase tracking-widest text-xs" onClick={onViewAll}>
+          Discover Collection <ArrowRight className="ml-2 h-3 w-3" />
         </Button>
       </div>
 
       <div className="relative">
         <Carousel opts={{ align: "start", loop: false }} className="w-full">
-          <CarouselContent className="-ml-4">
+          <CarouselContent className="-ml-6">
             {products.map((product) => (
-              <CarouselItem key={`${title}-${product.id}`} className="pl-4 basis-[85%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
-                <article className="retail-card group h-full flex flex-col relative">
+              <CarouselItem key={`${title}-${product.id}`} className="pl-6 basis-[85%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                <article className="retail-card group h-full flex flex-col relative bg-white pb-5">
                   {product.badge && (
-                    <div className="absolute top-3 left-3 z-10">
-                      <Badge className="bg-accent text-accent-foreground font-bold tracking-wide rounded-sm px-2 py-0.5 pointer-events-none">
+                    <div className="absolute top-4 left-4 z-10">
+                      <Badge className="bg-accent text-accent-foreground font-medium tracking-widest uppercase rounded-none px-3 py-1 pointer-events-none text-[10px] shadow-sm">
                         {product.badge}
                       </Badge>
                     </div>
                   )}
-                  <div className="relative aspect-[4/3] overflow-hidden bg-muted flex items-center justify-center p-4">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-muted/30 flex items-center justify-center p-6 border-b border-border/50">
                     {product.imageUrl ? (
                       <img
                         src={product.imageUrl}
                         alt={product.name}
-                        className="h-full w-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+                        className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
                       />
                     ) : (
-                      <span className="font-display font-bold text-4xl text-muted-foreground/30">No Image</span>
+                      <span className="font-display italic text-4xl text-muted-foreground/30">C</span>
                     )}
                   </div>
-                  <div className="flex flex-1 flex-col p-4 sm:p-5">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1.5">
+                  <div className="flex flex-1 flex-col px-5 pt-5 text-center">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
                       {product.category}
                     </p>
-                    <h3 className="line-clamp-2 text-sm sm:text-base font-semibold leading-snug mb-3 flex-1">
+                    <h3 className="line-clamp-2 text-sm md:text-base font-medium leading-relaxed mb-4 flex-1">
                       {product.name}
                     </h3>
-                    <div className="flex items-end justify-between mt-auto">
-                      <div>
-                        <span className="font-display text-xl font-bold text-foreground block">
+                    <div className="flex flex-col items-center justify-end mt-auto gap-4">
+                      <div className="flex items-baseline gap-2 justify-center">
+                        <span className="font-display text-xl text-foreground block">
                           {formatPrice(product.price)}
                         </span>
                         {product.compareAtPrice && product.compareAtPrice > product.price && (
-                          <span className="text-xs font-medium text-muted-foreground line-through block mt-0.5">
-                            RRP {formatPrice(product.compareAtPrice)}
+                          <span className="text-xs font-medium text-muted-foreground line-through block mb-1">
+                            {formatPrice(product.compareAtPrice)}
                           </span>
                         )}
                       </div>
-                      <Button size="icon" className="h-10 w-10 rounded-full bg-black hover:bg-primary text-white transition-colors" onClick={() => onAdd(product)}>
-                        <ShoppingCart className="h-4 w-4" />
-                        <span className="sr-only">Add to cart</span>
+                      <Button 
+                        variant="outline"
+                        className="w-full rounded-none border-foreground text-foreground hover:bg-primary hover:text-white hover:border-primary transition-all uppercase tracking-widest text-[11px] h-10" 
+                        onClick={() => onAdd(product)}
+                      >
+                        Add to Bag
                       </Button>
                     </div>
                   </div>
@@ -111,8 +114,8 @@ function ProductCarousel({
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex -left-5 bg-white border-border shadow-sm hover:bg-muted" />
-          <CarouselNext className="hidden md:flex -right-5 bg-white border-border shadow-sm hover:bg-muted" />
+          <CarouselPrevious className="hidden md:flex -left-6 bg-white border-border shadow-sm hover:bg-muted rounded-none" />
+          <CarouselNext className="hidden md:flex -right-6 bg-white border-border shadow-sm hover:bg-muted rounded-none" />
         </Carousel>
       </div>
     </section>
@@ -185,8 +188,8 @@ export default function Storefront() {
   const handleAddToCart = (product: any) => {
     addToCart(product)
     toast({
-      title: "Added to Basket",
-      description: `${product.name} has been added to your basket.`,
+      title: "Added to Bag",
+      description: `${product.name} has been added to your bag.`,
     })
   }
 
@@ -209,58 +212,112 @@ export default function Storefront() {
   }
 
   return (
-    <main className="container mx-auto px-4 py-8 md:py-12 space-y-12 md:space-y-16">
+    <main className="container mx-auto px-4 py-8 md:py-16 space-y-20 md:space-y-28">
       
       {/* Hero Banner */}
-      <section className="relative overflow-hidden rounded-2xl bg-muted h-[400px] md:h-[500px] flex items-center shadow-sm">
+      <section className="relative overflow-hidden bg-white min-h-[500px] md:min-h-[600px] flex items-center border border-border">
         <div className="absolute inset-0 z-0">
           <img 
             src={heroImage} 
-            alt="Modern Minimal Retail" 
-            className="w-full h-full object-cover object-center opacity-90"
+            alt="European Department Store" 
+            className="w-full h-full object-cover object-[center_30%]"
             onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent dark:from-black/90 dark:to-black/20" />
+          <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
         </div>
-        <div className="relative z-10 px-8 md:px-16 max-w-2xl text-white">
-          <Badge className="bg-primary hover:bg-primary text-white font-bold tracking-wider rounded-sm px-3 py-1 mb-6 border-none">
-            EVERYDAY CLEARANCE
-          </Badge>
-          <h1 className="font-display font-bold text-4xl md:text-6xl tracking-tight leading-[1.1] mb-6">
-            Sharp prices.<br />Premium finds.
-          </h1>
-          <p className="text-lg md:text-xl text-white/90 font-medium mb-8 max-w-md">
-            Curated clearance items for every room in your home. Quality you can trust, prices you can't ignore.
+        
+        <div className="relative z-10 px-8 md:px-16 lg:px-24 max-w-3xl text-white">
+          <p className="text-sm md:text-sm font-semibold uppercase tracking-[0.3em] mb-6 text-white/90">
+            The Spring Edit
           </p>
-          <div className="flex flex-wrap gap-4">
-            <Button size="lg" className="bg-white text-black hover:bg-gray-100 font-bold px-8 h-12" onClick={() => handleFilterClick('All')}>
-              Shop All Deals
+          <h1 className="font-display text-5xl md:text-7xl leading-[1.05] mb-8">
+            Elevated living,<br />
+            <span className="italic font-light">accessible elegance.</span>
+          </h1>
+          <p className="text-lg text-white/80 font-light mb-10 max-w-lg leading-relaxed">
+            Discover our curated collection of premium home, kitchen, and lifestyle essentials. Distinctive design without the typical premium price tag.
+          </p>
+          <div className="flex flex-wrap gap-5">
+            <Button 
+              size="lg" 
+              className="bg-white text-black hover:bg-gray-100 uppercase tracking-widest text-xs font-semibold px-10 h-14 rounded-none" 
+              onClick={() => handleFilterClick('All')}
+            >
+              Explore Collection
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white/30 hover:bg-white/10 hover:text-white font-bold px-8 h-12 bg-transparent" onClick={() => handleFilterClick('Last Chance Clearance')}>
-              Last Chance
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-white border-white/50 hover:bg-white/10 hover:text-white uppercase tracking-widest text-xs font-semibold px-10 h-14 rounded-none bg-transparent" 
+              onClick={() => handleFilterClick('Last Chance Clearance')}
+            >
+              The Archive
             </Button>
           </div>
         </div>
       </section>
 
+      {/* Featured category row */}
+      <section aria-label="Featured shopping categories" className="border-y border-border bg-white">
+        <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-5">
+          {[
+            { number: "01", title: "Deals", subtitle: "Accessible Luxuries Under £10", menu: "under-10" },
+            { number: "02", title: "Home & Living", menu: "bedroom" },
+            { number: "03", title: "Kitchen & Dining", menu: "cookware" },
+            { number: "04", title: "Gifts", menu: "gifts-for-her" },
+            { number: "05", title: "Last Chance", menu: "last-chance" },
+          ].map((item) => (
+            <a
+              key={item.title}
+              href={`/?menu=${item.menu}#all-products`}
+              className="group relative flex min-h-36 flex-col justify-between overflow-hidden px-6 py-7 transition-colors duration-300 hover:bg-blue-700"
+            >
+              <span className="text-[10px] font-bold tracking-[0.24em] text-blue-700 transition-colors group-hover:text-white/60">
+                {item.number}
+              </span>
+              <div>
+                <h2 className="font-display text-2xl leading-tight text-foreground transition-colors group-hover:text-white">
+                  {item.title}
+                </h2>
+                {item.subtitle && (
+                  <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground transition-colors group-hover:text-white/75">
+                    {item.subtitle}
+                  </p>
+                )}
+              </div>
+              <span className="absolute bottom-0 left-0 h-1 w-0 bg-white transition-all duration-500 group-hover:w-full" />
+            </a>
+          ))}
+        </div>
+      </section>
+
       {/* Directory / Categories */}
-      <section className="bg-white rounded-2xl border border-border p-6 md:p-8 shadow-sm">
-        <h2 className="font-display font-bold text-lg mb-6 uppercase tracking-wider text-muted-foreground border-b border-border pb-4">
-          Shop by Department
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <section className="bg-white border border-border p-8 md:p-12 lg:p-16 relative">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="text-center mb-12">
+          <h2 className="font-display italic text-3xl md:text-4xl mb-4">
+            Department Directory
+          </h2>
+          <div className="w-12 h-px bg-primary mx-auto" />
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-12">
           {categoryGroups.map((group) => (
-            <div key={group.name} className="space-y-4">
-              <h3 className="font-bold text-base text-foreground">{group.name}</h3>
-              <ul className="space-y-2.5">
+            <div key={group.name} className="space-y-6">
+              <h3 className="font-sans font-semibold uppercase tracking-[0.15em] text-sm text-foreground border-b border-border/50 pb-3">
+                {group.name}
+              </h3>
+              <ul className="space-y-4">
                 {group.items.map((item) => (
                   <li key={`${group.name}-${item}`}>
                     <button
                       type="button"
                       onClick={() => handleFilterClick(item)}
-                      className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors text-left"
+                      className="text-sm font-normal text-muted-foreground hover:text-primary transition-colors text-left flex items-center group/btn"
                     >
-                      {item}
+                      <span className="w-0 overflow-hidden group-hover/btn:w-3 transition-all duration-300 ease-out opacity-0 group-hover/btn:opacity-100">—</span>
+                      <span className="group-hover/btn:ml-1 transition-all duration-300">{item}</span>
                     </button>
                   </li>
                 ))}
@@ -272,15 +329,16 @@ export default function Storefront() {
 
       {/* Carousels */}
       {visibleProducts.length > 0 && (
-        <div className="space-y-16">
+        <div className="space-y-24">
           <ProductCarousel
-            title="Customer Favourites"
+            title="Curator's Selection"
             products={visibleProducts.filter((product) => product.featured)}
             onAdd={handleAddToCart}
             onViewAll={() => handleFilterClick("All")}
           />
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
           <ProductCarousel
-            title="Deals Under £10"
+            title="Accessible Luxuries Under £10"
             products={visibleProducts.filter((product) => product.price <= 10)}
             onAdd={handleAddToCart}
             onViewAll={() => handleFilterClick("Under £10")}
@@ -289,21 +347,21 @@ export default function Storefront() {
       )}
 
       {/* Main Grid Header & Filters */}
-      <div id="all-products" className="scroll-mt-32 border-t border-border pt-12">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+      <div id="all-products" className="scroll-mt-32 pt-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 border-b border-border pb-8">
           <div>
-            <h2 className="font-display font-bold text-3xl mb-2">All Products</h2>
-            <p className="text-muted-foreground font-medium">
-              {visibleProducts.length} {visibleProducts.length === 1 ? "item" : "items"} available
+            <h2 className="font-display italic text-4xl mb-3">The Complete Collection</h2>
+            <p className="text-muted-foreground font-medium uppercase tracking-widest text-[10px]">
+              Showing {visibleProducts.length} {visibleProducts.length === 1 ? "item" : "items"}
             </p>
           </div>
           
           <div className="flex items-center w-full md:w-auto gap-3">
-            <div className="relative w-full md:w-72">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <div className="relative w-full md:w-80">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input 
-                placeholder="Search products..." 
-                className="pl-9 h-11 bg-muted/50 border-transparent focus-visible:border-primary focus-visible:ring-0 rounded-full"
+                placeholder="Search collection..." 
+                className="pl-12 h-12 bg-white border-border rounded-none focus-visible:border-primary focus-visible:ring-1 focus-visible:ring-primary/20 text-sm"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -313,68 +371,70 @@ export default function Storefront() {
 
         {/* Product Grid */}
         {visibleProducts.length === 0 ? (
-          <div className="text-center py-32 bg-muted/30 rounded-2xl border border-border border-dashed">
-            <Tag className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
-            <h3 className="text-xl font-bold mb-2">No items found</h3>
-            <p className="text-muted-foreground">Try adjusting your search or filters to find what you're looking for.</p>
-            <Button variant="outline" className="mt-6 font-semibold" onClick={() => handleFilterClick("All")}>
-              Clear Filters
+          <div className="text-center py-40 bg-white border border-border">
+            <Tag className="h-10 w-10 mx-auto text-muted-foreground/30 mb-6" />
+            <h3 className="font-display italic text-2xl mb-3">No pieces found</h3>
+            <p className="text-muted-foreground mb-8 max-w-md mx-auto">We couldn't find any items matching your criteria. Explore our other departments.</p>
+            <Button variant="outline" className="uppercase tracking-widest text-xs rounded-none h-12 px-8" onClick={() => handleFilterClick("All")}>
+              Reset Selection
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-x-8 md:gap-y-12">
             {visibleProducts.map(product => (
-              <article key={product.id} className="retail-card group flex flex-col relative animate-slide-down">
+              <article key={product.id} className="retail-card group flex flex-col relative bg-white animate-slide-down pb-5">
                 {product.badge && (
-                  <div className="absolute top-3 left-3 z-10">
-                    <Badge className="bg-accent text-accent-foreground font-bold tracking-wide rounded-sm px-2 py-0.5 pointer-events-none">
+                  <div className="absolute top-4 left-4 z-10">
+                    <Badge className="bg-accent text-accent-foreground font-medium tracking-widest uppercase rounded-none px-3 py-1 pointer-events-none text-[10px] shadow-sm">
                       {product.badge}
                     </Badge>
                   </div>
                 )}
-                <div className="relative aspect-[4/3] bg-muted overflow-hidden flex items-center justify-center p-4">
+                <div className="relative aspect-[4/5] bg-muted/30 overflow-hidden flex items-center justify-center p-6 border-b border-border/50">
                   {product.imageUrl ? (
                     <img 
                       src={product.imageUrl} 
                       alt={product.name} 
-                      className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" 
+                      className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-out" 
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground/30 font-display font-bold text-4xl">
-                      {product.name.charAt(0)}
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground/30 font-display italic text-4xl">
+                      C
                     </div>
                   )}
+                  
+                  {/* Quick Add Overlay */}
+                  <div className="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out flex justify-center">
+                    <Button 
+                      onClick={(e) => {
+                        e.preventDefault()
+                        handleAddToCart(product)
+                      }}
+                      className={`w-full rounded-none uppercase tracking-widest text-[11px] h-10 shadow-lg ${product.inventory === 0 ? "bg-muted text-muted-foreground pointer-events-none" : "bg-primary hover:bg-primary/90 text-white"}`}
+                      disabled={product.inventory === 0}
+                    >
+                      {product.inventory === 0 ? "Out of Stock" : "Quick Add"}
+                    </Button>
+                  </div>
                 </div>
                 
-                <div className="flex-1 flex flex-col p-5">
-                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2">
+                <div className="flex-1 flex flex-col px-5 pt-5 text-center">
+                  <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-[0.2em] mb-2">
                     {product.category}
                   </p>
-                  <h3 className="font-semibold text-base leading-snug mb-4 line-clamp-2 flex-1 group-hover:text-primary transition-colors">
+                  <h3 className="font-medium text-sm md:text-base leading-relaxed mb-4 line-clamp-2 flex-1">
                     {product.name}
                   </h3>
                   
-                  <div className="flex items-end justify-between mt-auto pt-4 border-t border-border/50">
-                    <div>
-                      <span className="font-display font-bold text-xl block">
-                        {formatPrice(product.price)}
+                  <div className="flex items-baseline justify-center gap-2 mt-auto">
+                    <span className="font-display text-xl block">
+                      {formatPrice(product.price)}
+                    </span>
+                    {product.compareAtPrice && product.compareAtPrice > product.price && (
+                      <span className="text-xs font-medium text-muted-foreground line-through block">
+                        {formatPrice(product.compareAtPrice)}
                       </span>
-                      {product.compareAtPrice && product.compareAtPrice > product.price && (
-                        <span className="text-xs font-medium text-muted-foreground line-through block mt-1">
-                          RRP {formatPrice(product.compareAtPrice)}
-                        </span>
-                      )}
-                    </div>
-                    
-                    <Button 
-                      onClick={() => handleAddToCart(product)}
-                      className={`h-10 w-10 rounded-full transition-colors ${product.inventory === 0 ? "bg-muted text-muted-foreground pointer-events-none" : "bg-black hover:bg-primary text-white"}`}
-                      size="icon"
-                      disabled={product.inventory === 0}
-                      title={product.inventory === 0 ? "Out of Stock" : "Add to Basket"}
-                    >
-                      <ShoppingCart className="h-4 w-4" />
-                    </Button>
+                    )}
                   </div>
                 </div>
               </article>
