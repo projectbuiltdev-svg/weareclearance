@@ -109,7 +109,7 @@ export function Navbar() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4 lg:gap-8">
+      <div className="container mx-auto flex h-24 items-center justify-between gap-4 px-4 pb-1 pt-3 lg:gap-8">
         <div className="flex items-center gap-4">
           <Sheet>
             <SheetTrigger asChild>
