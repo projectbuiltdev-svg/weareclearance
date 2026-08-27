@@ -723,7 +723,7 @@ function AdminSignIn() {
   }
 
   return (
-    <main className="container mx-auto flex min-h-[70vh] max-w-3xl items-center justify-center px-4 py-12">
+    <main className="container mx-auto flex max-w-3xl items-center justify-center px-4 pb-8 pt-12 md:pb-10">
       <section className="w-full border border-border bg-[#fbfaf7] px-4 py-8 md:px-8 md:py-10">
         <div className="mb-8 text-center">
           <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-700">Temporary private access</p>
