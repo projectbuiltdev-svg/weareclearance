@@ -507,9 +507,7 @@ router.post("/orders/complete", async (req, res): Promise<void> => {
   }
 });
 
-router.use(requireAdmin);
-
-router.get("/admin/summary", async (_req, res): Promise<void> => {
+router.get("/admin/summary", requireAdmin, async (_req, res): Promise<void> => {
   await ensureSkus();
   const rows = await db.select().from(productsTable);
   const categories = new Set(rows.map((row) => row.category));
@@ -523,7 +521,7 @@ router.get("/admin/summary", async (_req, res): Promise<void> => {
   );
 });
 
-router.post("/products", async (req, res): Promise<void> => {
+router.post("/products", requireAdmin, async (req, res): Promise<void> => {
   const parsed = CreateProductBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: parsed.error.message });
@@ -544,7 +542,7 @@ router.post("/products", async (req, res): Promise<void> => {
   }
 });
 
-router.patch("/products/:id", async (req, res): Promise<void> => {
+router.patch("/products/:id", requireAdmin, async (req, res): Promise<void> => {
   const params = UpdateProductParams.safeParse(req.params);
   const body = UpdateProductBody.safeParse(req.body);
   if (!params.success) {
@@ -570,7 +568,7 @@ router.patch("/products/:id", async (req, res): Promise<void> => {
   res.json(UpdateProductResponse.parse(toProduct(product)));
 });
 
-router.delete("/products/:id", async (req, res): Promise<void> => {
+router.delete("/products/:id", requireAdmin, async (req, res): Promise<void> => {
   const params = DeleteProductParams.safeParse(req.params);
   if (!params.success) {
     res.status(400).json({ error: params.error.message });
@@ -585,7 +583,7 @@ router.delete("/products/:id", async (req, res): Promise<void> => {
   res.sendStatus(204);
 });
 
-router.post("/products/import", async (req, res): Promise<void> => {
+router.post("/products/import", requireAdmin, async (req, res): Promise<void> => {
   const parsed = ImportProductsBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: parsed.error.message });

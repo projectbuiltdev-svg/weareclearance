@@ -75,14 +75,12 @@ router.post("/admin/test-logout", (req, res): void => {
   res.json({ ok: true });
 });
 
-router.use(requireAdmin);
-
-router.get("/admin/access", async (_req, res): Promise<void> => {
+router.get("/admin/access", requireAdmin, async (_req, res): Promise<void> => {
   const access = res.locals.adminAccess as AdminAccessRecord;
   res.json(await getAccessResponse(access));
 });
 
-router.post("/admin/access", requireOwner, async (req, res): Promise<void> => {
+router.post("/admin/access", requireAdmin, requireOwner, async (req, res): Promise<void> => {
   const email = normalizeEmail(req.body?.email);
   if (!email) {
     res.status(400).json({ error: "Enter a valid email address." });
@@ -144,7 +142,7 @@ router.post("/admin/access", requireOwner, async (req, res): Promise<void> => {
   }
 });
 
-router.delete("/admin/access/:email", requireOwner, async (req, res): Promise<void> => {
+router.delete("/admin/access/:email", requireAdmin, requireOwner, async (req, res): Promise<void> => {
   const email = normalizeEmail(req.params.email);
   if (!email || email === PRIMARY_OWNER_EMAIL) {
     res.status(400).json({ error: "The primary owner cannot be removed." });
