@@ -14,3 +14,31 @@ mtime_ms = 1787143095080
 storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:71f3e437-c9d0-484f-b97e-d486149572a7/c87f9f6f-dee4-4845-91f2-f30918590c03/b190097c-5c5a-4c03-9c2b-531d0d3d1ce4"
 storage_version_token = "1787143134761789"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "rigObXFwuWvE-78Ajh502"
+uri = "file://exports/product-image-urls-2026-09-01/image-urls.txt"
+type = "text"
+title = "Product image URL list"
+description = "All 40 original image filenames paired with their permanent public URLs."
+logical_id = "b4587c42-fb16-4674-a69b-86980195e3ab"
+content_hash = "sha256:b97df8e1ec7c3c3a19adee50fc85b86094ff534c16d840e48d9eca5d192cd996"
+size = 5880
+mtime_ms = 1788267231529
+storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:71f3e437-c9d0-484f-b97e-d486149572a7/b4587c42-fb16-4674-a69b-86980195e3ab/c6e7c5f2-b30c-4935-a567-93f1b95a009e"
+storage_version_token = "1788267244062388"
+content_type = "text/plain"
+
+[[outputs]]
+id = "0Yv3EqKnhqWTptmneEc9h"
+uri = "file://exports/product-image-urls-2026-09-01/image-urls.csv"
+type = "table"
+title = "CSV-ready image URL mapping"
+description = "Two columns: originalFilename and imageUrl, ready to copy or merge into the product CSV."
+logical_id = "a60e871f-3417-4fe0-9ab8-4a776d92bf01"
+content_hash = "sha256:e743554ff179503ed71fb1f8a377aa2ee49ae61422b66a6b8e16bdade0f55bbd"
+size = 5866
+mtime_ms = 1788267231533
+storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:71f3e437-c9d0-484f-b97e-d486149572a7/a60e871f-3417-4fe0-9ab8-4a776d92bf01/ad28d590-fca2-47ca-9d72-e1ea37e7ffae"
+storage_version_token = "1788267244642045"
+content_type = "text/csv"
