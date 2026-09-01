@@ -36,12 +36,19 @@ export function Footer() {
       <footer className="bg-white border-t border-border mt-auto font-sans">
         {/* Benefits Bar */}
         <div className="border-b border-border/60 bg-muted/20">
-          <div className="container mx-auto px-4 py-10">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 divide-y sm:divide-y-0 lg:divide-x divide-border/60">
+          <div className="container mx-auto px-4 py-8 md:py-10">
+            <div className="grid grid-cols-2 gap-px overflow-hidden bg-border/60 lg:grid-cols-4">
               {footerBenefits.map(({ title, description }, index) => (
-                <div key={`${title}-${index}`} className="flex flex-col items-center text-center px-4 pt-6 sm:pt-0 first:pt-0">
-                  <h4 className="font-display italic text-lg mb-1">{title}</h4>
-                  <p className="text-xs uppercase tracking-widest text-muted-foreground">{description}</p>
+                <div
+                  key={`${title}-${index}`}
+                  className="flex min-h-[116px] min-w-0 flex-col items-center justify-center bg-[#fbfaf7] px-3 py-5 text-center lg:min-h-[96px] lg:px-5"
+                >
+                  <h4 className="flex min-h-11 items-end justify-center font-display text-base italic leading-tight sm:text-lg">
+                    {title}
+                  </h4>
+                  <p className="mt-1 flex min-h-8 items-start justify-center text-[10px] uppercase leading-4 tracking-[0.14em] text-muted-foreground sm:text-xs sm:tracking-widest">
+                    {description}
+                  </p>
                 </div>
               ))}
             </div>
