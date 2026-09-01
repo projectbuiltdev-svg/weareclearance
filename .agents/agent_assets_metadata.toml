@@ -42,3 +42,31 @@ mtime_ms = 1788267231533
 storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:71f3e437-c9d0-484f-b97e-d486149572a7/a60e871f-3417-4fe0-9ab8-4a776d92bf01/7584f9ee-684d-4bc4-abb1-4db7ab9ae1bc"
 storage_version_token = "1788267317707513"
 content_type = "text/csv"
+
+[[outputs]]
+id = "S51WLyN4uxthqNSc-Lnj-"
+uri = "file://exports/catalogue-backup-2026-09-01/products.json"
+type = "unspecified"
+title = "Complete catalogue backup (JSON)"
+description = "Full backup of all 40 live product records for exact restoration later."
+logical_id = "353015e2-a4da-49c4-823d-f2a93a49d0a4"
+content_hash = "sha256:7095e18ef5cf54b82b5f25a4344e9422ac62d515a0fd80146e38c0654e5778cd"
+size = 28153
+mtime_ms = 1788267474228
+storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:71f3e437-c9d0-484f-b97e-d486149572a7/353015e2-a4da-49c4-823d-f2a93a49d0a4/75d6b834-d530-4810-9ea8-514e122100af"
+storage_version_token = "1788267510246381"
+content_type = "application/octet-stream"
+
+[[outputs]]
+id = "axfk2MclNMhB3meoBrTln"
+uri = "file://exports/catalogue-backup-2026-09-01/products.csv"
+type = "table"
+title = "Complete catalogue backup (CSV)"
+description = "CSV backup of all 40 live products for later import and review."
+logical_id = "ab76947f-e9d0-48b7-aa21-14e3e783a928"
+content_hash = "sha256:a2a2040e15ed391a8faf213c18fbab2277f78b2e491a638fa5c9546431bb9287"
+size = 13793
+mtime_ms = 1788267474236
+storage_uri = "gcs://replit-rams-assets-picard/rams/assets/repl:71f3e437-c9d0-484f-b97e-d486149572a7/ab76947f-e9d0-48b7-aa21-14e3e783a928/fca74715-e28e-41dd-8ef5-fcb066c3ba93"
+storage_version_token = "1788267510890690"
+content_type = "text/csv"
