@@ -124,7 +124,7 @@ export function Navbar() {
         </div>
       </div>
 
-      <div className="container mx-auto flex h-24 items-center justify-between gap-4 px-4 pb-1 pt-3 lg:gap-8">
+      <div className="container mx-auto flex h-20 min-w-0 items-center justify-between gap-2 px-3 pb-1 pt-2 sm:h-24 sm:gap-4 sm:px-4 sm:pt-3 lg:gap-8">
         <div className="flex items-center gap-4">
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
@@ -195,7 +195,7 @@ export function Navbar() {
             </SheetContent>
           </Sheet>
 
-          <Link href="/" className="flex h-[68px] shrink-0 items-center sm:h-[72px] lg:h-[76px]">
+          <Link href="/" className="flex h-14 min-w-0 shrink items-center sm:h-[72px] sm:shrink-0 lg:h-[76px]">
             <img
               src={clearanceLogo}
               alt="We are Clearance"

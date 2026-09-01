@@ -150,9 +150,9 @@ export default function ProductDetail() {
   }
 
   return (
-    <main className="container mx-auto px-4 py-8 md:py-16 md:px-8">
+    <main className="container mx-auto min-w-0 px-4 py-5 pb-12 md:px-8 md:py-16">
       {/* Breadcrumbs */}
-      <nav className="flex items-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-8 whitespace-nowrap overflow-x-auto hide-scrollbar">
+      <nav className="mb-5 flex min-w-0 items-center overflow-x-auto whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.16em] text-muted-foreground hide-scrollbar md:mb-8 md:text-[10px] md:tracking-[0.2em]">
         <Link href="/" className="hover:text-primary transition-colors shrink-0">Home</Link>
         <ChevronRight className="h-3 w-3 mx-2 shrink-0" />
         <Link 
@@ -166,12 +166,12 @@ export default function ProductDetail() {
       </nav>
 
       {/* Main Product Area */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+      <div className="grid min-w-0 grid-cols-1 gap-8 md:grid-cols-2 md:gap-12 lg:gap-20">
         {/* Image */}
-        <div className="relative aspect-[4/5] bg-[#fbfaf7] border border-border flex items-center justify-center p-8 overflow-hidden group">
+        <div className="group relative aspect-[4/3] min-w-0 overflow-hidden border border-border bg-[#fbfaf7] p-4 md:aspect-[4/5] md:p-8">
           {product.badge && (
-            <div className="absolute top-6 left-6 z-10">
-              <Badge className="pointer-events-none rounded-none border border-blue-200/80 bg-white/95 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-950 shadow-[0_8px_24px_-12px_rgba(30,64,175,0.55)] backdrop-blur-md before:mr-2 before:h-1.5 before:w-1.5 before:rotate-45 before:bg-blue-600 before:content-['']">
+            <div className="absolute left-3 top-3 z-10 md:left-6 md:top-6">
+              <Badge className="pointer-events-none rounded-none border border-blue-200/80 bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-blue-950 shadow-[0_8px_24px_-12px_rgba(30,64,175,0.55)] backdrop-blur-md before:mr-2 before:h-1.5 before:w-1.5 before:rotate-45 before:bg-blue-600 before:content-[''] md:px-4 md:py-2 md:text-[10px] md:tracking-[0.2em]">
                 {product.badge}
               </Badge>
             </div>
@@ -180,7 +180,7 @@ export default function ProductDetail() {
             <img 
               src={product.imageUrl} 
               alt={product.name} 
-              className="w-full h-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-[1.02]"
+              className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-[1.02]"
             />
           ) : (
             <span className="font-display italic text-6xl text-muted-foreground/30">C</span>
@@ -188,40 +188,40 @@ export default function ProductDetail() {
         </div>
 
         {/* Details */}
-        <div className="flex flex-col justify-center">
+        <div className="flex min-w-0 flex-col justify-center">
           <div className="mb-3">
             <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-blue-700">
               {product.category}
             </span>
           </div>
-          <h1 className="font-display text-4xl md:text-5xl leading-tight mb-4 text-foreground">
+          <h1 className="mb-3 break-words font-display text-[2rem] leading-[1.08] text-foreground md:mb-4 md:text-5xl md:leading-tight">
             {product.name}
           </h1>
-          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-6">
+          <p className="mb-5 break-all text-[10px] font-semibold uppercase tracking-widest text-muted-foreground md:mb-6 md:text-[11px]">
             SKU: {product.sku}
           </p>
 
-          <div className="flex items-end gap-3 mb-6">
-            <span className="font-display text-3xl text-foreground">
+          <div className="mb-5 flex flex-wrap items-baseline gap-x-3 gap-y-2 md:mb-6">
+            <span className="font-display text-[1.75rem] text-foreground md:text-3xl">
               {formatPrice(product.price)}
             </span>
             {product.compareAtPrice && product.compareAtPrice > product.price && (
               <>
-                <span className="text-sm font-medium text-muted-foreground line-through mb-1">
+                <span className="text-sm font-medium text-muted-foreground line-through">
                   {formatPrice(product.compareAtPrice)}
                 </span>
-                <span className="mb-1 bg-blue-700 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
+                <span className="bg-blue-700 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
                   {discountPercent}% off
                 </span>
               </>
             )}
           </div>
 
-          <p className="text-base text-muted-foreground leading-relaxed mb-8">
+          <p className="mb-6 text-[15px] leading-relaxed text-muted-foreground md:mb-8 md:text-base">
             {product.shortDescription}
           </p>
           
-          <div className="border-t border-border py-8">
+          <div className="border-t border-border py-6 md:py-8">
              {/* Stock Status */}
              <div className="flex items-center gap-2.5 mb-6">
                <div className={`h-2 w-2 rounded-full ${isOutOfStock ? 'bg-red-500' : product.inventory < 10 ? 'bg-amber-500' : 'bg-emerald-500'}`} />
@@ -231,8 +231,8 @@ export default function ProductDetail() {
              </div>
 
              {/* Quantity & Add */}
-             <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex items-center border border-border h-14 bg-white w-full sm:w-36 shrink-0">
+              <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-3 sm:flex sm:gap-4">
+                 <div className="flex h-14 w-28 shrink-0 items-center border border-border bg-white sm:w-36">
                   <button 
                     type="button" 
                     className="flex-1 flex justify-center items-center h-full hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-foreground"
@@ -263,7 +263,7 @@ export default function ProductDetail() {
              </div>
           </div>
 
-          <div className="border-t border-border pt-8 mt-4">
+          <div className="mt-2 border-t border-border pt-6 md:mt-4 md:pt-8">
             <h3 className="font-sans font-semibold uppercase tracking-[0.15em] text-xs text-foreground mb-4">Product Details</h3>
             <div className="prose prose-sm max-w-none text-muted-foreground leading-relaxed whitespace-pre-wrap">
               {product.longDescription || product.description || product.shortDescription}
@@ -274,7 +274,7 @@ export default function ProductDetail() {
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
-        <section className="mt-24 md:mt-32 border-t border-border pt-16 md:pt-20">
+        <section className="mt-16 border-t border-border pt-10 md:mt-32 md:pt-20">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border pb-4 mb-8">
             <h2 className="font-display text-3xl md:text-4xl text-foreground italic">Similar pieces</h2>
             <Button asChild variant="link" className="h-auto px-0 pb-1 text-xs font-semibold uppercase tracking-widest text-primary hover:text-primary/80">
@@ -284,7 +284,7 @@ export default function ProductDetail() {
             </Button>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
             {relatedProducts.map(rp => (
                <article key={rp.id} className="retail-card group flex flex-col relative bg-white pb-5">
                  {rp.badge && (
@@ -294,7 +294,7 @@ export default function ProductDetail() {
                      </Badge>
                    </div>
                  )}
-                 <Link href={`/products/${rp.slug}`} className="relative aspect-[4/5] bg-muted/30 overflow-hidden flex items-center justify-center p-6 border-b border-border/50">
+                  <Link href={`/products/${rp.slug}`} className="relative flex aspect-[4/5] items-center justify-center overflow-hidden border-b border-border/50 bg-muted/30 p-3 sm:p-6">
                    {rp.imageUrl ? (
                      <>
                      <img 
@@ -312,12 +312,12 @@ export default function ProductDetail() {
                      <span className="font-display italic text-4xl text-muted-foreground/30">C</span>
                    )}
                  </Link>
-                 <div className="flex flex-1 flex-col px-5 pt-5 text-center">
+                  <div className="flex flex-1 flex-col px-2.5 pt-3 text-center sm:px-5 sm:pt-5">
                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
                      {rp.category}
                    </p>
                    <Link href={`/products/${rp.slug}`} className="hover:text-primary transition-colors">
-                     <h3 className="line-clamp-2 text-sm font-medium leading-relaxed">
+                      <h3 className="line-clamp-2 text-xs font-medium leading-relaxed sm:text-sm">
                        {rp.name}
                      </h3>
                    </Link>
