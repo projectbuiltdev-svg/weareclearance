@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import { useParams, Link } from "wouter"
 import { useListProducts } from "@workspace/api-client-react"
 import { useCart } from "@/lib/cart"
@@ -22,6 +22,12 @@ export default function ProductDetail() {
 
   const products = Array.isArray(apiProducts) ? apiProducts : []
   const product = products.find(p => p.slug === params.slug)
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [params.slug, product?.id])
 
   // Reset quantity when product changes
   useEffect(() => {

@@ -11,7 +11,7 @@ import Checkout from '@/pages/checkout'
 import Admin from '@/pages/admin'
 import ProductDetail from '@/pages/product-detail'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 
 import { ClerkProvider, SignIn, SignUp } from '@clerk/react';
 import { publishableKeyFromHost } from '@clerk/react/internal';
@@ -22,8 +22,30 @@ const queryClient = new QueryClient()
 function ScrollToTop() {
   const [location] = useLocation()
 
+  useEffect(() => {
+    const previous = window.history.scrollRestoration
+    window.history.scrollRestoration = 'manual'
+
+    return () => {
+      window.history.scrollRestoration = previous
+    }
+  }, [])
+
   useLayoutEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    const resetScroll = () => {
+      window.scrollTo(0, 0)
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+    }
+
+    resetScroll()
+    const frame = window.requestAnimationFrame(resetScroll)
+    const timeout = window.setTimeout(resetScroll, 250)
+
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.clearTimeout(timeout)
+    }
   }, [location])
 
   return null
