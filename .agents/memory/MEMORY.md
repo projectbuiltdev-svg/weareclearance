@@ -2,3 +2,4 @@
 - [Owner-only Admin access](admin-ownership.md) — keep the approved simple owner-password flow until the business owner’s real email identity is ready.
 - [GitHub write proxy](github-write-proxy.md) — connector reads work, but Git write payloads may be Cloudflare-blocked; use protected direct GitHub API auth as the server-side fallback.
 - [Clerk hydration boundary](clerk-hydration-boundary.md) — do not mount Clerk globally when its custom Frontend API DNS may be absent; isolate it to routes that require Clerk.
+- [API authentication boundaries](api-auth-boundaries.md) — require Admin access on individual protected handlers, never as unscoped shared-router middleware.
