@@ -4,7 +4,6 @@ import { useListProducts } from "@workspace/api-client-react"
 import { useCart } from "@/lib/cart"
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
-import { staticProducts } from "@/data/static-products"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Plus, Minus, ChevronRight, Tag } from "lucide-react"
@@ -21,7 +20,7 @@ export default function ProductDetail() {
     { query: { queryKey: ["/api/products"] } }
   )
 
-  const products = Array.isArray(apiProducts) ? apiProducts : staticProducts
+  const products = Array.isArray(apiProducts) ? apiProducts : []
   const product = products.find(p => p.slug === params.slug)
 
   // Reset quantity when product changes

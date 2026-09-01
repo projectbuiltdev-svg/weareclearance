@@ -20,7 +20,6 @@ import {
 } from "lucide-react"
 import { useCurrency } from "@/lib/currency"
 import { useToast } from "@/hooks/use-toast"
-import { staticCategories, staticProducts } from "@/data/static-products"
 import { FcGoogle } from "react-icons/fc"
 import {
   Carousel,
@@ -176,13 +175,9 @@ export default function Storefront() {
   const { formatPrice } = useCurrency()
   const { toast } = useToast()
   
-  const products = Array.isArray(apiProducts) ? apiProducts : staticProducts.filter((product) => {
-    const matchesSearch = !search || `${product.name} ${product.description}`.toLowerCase().includes(search.toLowerCase())
-    const matchesCategory = !category || product.category === category
-    return matchesSearch && matchesCategory
-  })
+  const products = Array.isArray(apiProducts) ? apiProducts : []
   
-  const categories = Array.isArray(apiCategories) && apiCategories.length ? apiCategories : staticCategories
+  const categories = Array.isArray(apiCategories) ? apiCategories : []
   
   const visibleProducts = products.filter((product) => {
     if (!menuFilter) return true
