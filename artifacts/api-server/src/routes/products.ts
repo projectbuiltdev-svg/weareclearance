@@ -440,7 +440,6 @@ router.get("/products", async (req, res): Promise<void> => {
     return;
   }
 
-  await seedIfEmpty();
   await ensureSkus();
   const conditions = [];
   if (query.data.category) conditions.push(eq(productsTable.category, query.data.category));
@@ -460,7 +459,6 @@ router.get("/products", async (req, res): Promise<void> => {
 });
 
 router.get("/categories", async (_req, res): Promise<void> => {
-  await seedIfEmpty();
   const rows = await db.selectDistinct({ category: productsTable.category }).from(productsTable).orderBy(asc(productsTable.category));
   res.json(ListCategoriesResponse.parse(rows.map((row) => row.category)));
 });
@@ -512,7 +510,6 @@ router.post("/orders/complete", async (req, res): Promise<void> => {
 router.use(requireAdmin);
 
 router.get("/admin/summary", async (_req, res): Promise<void> => {
-  await seedIfEmpty();
   await ensureSkus();
   const rows = await db.select().from(productsTable);
   const categories = new Set(rows.map((row) => row.category));
