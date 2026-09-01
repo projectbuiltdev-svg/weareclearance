@@ -14,7 +14,7 @@ export function Footer() {
   const [showBackToTop, setShowBackToTop] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setShowBackToTop(window.scrollY > 500)
+    const handleScroll = () => setShowBackToTop(window.scrollY > 320)
     handleScroll()
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
@@ -27,7 +27,7 @@ export function Footer() {
           type="button"
           aria-label="Back to top"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-8 right-8 z-50 inline-flex h-12 w-12 items-center justify-center bg-primary text-white transition-transform hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-none shadow-md"
+          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-50 inline-flex h-11 w-11 items-center justify-center rounded-none bg-primary text-white shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary sm:bottom-8 sm:right-8 sm:h-12 sm:w-12"
         >
           <ArrowUp className="h-5 w-5" />
         </button>

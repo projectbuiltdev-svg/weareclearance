@@ -11,12 +11,23 @@ import Checkout from '@/pages/checkout'
 import Admin from '@/pages/admin'
 import ProductDetail from '@/pages/product-detail'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useLayoutEffect } from 'react'
 
 import { ClerkProvider, SignIn, SignUp } from '@clerk/react';
 import { publishableKeyFromHost } from '@clerk/react/internal';
 import { shadcn } from '@clerk/themes';
 
 const queryClient = new QueryClient()
+
+function ScrollToTop() {
+  const [location] = useLocation()
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [location])
+
+  return null
+}
 
 const clerkPubKey = publishableKeyFromHost(
   typeof window !== 'undefined' ? window.location.hostname : 'weareclearance.com',
@@ -142,6 +153,7 @@ function ClerkProviderWithRoutes() {
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         <CurrencyProvider>
+          <ScrollToTop />
           <Router />
           <Toaster />
         </CurrencyProvider>
