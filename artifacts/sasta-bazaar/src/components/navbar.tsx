@@ -30,16 +30,6 @@ import clearanceLogo from "@/assets/logo.jpg"
 
 const navGroups = [
   {
-    label: "Deals",
-    items: [
-      { label: "£5 & Under", menu: "under-5" },
-      { label: "£10 & Under", menu: "under-10" },
-      { label: "£20 & Under", menu: "under-20" },
-      { label: "Multibuy Deals", menu: "multibuy" },
-      { label: "Bulk Buys", menu: "bulk" },
-    ],
-  },
-  {
     label: "Home & Living",
     items: [
       { label: "Bedroom", menu: "bedroom" },
@@ -139,6 +129,14 @@ export function Navbar() {
                 <SheetTitle className="sr-only">Menu</SheetTitle>
               </SheetHeader>
               <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain py-4 pb-[max(1rem,env(safe-area-inset-bottom))] [-webkit-overflow-scrolling:touch]">
+                <a
+                  href="/collections/deals"
+                  onClick={() => setMobileOpen(false)}
+                  className="mx-5 mb-2 flex items-center border-b border-border px-0 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-slate-900"
+                >
+                  <Flame aria-hidden="true" className="mr-2 h-4 w-4 text-orange-500" />
+                  Deals
+                </a>
                 {navGroups.map(({ label, items: groupItems }) => (
                   <details key={label} className="group border-b border-border px-5">
                     <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-slate-900 marker:hidden">
@@ -209,16 +207,17 @@ export function Navbar() {
           <span className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-blue-300/80 to-transparent" />
           <span className="pointer-events-none absolute inset-x-20 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-600/35 to-transparent" />
           <span className="pointer-events-none absolute left-1/3 top-1/2 h-20 w-40 -translate-y-1/2 rounded-full bg-blue-400/10 blur-3xl" />
+          <a
+            href="/collections/deals"
+            className="group relative z-10 inline-flex items-center rounded-2xl border border-transparent px-5 py-3 text-[14px] font-extrabold uppercase tracking-[0.075em] text-slate-800 transition-all duration-300 after:absolute after:inset-x-5 after:bottom-1 after:h-0.5 after:origin-center after:scale-x-0 after:rounded-full after:bg-blue-600 after:transition-transform after:duration-300 hover:-translate-y-0.5 hover:border-blue-100 hover:bg-white hover:text-blue-800 hover:shadow-[0_12px_28px_-18px_rgba(30,64,175,0.7)] hover:after:scale-x-100"
+          >
+            <Flame aria-hidden="true" className="mr-2 h-4 w-4 text-orange-500 transition-transform duration-300 group-hover:scale-110" />
+            Deals
+          </a>
           {navGroups.map(({ label, items: groupItems }) => (
             <DropdownMenu key={label} modal={false}>
               <DropdownMenuTrigger asChild>
                 <button className="group relative z-10 inline-flex items-center rounded-2xl border border-transparent px-5 py-3 text-[14px] font-extrabold uppercase tracking-[0.075em] text-slate-800 transition-all duration-300 after:absolute after:inset-x-5 after:bottom-1 after:h-0.5 after:origin-center after:scale-x-0 after:rounded-full after:bg-blue-600 after:transition-transform after:duration-300 hover:-translate-y-0.5 hover:border-blue-100 hover:bg-white hover:text-blue-800 hover:shadow-[0_12px_28px_-18px_rgba(30,64,175,0.7)] hover:after:scale-x-100 data-[state=open]:border-blue-200 data-[state=open]:bg-blue-700 data-[state=open]:text-white data-[state=open]:shadow-[0_12px_28px_-14px_rgba(29,78,216,0.7)]">
-                  {label === "Deals" && (
-                    <Flame
-                      aria-hidden="true"
-                      className="mr-2 h-4 w-4 text-orange-500 transition-transform duration-300 group-hover:scale-110 data-[state=open]:text-orange-200"
-                    />
-                  )}
                   {label}
                   <ChevronDown className="ml-2 h-3.5 w-3.5 opacity-70 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                 </button>
