@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "publishedAt": "2026-09-03T13:13:12.444Z",
+  "publishedAt": "2026-09-03T13:27:36.202Z",
   "settings": {
     "gbpPerEur": 0.86
   },
   "products": [
     {
-      "id": 43,
+      "id": 95,
       "sku": "SKU-TEST-001",
       "name": "Test 1",
-      "slug": "test-1",
+      "slug": "test-1-1788442007191",
       "shortDescription": "Dummy €1 product for testing checkout and payment flows.",
       "longDescription": "This is a dummy test product created for safely checking the catalogue, cart, and SumUp checkout flow.",
       "description": "This is a dummy test product created for safely checking the catalogue, cart, and SumUp checkout flow.",
@@ -21,7 +21,7 @@
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T13:12:08.086Z",
-      "updatedAt": "2026-09-03T13:12:08.086Z"
+      "updatedAt": "2026-09-03T13:27:21.753Z"
     },
     {
       "id": 41,
