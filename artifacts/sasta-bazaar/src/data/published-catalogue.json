@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-09-03T13:30:20.279Z",
+  "publishedAt": "2026-09-03T13:43:13.754Z",
   "settings": {
     "gbpPerEur": 0.86
   },
@@ -10,17 +10,18 @@
       "sku": "SKU-TEST-001",
       "name": "Test 1",
       "slug": "test-1-1788442007191",
-      "shortDescription": "Dummy €1 product for testing the live checkout and payment flow.",
-      "description": "This is a live €1 test product for checking the catalogue, cart, and SumUp checkout flow.",
-      "longDescription": "This is a live €1 test product for checking the catalogue, cart, and SumUp checkout flow.",
+      "shortDescription": "A special clearance offer available while stocks last.",
+      "longDescription": "A special clearance offer available at €1 while stocks last. Add it to your basket and complete payment securely with SumUp.",
+      "description": "A special clearance offer available at €1 while stocks last. Add it to your basket and complete payment securely with SumUp.",
       "category": "Test Products",
       "price": 1,
       "compareAtPrice": null,
       "imageUrl": "https://placehold.co/900x1100/f3f0e9/1f2937?text=Test+1",
-      "badge": "Test Product",
+      "badge": "Clearance",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T13:26:47.208Z"
+      "createdAt": "2026-09-03T13:26:47.208Z",
+      "updatedAt": "2026-09-03T13:43:12.688Z"
     },
     {
       "id": 94,
@@ -28,8 +29,8 @@
       "name": "Extra Deep Fitted Sheet - Super King",
       "slug": "extra-deep-fitted-sheet-super-king-1788438785757",
       "shortDescription": "Extra-deep Super King fitted sheet made to fit taller mattresses and mattress-and-topper combinations.",
-      "description": "Designed for a more generous fit, this Super King extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
       "longDescription": "Designed for a more generous fit, this Super King extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
+      "description": "Designed for a more generous fit, this Super King extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
       "category": "Bedroom",
       "price": 15,
       "compareAtPrice": 18,
@@ -37,7 +38,8 @@
       "badge": "17% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:05.774Z"
+      "createdAt": "2026-09-03T12:33:05.774Z",
+      "updatedAt": "2026-09-03T12:47:55.899Z"
     },
     {
       "id": 93,
@@ -45,8 +47,8 @@
       "name": "Extra Deep Fitted Sheet - King",
       "slug": "extra-deep-fitted-sheet-king-1788438785545",
       "shortDescription": "Extra-deep King fitted sheet made to fit taller mattresses and mattress-and-topper combinations.",
-      "description": "Designed for a more generous fit, this King extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
       "longDescription": "Designed for a more generous fit, this King extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
+      "description": "Designed for a more generous fit, this King extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
       "category": "Bedroom",
       "price": 12,
       "compareAtPrice": 15,
@@ -54,7 +56,8 @@
       "badge": "20% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:05.562Z"
+      "createdAt": "2026-09-03T12:33:05.562Z",
+      "updatedAt": "2026-09-03T12:47:55.679Z"
     },
     {
       "id": 92,
@@ -62,8 +65,8 @@
       "name": "Extra Deep Fitted Sheet - Double",
       "slug": "extra-deep-fitted-sheet-double-1788438785338",
       "shortDescription": "Extra-deep Double fitted sheet made to fit taller mattresses and mattress-and-topper combinations.",
-      "description": "Designed for a more generous fit, this Double extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
       "longDescription": "Designed for a more generous fit, this Double extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
+      "description": "Designed for a more generous fit, this Double extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
       "category": "Bedroom",
       "price": 10,
       "compareAtPrice": 12,
@@ -71,7 +74,8 @@
       "badge": "17% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:05.355Z"
+      "createdAt": "2026-09-03T12:33:05.355Z",
+      "updatedAt": "2026-09-03T12:47:55.443Z"
     },
     {
       "id": 91,
@@ -79,8 +83,8 @@
       "name": "Extra Deep Fitted Sheet - Single",
       "slug": "extra-deep-fitted-sheet-single-1788438785126",
       "shortDescription": "Extra-deep Single fitted sheet made to fit taller mattresses and mattress-and-topper combinations.",
-      "description": "Designed for a more generous fit, this Single extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
       "longDescription": "Designed for a more generous fit, this Single extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
+      "description": "Designed for a more generous fit, this Single extra-deep fitted sheet wraps neatly around taller mattresses and mattress-and-topper combinations. Soft easy-care fabric provides everyday comfort, while the deep pocket and strong elasticated edge help prevent slipping and bunching for a smooth, secure finish.",
       "category": "Bedroom",
       "price": 8,
       "compareAtPrice": 10,
@@ -88,7 +92,8 @@
       "badge": "20% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:05.143Z"
+      "createdAt": "2026-09-03T12:33:05.143Z",
+      "updatedAt": "2026-09-03T12:47:55.219Z"
     },
     {
       "id": 90,
@@ -96,8 +101,8 @@
       "name": "Fitted Sheet - King",
       "slug": "fitted-sheet-king-1788438784918",
       "shortDescription": "Smooth, easy-care King fitted sheet with an elasticated edge for a neat and secure fit.",
-      "description": "Create a clean, comfortable foundation for your bedding with this soft King fitted sheet. The smooth easy-care fabric feels fresh against the skin, while the elasticated edge wraps securely around the mattress for a tidy finish that stays in place. Ideal for everyday bedrooms and guest rooms.",
       "longDescription": "Create a clean, comfortable foundation for your bedding with this soft King fitted sheet. The smooth easy-care fabric feels fresh against the skin, while the elasticated edge wraps securely around the mattress for a tidy finish that stays in place. Ideal for everyday bedrooms and guest rooms.",
+      "description": "Create a clean, comfortable foundation for your bedding with this soft King fitted sheet. The smooth easy-care fabric feels fresh against the skin, while the elasticated edge wraps securely around the mattress for a tidy finish that stays in place. Ideal for everyday bedrooms and guest rooms.",
       "category": "Bedroom",
       "price": 5,
       "compareAtPrice": 10,
@@ -105,7 +110,8 @@
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:04.934Z"
+      "createdAt": "2026-09-03T12:33:04.934Z",
+      "updatedAt": "2026-09-03T12:47:55.003Z"
     },
     {
       "id": 89,
@@ -113,8 +119,8 @@
       "name": "Fitted Sheet - Double",
       "slug": "fitted-sheet-double-1788438784711",
       "shortDescription": "Smooth, easy-care Double fitted sheet with an elasticated edge for a neat and secure fit.",
-      "description": "Create a clean, comfortable foundation for your bedding with this soft Double fitted sheet. The smooth easy-care fabric feels fresh against the skin, while the elasticated edge wraps securely around the mattress for a tidy finish that stays in place. Ideal for everyday bedrooms and guest rooms.",
       "longDescription": "Create a clean, comfortable foundation for your bedding with this soft Double fitted sheet. The smooth easy-care fabric feels fresh against the skin, while the elasticated edge wraps securely around the mattress for a tidy finish that stays in place. Ideal for everyday bedrooms and guest rooms.",
+      "description": "Create a clean, comfortable foundation for your bedding with this soft Double fitted sheet. The smooth easy-care fabric feels fresh against the skin, while the elasticated edge wraps securely around the mattress for a tidy finish that stays in place. Ideal for everyday bedrooms and guest rooms.",
       "category": "Bedroom",
       "price": 5,
       "compareAtPrice": 8,
@@ -122,7 +128,8 @@
       "badge": "38% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:04.727Z"
+      "createdAt": "2026-09-03T12:33:04.727Z",
+      "updatedAt": "2026-09-03T12:47:54.787Z"
     },
     {
       "id": 88,
@@ -130,8 +137,8 @@
       "name": "Fitted Sheet - Single",
       "slug": "fitted-sheet-single-1788438784507",
       "shortDescription": "Smooth, easy-care Single fitted sheet with an elasticated edge for a neat and secure fit.",
-      "description": "Create a clean, comfortable foundation for your bedding with this soft Single fitted sheet. The smooth easy-care fabric feels fresh against the skin, while the elasticated edge wraps securely around the mattress for a tidy finish that stays in place. Ideal for everyday bedrooms and guest rooms.",
       "longDescription": "Create a clean, comfortable foundation for your bedding with this soft Single fitted sheet. The smooth easy-care fabric feels fresh against the skin, while the elasticated edge wraps securely around the mattress for a tidy finish that stays in place. Ideal for everyday bedrooms and guest rooms.",
+      "description": "Create a clean, comfortable foundation for your bedding with this soft Single fitted sheet. The smooth easy-care fabric feels fresh against the skin, while the elasticated edge wraps securely around the mattress for a tidy finish that stays in place. Ideal for everyday bedrooms and guest rooms.",
       "category": "Bedroom",
       "price": 5,
       "compareAtPrice": 7,
@@ -139,7 +146,8 @@
       "badge": "29% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:04.524Z"
+      "createdAt": "2026-09-03T12:33:04.524Z",
+      "updatedAt": "2026-09-03T12:47:54.565Z"
     },
     {
       "id": 87,
@@ -147,8 +155,8 @@
       "name": "Mattress Topper 10cm - Super King",
       "slug": "mattress-topper-10cm-super-king-1788438784299",
       "shortDescription": "Plush 10cm deep Super King mattress topper for an extra layer of softness and supportive comfort.",
-      "description": "Make bedtime feel more luxurious with this generously filled 10cm deep Super King mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
       "longDescription": "Make bedtime feel more luxurious with this generously filled 10cm deep Super King mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
+      "description": "Make bedtime feel more luxurious with this generously filled 10cm deep Super King mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
       "category": "Bedroom",
       "price": 40,
       "compareAtPrice": 60,
@@ -156,7 +164,8 @@
       "badge": "33% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:04.316Z"
+      "createdAt": "2026-09-03T12:33:04.316Z",
+      "updatedAt": "2026-09-03T12:35:52.150Z"
     },
     {
       "id": 86,
@@ -164,8 +173,8 @@
       "name": "Mattress Topper 10cm - King",
       "slug": "mattress-topper-10cm-king-1788438784092",
       "shortDescription": "Plush 10cm deep King mattress topper for an extra layer of softness and supportive comfort.",
-      "description": "Make bedtime feel more luxurious with this generously filled 10cm deep King mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
       "longDescription": "Make bedtime feel more luxurious with this generously filled 10cm deep King mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
+      "description": "Make bedtime feel more luxurious with this generously filled 10cm deep King mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
       "category": "Bedroom",
       "price": 35,
       "compareAtPrice": 50,
@@ -173,7 +182,8 @@
       "badge": "30% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:04.108Z"
+      "createdAt": "2026-09-03T12:33:04.108Z",
+      "updatedAt": "2026-09-03T12:35:52.349Z"
     },
     {
       "id": 85,
@@ -181,8 +191,8 @@
       "name": "Mattress Topper 10cm - Double",
       "slug": "mattress-topper-10cm-double-1788438783884",
       "shortDescription": "Plush 10cm deep Double mattress topper for an extra layer of softness and supportive comfort.",
-      "description": "Make bedtime feel more luxurious with this generously filled 10cm deep Double mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
       "longDescription": "Make bedtime feel more luxurious with this generously filled 10cm deep Double mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
+      "description": "Make bedtime feel more luxurious with this generously filled 10cm deep Double mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
       "category": "Bedroom",
       "price": 30,
       "compareAtPrice": 45,
@@ -190,7 +200,8 @@
       "badge": "33% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:03.900Z"
+      "createdAt": "2026-09-03T12:33:03.900Z",
+      "updatedAt": "2026-09-03T12:35:52.552Z"
     },
     {
       "id": 84,
@@ -198,8 +209,8 @@
       "name": "Mattress Topper 10cm - Single",
       "slug": "mattress-topper-10cm-single-1788438783673",
       "shortDescription": "Plush 10cm deep Single mattress topper for an extra layer of softness and supportive comfort.",
-      "description": "Make bedtime feel more luxurious with this generously filled 10cm deep Single mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
       "longDescription": "Make bedtime feel more luxurious with this generously filled 10cm deep Single mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
+      "description": "Make bedtime feel more luxurious with this generously filled 10cm deep Single mattress topper. Its lofty quilted construction adds cushioning and softness to your existing mattress, while secure corner straps help keep the topper in place through the night. An easy way to refresh your sleep surface without replacing your mattress.",
       "category": "Bedroom",
       "price": 25,
       "compareAtPrice": 35,
@@ -207,7 +218,8 @@
       "badge": "29% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:03.689Z"
+      "createdAt": "2026-09-03T12:33:03.689Z",
+      "updatedAt": "2026-09-03T12:35:52.762Z"
     },
     {
       "id": 83,
@@ -215,8 +227,8 @@
       "name": "Mattress Protector - Super King",
       "slug": "mattress-protector-super-king-1788438783467",
       "shortDescription": "Soft quilted mattress protector in Super King size, designed to help keep your mattress fresh and protected.",
-      "description": "Refresh and protect your bed with this soft quilted Super King mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
       "longDescription": "Refresh and protect your bed with this soft quilted Super King mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
+      "description": "Refresh and protect your bed with this soft quilted Super King mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
       "category": "Bedroom",
       "price": 15,
       "compareAtPrice": 25,
@@ -224,7 +236,8 @@
       "badge": "40% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:03.484Z"
+      "createdAt": "2026-09-03T12:33:03.484Z",
+      "updatedAt": "2026-09-03T12:35:52.958Z"
     },
     {
       "id": 82,
@@ -232,8 +245,8 @@
       "name": "Mattress Protector - King",
       "slug": "mattress-protector-king-1788438783210",
       "shortDescription": "Soft quilted mattress protector in King size, designed to help keep your mattress fresh and protected.",
-      "description": "Refresh and protect your bed with this soft quilted King mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
       "longDescription": "Refresh and protect your bed with this soft quilted King mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
+      "description": "Refresh and protect your bed with this soft quilted King mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
       "category": "Bedroom",
       "price": 11,
       "compareAtPrice": 22,
@@ -241,7 +254,8 @@
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:03.227Z"
+      "createdAt": "2026-09-03T12:33:03.227Z",
+      "updatedAt": "2026-09-03T12:35:53.157Z"
     },
     {
       "id": 81,
@@ -249,8 +263,8 @@
       "name": "Mattress Protector - Double",
       "slug": "mattress-protector-double-1788438783002",
       "shortDescription": "Soft quilted mattress protector in Double size, designed to help keep your mattress fresh and protected.",
-      "description": "Refresh and protect your bed with this soft quilted Double mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
       "longDescription": "Refresh and protect your bed with this soft quilted Double mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
+      "description": "Refresh and protect your bed with this soft quilted Double mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
       "category": "Bedroom",
       "price": 9,
       "compareAtPrice": 20,
@@ -258,7 +272,8 @@
       "badge": "55% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:03.019Z"
+      "createdAt": "2026-09-03T12:33:03.019Z",
+      "updatedAt": "2026-09-03T12:35:53.357Z"
     },
     {
       "id": 80,
@@ -266,8 +281,8 @@
       "name": "Mattress Protector - Single",
       "slug": "mattress-protector-single-1788438782745",
       "shortDescription": "Soft quilted mattress protector in Single size, designed to help keep your mattress fresh and protected.",
-      "description": "Refresh and protect your bed with this soft quilted Single mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
       "longDescription": "Refresh and protect your bed with this soft quilted Single mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
+      "description": "Refresh and protect your bed with this soft quilted Single mattress protector. The breathable padded surface adds a comfortable layer while helping shield your mattress from everyday spills, marks and wear. A secure elasticated skirt keeps it neatly fitted and makes it easy to remove for washing.",
       "category": "Bedroom",
       "price": 7,
       "compareAtPrice": 15,
@@ -275,7 +290,8 @@
       "badge": "53% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:33:02.762Z"
+      "createdAt": "2026-09-03T12:33:02.762Z",
+      "updatedAt": "2026-09-03T12:35:53.557Z"
     },
     {
       "id": 79,
@@ -283,8 +299,8 @@
       "name": "Hand Towel (1pc)",
       "slug": "hand-towel-1pc-1788437196163",
       "shortDescription": "Luxury cotton hand towel with woven jacquard border.",
-      "description": "100% cotton hand towel finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
       "longDescription": "100% cotton hand towel finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
+      "description": "100% cotton hand towel finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
       "category": "Home & Bath",
       "price": 3,
       "compareAtPrice": 6,
@@ -292,7 +308,8 @@
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:06:36.414Z"
+      "createdAt": "2026-09-03T12:06:36.414Z",
+      "updatedAt": "2026-09-03T12:24:23.688Z"
     },
     {
       "id": 78,
@@ -300,8 +317,8 @@
       "name": "Bath Towel (1pc)",
       "slug": "bath-towel-1pc-1788437196162",
       "shortDescription": "Luxury cotton bath towel with woven jacquard border.",
-      "description": "100% cotton bath towel finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
       "longDescription": "100% cotton bath towel finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
+      "description": "100% cotton bath towel finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
       "category": "Home & Bath",
       "price": 4,
       "compareAtPrice": 8,
@@ -309,7 +326,8 @@
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:06:36.323Z"
+      "createdAt": "2026-09-03T12:06:36.323Z",
+      "updatedAt": "2026-09-03T12:24:23.481Z"
     },
     {
       "id": 77,
@@ -317,8 +335,8 @@
       "name": "Bath Sheet (1pc)",
       "slug": "bath-sheet-1pc-1788437196161",
       "shortDescription": "Luxury cotton bath sheet with woven jacquard border.",
-      "description": "Extra-large 100% cotton bath sheet finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
       "longDescription": "Extra-large 100% cotton bath sheet finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
+      "description": "Extra-large 100% cotton bath sheet finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
       "category": "Home & Bath",
       "price": 5,
       "compareAtPrice": 10,
@@ -326,7 +344,8 @@
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T12:06:36.225Z"
+      "createdAt": "2026-09-03T12:06:36.225Z",
+      "updatedAt": "2026-09-03T12:24:23.247Z"
     },
     {
       "id": 76,
@@ -334,8 +353,8 @@
       "name": "Floral & Geometric Duvet Cover Set (3pc) - King",
       "slug": "floral-geometric-duvet-cover-set-3pc-king-1788435471154",
       "shortDescription": "Reversible duvet cover set with matching shams.",
-      "description": "3-piece reversible duvet cover set including duvet cover and 2 pillow shams. Soft breathable fabric. Designs: sage floral, tan geometric, blue floral, blush floral, soft pink floral, red/burgundy floral.",
       "longDescription": "3-piece reversible duvet cover set including duvet cover and 2 pillow shams. Soft breathable fabric. Designs: sage floral, tan geometric, blue floral, blush floral, soft pink floral, red/burgundy floral.",
+      "description": "3-piece reversible duvet cover set including duvet cover and 2 pillow shams. Soft breathable fabric. Designs: sage floral, tan geometric, blue floral, blush floral, soft pink floral, red/burgundy floral.",
       "category": "Bedding",
       "price": 10,
       "compareAtPrice": 40,
@@ -343,7 +362,8 @@
       "badge": "75% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:52.084Z"
+      "createdAt": "2026-09-03T11:37:52.084Z",
+      "updatedAt": "2026-09-03T12:27:25.055Z"
     },
     {
       "id": 75,
@@ -351,8 +371,8 @@
       "name": "Floral & Geometric Duvet Cover Set (3pc) - Double",
       "slug": "floral-geometric-duvet-cover-set-3pc-double-1788435471153",
       "shortDescription": "Reversible duvet cover set with matching shams.",
-      "description": "3-piece reversible duvet cover set including duvet cover and 2 pillow shams. Soft breathable fabric. Designs: sage floral, tan geometric, blue floral, blush floral, soft pink floral, red/burgundy floral.",
       "longDescription": "3-piece reversible duvet cover set including duvet cover and 2 pillow shams. Soft breathable fabric. Designs: sage floral, tan geometric, blue floral, blush floral, soft pink floral, red/burgundy floral.",
+      "description": "3-piece reversible duvet cover set including duvet cover and 2 pillow shams. Soft breathable fabric. Designs: sage floral, tan geometric, blue floral, blush floral, soft pink floral, red/burgundy floral.",
       "category": "Bedding",
       "price": 10,
       "compareAtPrice": 35,
@@ -360,7 +380,8 @@
       "badge": "71% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:52.016Z"
+      "createdAt": "2026-09-03T11:37:52.016Z",
+      "updatedAt": "2026-09-03T12:27:24.852Z"
     },
     {
       "id": 74,
@@ -368,8 +389,8 @@
       "name": "Floral & Geometric Duvet Cover Set (3pc) - Single",
       "slug": "floral-geometric-duvet-cover-set-3pc-single-1788435471152",
       "shortDescription": "Reversible duvet cover set with matching shams.",
-      "description": "3-piece reversible duvet cover set including duvet cover and 2 pillow shams. Soft breathable fabric. Designs: sage floral, tan geometric, blue floral, blush floral, soft pink floral, red/burgundy floral.",
       "longDescription": "3-piece reversible duvet cover set including duvet cover and 2 pillow shams. Soft breathable fabric. Designs: sage floral, tan geometric, blue floral, blush floral, soft pink floral, red/burgundy floral.",
+      "description": "3-piece reversible duvet cover set including duvet cover and 2 pillow shams. Soft breathable fabric. Designs: sage floral, tan geometric, blue floral, blush floral, soft pink floral, red/burgundy floral.",
       "category": "Bedding",
       "price": 8,
       "compareAtPrice": 30,
@@ -377,7 +398,8 @@
       "badge": "73% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.948Z"
+      "createdAt": "2026-09-03T11:37:51.948Z",
+      "updatedAt": "2026-09-03T12:27:24.653Z"
     },
     {
       "id": 73,
@@ -385,8 +407,8 @@
       "name": "Highland Cow Insulated Travel Tumbler (40oz)",
       "slug": "highland-cow-insulated-travel-tumbler-40oz-1788435471151",
       "shortDescription": "Insulated tumbler with Highland cow artwork.",
-      "description": "40oz insulated travel tumbler with carry handle, straw lid and stainless steel double-wall insulation. 6 Highland cow designs available.",
       "longDescription": "40oz insulated travel tumbler with carry handle, straw lid and stainless steel double-wall insulation. 6 Highland cow designs available.",
+      "description": "40oz insulated travel tumbler with carry handle, straw lid and stainless steel double-wall insulation. 6 Highland cow designs available.",
       "category": "Drinkware",
       "price": 15,
       "compareAtPrice": 25,
@@ -394,7 +416,8 @@
       "badge": "40% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.880Z"
+      "createdAt": "2026-09-03T11:37:51.880Z",
+      "updatedAt": "2026-09-03T11:51:52.349Z"
     },
     {
       "id": 72,
@@ -402,8 +425,8 @@
       "name": "Magic Cloth Microfibre Cleaning Cloths",
       "slug": "magic-cloth-microfibre-cleaning-cloths-1788435471150",
       "shortDescription": "Super-absorbent reusable microfibre cloths.",
-      "description": "High-quality microfibre cleaning cloths for any surface. Reusable and machine washable. Available in Orange, Green and Blue.",
       "longDescription": "High-quality microfibre cleaning cloths for any surface. Reusable and machine washable. Available in Orange, Green and Blue.",
+      "description": "High-quality microfibre cleaning cloths for any surface. Reusable and machine washable. Available in Orange, Green and Blue.",
       "category": "Household",
       "price": 2,
       "compareAtPrice": 10,
@@ -411,7 +434,8 @@
       "badge": "80% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.813Z"
+      "createdAt": "2026-09-03T11:37:51.813Z",
+      "updatedAt": "2026-09-03T11:45:34.766Z"
     },
     {
       "id": 71,
@@ -419,8 +443,8 @@
       "name": "Cotton King Luxury Pillow Pair",
       "slug": "cotton-king-luxury-pillow-pair-1788435471149",
       "shortDescription": "memory foam Comfort pillows in Copper, Aloe Vera, Bamboo, Cool Touch or Charcoal.",
-      "description": "memory foam 2-pack plush comfort pillows in a smart carry case. Choose from Copper (rejuvenating), Aloe Vera (soothing), Bamboo (cooling), Cool Touch (instantly cool) or Charcoal (purifying).",
       "longDescription": "memory foam 2-pack plush comfort pillows in a smart carry case. Choose from Copper (rejuvenating), Aloe Vera (soothing), Bamboo (cooling), Cool Touch (instantly cool) or Charcoal (purifying).",
+      "description": "memory foam 2-pack plush comfort pillows in a smart carry case. Choose from Copper (rejuvenating), Aloe Vera (soothing), Bamboo (cooling), Cool Touch (instantly cool) or Charcoal (purifying).",
       "category": "Bedding",
       "price": 15,
       "compareAtPrice": 49,
@@ -428,7 +452,8 @@
       "badge": "69% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.745Z"
+      "createdAt": "2026-09-03T11:37:51.745Z",
+      "updatedAt": "2026-09-03T11:51:52.597Z"
     },
     {
       "id": 70,
@@ -436,8 +461,8 @@
       "name": "Foldable Laptop Bed Tray Table",
       "slug": "foldable-laptop-bed-tray-table-1788435471148",
       "shortDescription": "Folding lap desk with cup holder and tablet slot.",
-      "description": "Foldable laptop tray table with built-in cup holder, tablet slot and sturdy folding legs. Easy-wipe surface. Available in Black and Natural Wood.",
       "longDescription": "Foldable laptop tray table with built-in cup holder, tablet slot and sturdy folding legs. Easy-wipe surface. Available in Black and Natural Wood.",
+      "description": "Foldable laptop tray table with built-in cup holder, tablet slot and sturdy folding legs. Easy-wipe surface. Available in Black and Natural Wood.",
       "category": "Furniture",
       "price": 8,
       "compareAtPrice": 15,
@@ -445,7 +470,8 @@
       "badge": "47% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.678Z"
+      "createdAt": "2026-09-03T11:37:51.678Z",
+      "updatedAt": "2026-09-03T11:51:52.812Z"
     },
     {
       "id": 69,
@@ -453,8 +479,8 @@
       "name": "Fluffy Round Pet Bed",
       "slug": "fluffy-round-pet-bed-1788435471147",
       "shortDescription": "Plush donut-style pet bed with bolster sides.",
-      "description": "Soft faux-fur donut pet bed with raised bolster sides for head and neck support. Machine washable. Available in Ivory, Charcoal, Slate, Grey and Blue-Grey.",
       "longDescription": "Soft faux-fur donut pet bed with raised bolster sides for head and neck support. Machine washable. Available in Ivory, Charcoal, Slate, Grey and Blue-Grey.",
+      "description": "Soft faux-fur donut pet bed with raised bolster sides for head and neck support. Machine washable. Available in Ivory, Charcoal, Slate, Grey and Blue-Grey.",
       "category": "Pet Supplies",
       "price": 10,
       "compareAtPrice": 29,
@@ -462,7 +488,8 @@
       "badge": "66% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.610Z"
+      "createdAt": "2026-09-03T11:37:51.610Z",
+      "updatedAt": "2026-09-03T11:51:53.031Z"
     },
     {
       "id": 68,
@@ -470,8 +497,8 @@
       "name": "Quilted Bedspread 3-Piece Set",
       "slug": "quilted-bedspread-3-piece-set-1788435471146",
       "shortDescription": "Diamond stitch quilted bedspread with gold trim.",
-      "description": "3-piece quilted bedspread set with diamond stitch pattern and contrasting Greek-key trim. Includes 1 bedspread and 2 pillow shams. Available in Black, Navy, White and Grey.",
       "longDescription": "3-piece quilted bedspread set with diamond stitch pattern and contrasting Greek-key trim. Includes 1 bedspread and 2 pillow shams. Available in Black, Navy, White and Grey.",
+      "description": "3-piece quilted bedspread set with diamond stitch pattern and contrasting Greek-key trim. Includes 1 bedspread and 2 pillow shams. Available in Black, Navy, White and Grey.",
       "category": "Bedding",
       "price": 15,
       "compareAtPrice": 39,
@@ -479,7 +506,8 @@
       "badge": "62% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.541Z"
+      "createdAt": "2026-09-03T11:37:51.541Z",
+      "updatedAt": "2026-09-03T11:58:23.399Z"
     },
     {
       "id": 67,
@@ -487,8 +515,8 @@
       "name": "Dr. Hawthorne Deep Tissue Mini Massager",
       "slug": "dr-hawthorne-deep-tissue-mini-massager-1788435471145",
       "shortDescription": "Compact percussion massage gun with 4 heads.",
-      "description": "Deep tissue mini massage gun with quiet high-torque motor, multiple speed levels and 4 interchangeable heads. Ideal for muscle recovery and everyday tension relief. Available in Black and Red.",
       "longDescription": "Deep tissue mini massage gun with quiet high-torque motor, multiple speed levels and 4 interchangeable heads. Ideal for muscle recovery and everyday tension relief. Available in Black and Red.",
+      "description": "Deep tissue mini massage gun with quiet high-torque motor, multiple speed levels and 4 interchangeable heads. Ideal for muscle recovery and everyday tension relief. Available in Black and Red.",
       "category": "Wellness",
       "price": 10,
       "compareAtPrice": 20,
@@ -496,7 +524,8 @@
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.474Z"
+      "createdAt": "2026-09-03T11:37:51.474Z",
+      "updatedAt": "2026-09-03T11:58:46.047Z"
     },
     {
       "id": 65,
@@ -504,8 +533,8 @@
       "name": "Bonappétit 8-Piece Non-Stick Cookware Set",
       "slug": "bonapp-tit-8-piece-non-stick-cookware-set-1788435471143",
       "shortDescription": "Marble ceramic non-stick cookware, 4 casserole sizes with lids.",
-      "description": "8-piece non-stick cookware set including 20cm, 24cm, 28cm and 32cm casseroles with marble ceramic coating, glass lids and soft-touch handles. Suitable for all hobs including induction.",
       "longDescription": "8-piece non-stick cookware set including 20cm, 24cm, 28cm and 32cm casseroles with marble ceramic coating, glass lids and soft-touch handles. Suitable for all hobs including induction.",
+      "description": "8-piece non-stick cookware set including 20cm, 24cm, 28cm and 32cm casseroles with marble ceramic coating, glass lids and soft-touch handles. Suitable for all hobs including induction.",
       "category": "Kitchen",
       "price": 45,
       "compareAtPrice": 90,
@@ -513,7 +542,8 @@
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.339Z"
+      "createdAt": "2026-09-03T11:37:51.339Z",
+      "updatedAt": "2026-09-03T11:59:14.185Z"
     },
     {
       "id": 63,
@@ -521,8 +551,8 @@
       "name": "Memory Foam Bath Mat Set (2pc)",
       "slug": "memory-foam-bath-mat-set-2pc-1788435471141",
       "shortDescription": "Plush non-slip memory foam bath mat with matching toilet contour mat.",
-      "description": "2-piece memory foam bath set with raised footprint design and Greek-key border. Includes a large rectangular rug and a matching contour mat. Soft, quick-drying and non-slip. Available in Black, Pink, Sky Blue, Beige, Royal Blue, Silver, Grey and Charcoal.",
       "longDescription": "2-piece memory foam bath set with raised footprint design and Greek-key border. Includes a large rectangular rug and a matching contour mat. Soft, quick-drying and non-slip. Available in Black, Pink, Sky Blue, Beige, Royal Blue, Silver, Grey and Charcoal.",
+      "description": "2-piece memory foam bath set with raised footprint design and Greek-key border. Includes a large rectangular rug and a matching contour mat. Soft, quick-drying and non-slip. Available in Black, Pink, Sky Blue, Beige, Royal Blue, Silver, Grey and Charcoal.",
       "category": "Home & Bath",
       "price": 8,
       "compareAtPrice": 15,
@@ -530,7 +560,8 @@
       "badge": "47% OFF",
       "featured": false,
       "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.197Z"
+      "createdAt": "2026-09-03T11:37:51.197Z",
+      "updatedAt": "2026-09-03T11:56:56.155Z"
     }
   ]
 }
