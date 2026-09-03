@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-09-03T11:51:54.555Z",
+  "publishedAt": "2026-09-03T11:56:57.255Z",
   "settings": {
     "gbpPerEur": 0.86
   },
@@ -248,14 +248,14 @@
       "longDescription": "2-piece memory foam bath set with raised footprint design and Greek-key border. Includes a large rectangular rug and a matching contour mat. Soft, quick-drying and non-slip. Available in Black, Pink, Sky Blue, Beige, Royal Blue, Silver, Grey and Charcoal.",
       "description": "2-piece memory foam bath set with raised footprint design and Greek-key border. Includes a large rectangular rug and a matching contour mat. Soft, quick-drying and non-slip. Available in Black, Pink, Sky Blue, Beige, Royal Blue, Silver, Grey and Charcoal.",
       "category": "Home & Bath",
-      "price": 9.99,
-      "compareAtPrice": 49,
+      "price": 8,
+      "compareAtPrice": 15,
       "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/85956388-5bdf-40d6-89e6-d6fef169aecf",
-      "badge": "80% OFF",
+      "badge": "47% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T11:37:51.197Z",
-      "updatedAt": "2026-09-03T11:37:51.197Z"
+      "updatedAt": "2026-09-03T11:56:56.155Z"
     }
   ]
 }
