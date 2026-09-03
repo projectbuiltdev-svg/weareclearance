@@ -8,9 +8,26 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Plus, Minus, ChevronRight, Tag } from "lucide-react"
 
+const towelGallerySkus = new Set(["SKU-2002-BS", "SKU-2002-BT", "SKU-2002-HT"])
+
+const towelGalleryImages = [
+  "/api/storage/objects/uploads/b6ca8149-30dd-4437-9b89-5c4e43850239",
+  "/api/storage/objects/uploads/ded604a3-9287-46b5-9b83-14a238461743",
+  "/api/storage/objects/uploads/31eecc12-fb11-4f55-8113-d5509392e5e0",
+  "/api/storage/objects/uploads/27f25777-d61a-4638-8cd9-658f2c158843",
+  "/api/storage/objects/uploads/1669482d-39dd-46ce-aec2-6d28551b3c4c",
+  "/api/storage/objects/uploads/f29fbf4b-f7c2-480a-9269-b41587bd0e0f",
+]
+
+function getProductImages(product: { sku: string; imageUrl: string } | undefined): string[] {
+  if (!product) return []
+  return towelGallerySkus.has(product.sku) ? towelGalleryImages : [product.imageUrl]
+}
+
 export default function ProductDetail() {
   const params = useParams<{ slug: string }>()
   const [quantity, setQuantity] = useState(1)
+  const [selectedImage, setSelectedImage] = useState("")
   const { addToCart } = useCart()
   const { formatPrice } = useCurrency()
   const { toast } = useToast()
@@ -22,6 +39,8 @@ export default function ProductDetail() {
 
   const products = Array.isArray(apiProducts) ? apiProducts : []
   const product = products.find(p => p.slug === params.slug)
+  const productImages = getProductImages(product)
+  const displayedImage = selectedImage || productImages[0]
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0)
@@ -32,6 +51,7 @@ export default function ProductDetail() {
   // Reset quantity when product changes
   useEffect(() => {
     setQuantity(1)
+    setSelectedImage(getProductImages(product)[0] ?? "")
   }, [product?.id])
 
   useEffect(() => {
@@ -85,7 +105,7 @@ export default function ProductDetail() {
         "@type": "Product",
         name: product.name,
         description: product.longDescription || product.description,
-        image: [product.imageUrl],
+        image: getProductImages(product),
         sku: product.sku,
         category: product.category,
         brand: { "@type": "Brand", name: "We Are Clearance" },
@@ -173,23 +193,43 @@ export default function ProductDetail() {
 
       {/* Main Product Area */}
       <div className="grid min-w-0 grid-cols-1 gap-8 md:grid-cols-2 md:gap-12 lg:gap-20">
-        {/* Image */}
-        <div className="group relative aspect-[4/3] min-w-0 overflow-hidden border border-border bg-[#fbfaf7] p-4 md:aspect-[4/5] md:p-8">
-          {product.badge && (
-            <div className="absolute left-3 top-3 z-10 md:left-6 md:top-6">
-              <Badge className="pointer-events-none rounded-none border border-blue-200/80 bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-blue-950 shadow-[0_8px_24px_-12px_rgba(30,64,175,0.55)] backdrop-blur-md before:mr-2 before:h-1.5 before:w-1.5 before:rotate-45 before:bg-blue-600 before:content-[''] md:px-4 md:py-2 md:text-[10px] md:tracking-[0.2em]">
-                {product.badge}
-              </Badge>
+        {/* Image gallery */}
+        <div className="min-w-0 space-y-3">
+          <div className="group relative aspect-[4/3] min-w-0 overflow-hidden border border-border bg-[#fbfaf7] p-4 md:aspect-[4/5] md:p-8">
+            {product.badge && (
+              <div className="absolute left-3 top-3 z-10 md:left-6 md:top-6">
+                <Badge className="pointer-events-none rounded-none border border-blue-200/80 bg-white/95 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-blue-950 shadow-[0_8px_24px_-12px_rgba(30,64,175,0.55)] backdrop-blur-md before:mr-2 before:h-1.5 before:w-1.5 before:rotate-45 before:bg-blue-600 before:content-[''] md:px-4 md:py-2 md:text-[10px] md:tracking-[0.2em]">
+                  {product.badge}
+                </Badge>
+              </div>
+            )}
+            {displayedImage ? (
+              <img
+                src={displayedImage}
+                alt={product.name}
+                className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-[1.02]"
+              />
+            ) : (
+              <span className="font-display italic text-6xl text-muted-foreground/30">C</span>
+            )}
+          </div>
+          {productImages.length > 1 && (
+            <div className="grid grid-cols-6 gap-2" aria-label={`${product.name} image gallery`}>
+              {productImages.map((image, index) => (
+                <button
+                  key={image}
+                  type="button"
+                  onClick={() => setSelectedImage(image)}
+                  aria-label={`View ${product.name} image ${index + 1}`}
+                  aria-pressed={displayedImage === image}
+                  className={`aspect-square overflow-hidden border bg-[#fbfaf7] p-1 transition-colors ${
+                    displayedImage === image ? "border-blue-700 ring-1 ring-blue-700" : "border-border hover:border-blue-400"
+                  }`}
+                >
+                  <img src={image} alt="" className="h-full w-full object-cover" />
+                </button>
+              ))}
             </div>
-          )}
-          {product.imageUrl ? (
-            <img 
-              src={product.imageUrl} 
-              alt={product.name} 
-              className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-[1.02]"
-            />
-          ) : (
-            <span className="font-display italic text-6xl text-muted-foreground/30">C</span>
           )}
         </div>
 
