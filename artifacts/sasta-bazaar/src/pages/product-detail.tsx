@@ -19,9 +19,21 @@ const towelGalleryImages = [
   "/api/storage/objects/uploads/f29fbf4b-f7c2-480a-9269-b41587bd0e0f",
 ]
 
+const beddingGallerySkus = new Set(["SKU-2013-S", "SKU-2013-D", "SKU-2013-K"])
+
+const beddingGalleryImages = [
+  "/api/storage/objects/uploads/61bcd4ff-8658-4cb2-927b-beaba904ea27",
+  "/api/storage/objects/uploads/f40a1b8b-e865-467f-9f50-18b5a7c411c3",
+  "/api/storage/objects/uploads/6280adaa-ce2f-45f9-8641-b342697412e7",
+  "/api/storage/objects/uploads/acd8bceb-7f07-4d39-b652-cf11089b1764",
+  "/api/storage/objects/uploads/74c4af5c-9f4c-4c92-84b4-8fbdada3d233",
+]
+
 function getProductImages(product: { sku: string; imageUrl: string } | undefined): string[] {
   if (!product) return []
-  return towelGallerySkus.has(product.sku) ? towelGalleryImages : [product.imageUrl]
+  if (towelGallerySkus.has(product.sku)) return towelGalleryImages
+  if (beddingGallerySkus.has(product.sku)) return beddingGalleryImages
+  return [product.imageUrl]
 }
 
 export default function ProductDetail() {
