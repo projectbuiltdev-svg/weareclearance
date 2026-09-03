@@ -10,23 +10,26 @@ import { Plus, Minus, ChevronRight, Tag } from "lucide-react"
 
 const towelGallerySkus = new Set(["SKU-2002-BS", "SKU-2002-BT", "SKU-2002-HT"])
 
+const productImageUrl = (objectId: string) =>
+  `https://weareclearance.replit.app/api/storage/objects/uploads/${objectId}`
+
 const towelGalleryImages = [
-  "/api/storage/objects/uploads/b6ca8149-30dd-4437-9b89-5c4e43850239",
-  "/api/storage/objects/uploads/ded604a3-9287-46b5-9b83-14a238461743",
-  "/api/storage/objects/uploads/31eecc12-fb11-4f55-8113-d5509392e5e0",
-  "/api/storage/objects/uploads/27f25777-d61a-4638-8cd9-658f2c158843",
-  "/api/storage/objects/uploads/1669482d-39dd-46ce-aec2-6d28551b3c4c",
-  "/api/storage/objects/uploads/f29fbf4b-f7c2-480a-9269-b41587bd0e0f",
+  productImageUrl("b6ca8149-30dd-4437-9b89-5c4e43850239"),
+  productImageUrl("ded604a3-9287-46b5-9b83-14a238461743"),
+  productImageUrl("31eecc12-fb11-4f55-8113-d5509392e5e0"),
+  productImageUrl("27f25777-d61a-4638-8cd9-658f2c158843"),
+  productImageUrl("1669482d-39dd-46ce-aec2-6d28551b3c4c"),
+  productImageUrl("f29fbf4b-f7c2-480a-9269-b41587bd0e0f"),
 ]
 
 const beddingGallerySkus = new Set(["SKU-2013-S", "SKU-2013-D", "SKU-2013-K"])
 
 const beddingGalleryImages = [
-  "/api/storage/objects/uploads/61bcd4ff-8658-4cb2-927b-beaba904ea27",
-  "/api/storage/objects/uploads/f40a1b8b-e865-467f-9f50-18b5a7c411c3",
-  "/api/storage/objects/uploads/6280adaa-ce2f-45f9-8641-b342697412e7",
-  "/api/storage/objects/uploads/acd8bceb-7f07-4d39-b652-cf11089b1764",
-  "/api/storage/objects/uploads/74c4af5c-9f4c-4c92-84b4-8fbdada3d233",
+  productImageUrl("61bcd4ff-8658-4cb2-927b-beaba904ea27"),
+  productImageUrl("f40a1b8b-e865-467f-9f50-18b5a7c411c3"),
+  productImageUrl("6280adaa-ce2f-45f9-8641-b342697412e7"),
+  productImageUrl("acd8bceb-7f07-4d39-b652-cf11089b1764"),
+  productImageUrl("74c4af5c-9f4c-4c92-84b4-8fbdada3d233"),
 ]
 
 function getProductImages(product: { sku: string; imageUrl: string } | undefined): string[] {
