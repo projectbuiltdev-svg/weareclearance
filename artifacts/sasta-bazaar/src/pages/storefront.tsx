@@ -37,17 +37,21 @@ const categoryGroups = [
   },
   {
     name: "Home & Sanctuary",
-    items: ["Bedroom", "Bathroom", "Storage", "Household Essentials"],
+    items: ["Bedding", "Furniture", "Home & Bath", "Household", "Pet Supplies"],
   },
   {
     name: "Kitchen & Dining",
-    items: ["Cookware", "Appliances", "Glassware & Drinkware", "Kitchen Accessories"],
+    items: ["Kitchen", "Drinkware"],
   },
   {
-    name: "Gifting & Seasonal",
-    items: ["Gifts for Her", "Gifts for Him", "Gift Sets", "Garden & Outdoor"],
+    name: "Lifestyle & Outdoor",
+    items: ["Wellness", "Outdoor & Camping"],
   }
 ] as const
+
+function categorySlug(category: string): string {
+  return category.toLowerCase().trim().replace(/\s*&\s*/g, "-").replace(/\s+/g, "-")
+}
 
 function ProductCarousel({
   title,
@@ -194,8 +198,8 @@ export default function Storefront() {
       return product.badge === "Last Chance" || (product.compareAtPrice != null && product.compareAtPrice > product.price)
     }
     const departmentCategories: Record<string, string[]> = {
-      "home-living": ["Bedroom", "Pillows", "Duvet Covers & Bed Sets", "Sheets", "Bathroom", "Towels", "Bathrobes", "Storage", "Household Essentials", "For the Home"],
-      "kitchen-dining": ["Cookware", "Appliances", "Food Storage", "Glassware & Drinkware", "Kitchen Accessories"],
+      "home-living": ["Bedroom", "Pillows", "Duvet Covers & Bed Sets", "Sheets", "Bathroom", "Towels", "Bathrobes", "Storage", "Household Essentials", "For the Home", "Bedding", "Furniture", "Home & Bath", "Household", "Pet Supplies"],
+      "kitchen-dining": ["Cookware", "Appliances", "Food Storage", "Glassware & Drinkware", "Kitchen Accessories", "Kitchen", "Drinkware"],
       gifts: ["Gifts for Her", "Gifts for Him", "Home Gifts", "Gift Sets"],
       bedroom: ["Bedroom"],
       pillows: ["Pillows"],
@@ -222,7 +226,9 @@ export default function Storefront() {
       "garden-accessories": ["Garden Accessories"],
       "camping-outdoor": ["Camping & Outdoor"],
     }
-    return departmentCategories[menuFilter]?.includes(product.category) ?? true
+    const indexedCategories = departmentCategories[menuFilter]
+    if (indexedCategories) return indexedCategories.includes(product.category)
+    return categorySlug(product.category) === menuFilter
   })
 
   const handleAddToCart = (product: any) => {
@@ -327,6 +333,11 @@ export default function Storefront() {
               "Storage",
               "Household Essentials",
               "For the Home",
+              "Bedding",
+              "Furniture",
+              "Home & Bath",
+              "Household",
+              "Pet Supplies",
             ].includes(product.category),
           )}
           onAdd={handleAddToCart}
@@ -342,10 +353,21 @@ export default function Storefront() {
               "Food Storage",
               "Glassware & Drinkware",
               "Kitchen Accessories",
+              "Kitchen",
+              "Drinkware",
             ].includes(product.category),
           )}
           onAdd={handleAddToCart}
           viewAllHref="/collections/kitchen-dining"
+        />
+
+        <ProductCarousel
+          title="Lifestyle & Outdoor"
+          products={visibleProducts.filter((product) =>
+            ["Wellness", "Outdoor & Camping"].includes(product.category),
+          )}
+          onAdd={handleAddToCart}
+          viewAllHref="/collections/lifestyle-outdoor"
         />
 
         <ProductCarousel
