@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Plus, Minus, ChevronRight, Tag } from "lucide-react"
+import { staticProducts } from "@/data/static-products"
 
 const towelGallerySkus = new Set(["SKU-2002-BS", "SKU-2002-BT", "SKU-2002-HT"])
 
@@ -84,7 +85,12 @@ export default function ProductDetail() {
     { query: { queryKey: ["/api/products"] } }
   )
 
-  const products = Array.isArray(apiProducts) ? apiProducts : []
+  const liveProducts = Array.isArray(apiProducts) ? apiProducts : []
+  const liveProductKeys = new Set(liveProducts.map((item) => item.sku || item.slug))
+  const products = [
+    ...liveProducts,
+    ...staticProducts.filter((item) => !liveProductKeys.has(item.sku || item.slug)),
+  ]
   const product = products.find(p => p.slug === params.slug)
   const productImages = getProductImages(product)
   const displayedImage = selectedImage || productImages[0]
