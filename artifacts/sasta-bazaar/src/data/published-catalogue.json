@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-09-03T12:07:57.155Z",
+  "publishedAt": "2026-09-03T12:24:39.683Z",
   "settings": {
     "gbpPerEur": 0.86
   },
@@ -16,12 +16,12 @@
       "category": "Home & Bath",
       "price": 3,
       "compareAtPrice": 6,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/815a86c6-6c2f-462c-88fe-cdbcb75087b2",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/b6ca8149-30dd-4437-9b89-5c4e43850239",
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T12:06:36.414Z",
-      "updatedAt": "2026-09-03T12:06:36.414Z"
+      "updatedAt": "2026-09-03T12:24:23.688Z"
     },
     {
       "id": 78,
@@ -34,12 +34,12 @@
       "category": "Home & Bath",
       "price": 4,
       "compareAtPrice": 8,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/815a86c6-6c2f-462c-88fe-cdbcb75087b2",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/b6ca8149-30dd-4437-9b89-5c4e43850239",
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T12:06:36.323Z",
-      "updatedAt": "2026-09-03T12:06:36.323Z"
+      "updatedAt": "2026-09-03T12:24:23.481Z"
     },
     {
       "id": 77,
@@ -52,12 +52,12 @@
       "category": "Home & Bath",
       "price": 5,
       "compareAtPrice": 10,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/815a86c6-6c2f-462c-88fe-cdbcb75087b2",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/b6ca8149-30dd-4437-9b89-5c4e43850239",
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T12:06:36.225Z",
-      "updatedAt": "2026-09-03T12:06:36.225Z"
+      "updatedAt": "2026-09-03T12:24:23.247Z"
     },
     {
       "id": 76,
