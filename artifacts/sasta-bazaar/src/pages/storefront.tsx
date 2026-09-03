@@ -29,6 +29,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import heroImage from "@/assets/homeware-clearance-hero.jpg"
+import { staticCategories, staticProducts } from "@/data/static-products"
 
 const categoryGroups = [
   {
@@ -170,8 +171,8 @@ export default function Storefront() {
   }, [location])
   
   const { data: apiProducts } = useListProducts(
-    { search: search || undefined, category: category || undefined },
-    { query: { queryKey: ["/api/products", search, category] } }
+    {},
+    { query: { queryKey: ["/api/products"] } }
   )
   
   const { data: apiCategories } = useListCategories({ query: { queryKey: ["/api/categories"] } })
@@ -179,9 +180,30 @@ export default function Storefront() {
   const { formatPrice } = useCurrency()
   const { toast } = useToast()
   
-  const products = Array.isArray(apiProducts) ? apiProducts : []
+  const liveProducts = Array.isArray(apiProducts) ? apiProducts : []
+  const liveProductKeys = new Set(liveProducts.map((product) => product.sku || product.slug))
+  const allProducts = [
+    ...liveProducts,
+    ...staticProducts.filter((product) => !liveProductKeys.has(product.sku || product.slug)),
+  ]
+  const normalizedSearch = search.trim().toLowerCase()
+  const products = allProducts.filter((product) => {
+    if (category && product.category !== category) return false
+    if (!normalizedSearch) return true
+    return [
+      product.name,
+      product.sku,
+      product.category,
+      product.shortDescription,
+      product.longDescription,
+      product.description,
+    ].some((value) => value?.toLowerCase().includes(normalizedSearch))
+  })
   
-  const categories = Array.isArray(apiCategories) ? apiCategories : []
+  const categories = [...new Set([
+    ...(Array.isArray(apiCategories) ? apiCategories : []),
+    ...staticCategories,
+  ])].sort()
   
   const visibleProducts = products.filter((product) => {
     if (!menuFilter) return true
