@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useCart } from "@/lib/cart"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,9 +10,21 @@ import { apiFetch } from "@/lib/api"
 import { useToast } from "@/hooks/use-toast"
 import { Separator } from "@/components/ui/separator"
 
+declare global {
+  interface Window {
+    SumUpCard?: {
+      mount: (configuration: {
+        id: string
+        checkoutId: string
+        onResponse: (type: string, body: unknown) => void
+      }) => { unmount: () => void }
+    }
+  }
+}
+
 export default function Checkout() {
   const { items, updateQuantity, removeFromCart, total, clearCart } = useCart()
-  const { formatPrice } = useCurrency()
+  const { currency, formatPrice } = useCurrency()
   const [, setLocation] = useLocation()
   const { toast } = useToast()
   
@@ -22,32 +34,114 @@ export default function Checkout() {
   const [city, setCity] = useState("")
   const [postcode, setPostcode] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [checkoutId, setCheckoutId] = useState<string | null>(null)
+  const sumUpCardRef = useRef<{ unmount: () => void } | null>(null)
 
-  const handleCheckout = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (items.length === 0 || isSubmitting) return
-
+  const verifyPayment = async (id: string) => {
     setIsSubmitting(true)
     try {
-      const response = await apiFetch("/api/orders/complete", {
+      const response = await apiFetch("/api/payments/sumup/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items: items.map((item) => ({ productId: item.id, quantity: item.quantity })),
-        }),
+        body: JSON.stringify({ checkoutId: id }),
       })
       const body = await response.json()
-      if (!response.ok) throw new Error(body.error || "Could not complete the order")
+      if (!response.ok) throw new Error(body.error || "Could not verify the payment")
 
       toast({
-        title: "Order Placed Successfully",
-        description: "Thank you for shopping with We Are Clearance. Your demo order has been received.",
+        title: "Payment Successful",
+        description: "Thank you for shopping with We Are Clearance. Your paid order has been received.",
       })
       clearCart()
       setLocation("/")
     } catch (error) {
       toast({
-        title: "Order could not be completed",
+        title: "Payment verification failed",
+        description: error instanceof Error ? error.message : "Please try again or contact support.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  useEffect(() => {
+    if (!checkoutId) return
+    let cancelled = false
+
+    const mountCard = () => {
+      if (cancelled || !window.SumUpCard) return
+      sumUpCardRef.current?.unmount()
+      sumUpCardRef.current = window.SumUpCard.mount({
+        id: "sumup-card",
+        checkoutId,
+        onResponse: (type: string) => {
+          if (type === "success") void verifyPayment(checkoutId)
+          if (type === "error" || type === "fail") {
+            toast({
+              title: "Payment was not completed",
+              description: "Please check your payment details and try again.",
+              variant: "destructive",
+            })
+          }
+        },
+      })
+    }
+
+    if (window.SumUpCard) {
+      mountCard()
+    } else {
+      const existing = document.querySelector<HTMLScriptElement>('script[data-sumup-card="true"]')
+      const script = existing ?? document.createElement("script")
+      if (!existing) {
+        script.src = "https://gateway.sumup.com/gateway/ecom/card/v2/sdk.js"
+        script.async = true
+        script.dataset.sumupCard = "true"
+        document.head.appendChild(script)
+      }
+      script.addEventListener("load", mountCard, { once: true })
+    }
+
+    return () => {
+      cancelled = true
+      sumUpCardRef.current?.unmount()
+      sumUpCardRef.current = null
+    }
+  }, [checkoutId])
+
+  const handleCheckout = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (items.length === 0 || isSubmitting) return
+    if (![name, email, address, city, postcode].every((value) => value.trim())) {
+      toast({
+        title: "Delivery details required",
+        description: "Please complete your contact and delivery information.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      const response = await apiFetch("/api/payments/sumup/checkouts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((item) => ({ productId: item.id, quantity: item.quantity })),
+          currency: currency === "£" ? "GBP" : "EUR",
+          name,
+          email,
+          address,
+          city,
+          postcode,
+        }),
+      })
+      const body = await response.json()
+      if (!response.ok) throw new Error(body.error || "Could not start the payment")
+      setCheckoutId(body.checkoutId)
+    } catch (error) {
+      toast({
+        title: "Payment could not be started",
         description: error instanceof Error ? error.message : "Please review your bag and try again.",
         variant: "destructive",
       })
@@ -181,15 +275,27 @@ export default function Checkout() {
                 <div className="bg-accent/5 border border-accent/20 p-6 flex gap-4 text-foreground mb-8">
                   <Lock className="h-5 w-5 text-accent shrink-0 mt-0.5" />
                   <div className="text-sm font-light">
-                    <p className="font-medium mb-1 uppercase tracking-widest text-[10px]">Secure Demo Checkout</p>
-                    <p className="leading-relaxed">This is a demonstration environment. No real payment is required or processed. Click 'Complete Order' below to proceed.</p>
+                    <p className="font-medium mb-1 uppercase tracking-widest text-[10px]">Secure SumUp Checkout</p>
+                    <p className="leading-relaxed">Your card details are collected securely by SumUp and never pass through our server.</p>
                   </div>
                 </div>
-                
-                <Button type="submit" form="checkout-form" size="lg" disabled={isSubmitting} className="w-full text-xs uppercase tracking-widest font-semibold h-14 rounded-none bg-primary hover:bg-primary/90 text-white shadow-none">
-                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  {isSubmitting ? "Completing Order" : "Complete Order"}
-                </Button>
+
+                {checkoutId ? (
+                  <div>
+                    <div id="sumup-card" />
+                    {isSubmitting && (
+                      <div className="mt-4 flex items-center justify-center text-xs uppercase tracking-widest text-muted-foreground">
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Verifying payment
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Button type="submit" form="checkout-form" size="lg" disabled={isSubmitting} className="w-full text-xs uppercase tracking-widest font-semibold h-14 rounded-none bg-primary hover:bg-primary/90 text-white shadow-none">
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {isSubmitting ? "Starting Secure Payment" : "Continue to SumUp Payment"}
+                  </Button>
+                )}
               </div>
 
             </div>
