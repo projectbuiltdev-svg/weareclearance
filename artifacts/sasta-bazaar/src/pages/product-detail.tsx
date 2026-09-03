@@ -47,17 +47,17 @@ const mattressTopperGalleryImages = [
 ]
 
 const fittedSheetGallerySkus = new Set(["SKU-2016-S", "SKU-2016-D", "SKU-2016-K"])
-const fittedSheetGalleryImages = [
-  productImageUrl("8e6ec33e-567a-4a83-af0f-8ded9fd06d28"),
-  productImageUrl("69500ab6-0d90-44fd-b49f-a6675bba7cf1"),
-  productImageUrl("f4e3cdb1-bc76-4d6d-8964-872227065633"),
-]
 
 const extraDeepSheetGallerySkus = new Set(["SKU-2017-S", "SKU-2017-D", "SKU-2017-K", "SKU-2017-SK"])
-const extraDeepSheetGalleryImages = [
-  productImageUrl("c1e6cb74-3d5b-415a-b631-78dd0ac22138"),
-  productImageUrl("aee2d709-fd1b-41d3-a248-7a79554beb9a"),
-  productImageUrl("fc3bb0dd-92c8-43c7-8488-82e9376abe8e"),
+const fittedSheetColourGalleryImages = [
+  productImageUrl("97599001-1463-4f32-ae70-d1b7af251584"),
+  productImageUrl("334fa716-58b7-4ea1-a51c-7b94090b8d0b"),
+  productImageUrl("5682a5ca-c49a-4034-864e-a962f036a8c7"),
+  productImageUrl("1fc193eb-a103-4699-9d9d-15126383923b"),
+  productImageUrl("206e755f-9439-44fe-a252-7c4c04c3e218"),
+  productImageUrl("a475920a-d3fb-4902-b214-039d1edf58e5"),
+  productImageUrl("734d97fa-2cd0-4bbb-9734-64f8aba8463d"),
+  productImageUrl("f570c609-dec1-4dc2-9fa6-840671642966"),
 ]
 
 function getProductImages(product: { sku: string; imageUrl: string } | undefined): string[] {
@@ -66,8 +66,8 @@ function getProductImages(product: { sku: string; imageUrl: string } | undefined
   if (beddingGallerySkus.has(product.sku)) return beddingGalleryImages
   if (mattressProtectorGallerySkus.has(product.sku)) return mattressProtectorGalleryImages
   if (mattressTopperGallerySkus.has(product.sku)) return mattressTopperGalleryImages
-  if (fittedSheetGallerySkus.has(product.sku)) return fittedSheetGalleryImages
-  if (extraDeepSheetGallerySkus.has(product.sku)) return extraDeepSheetGalleryImages
+  if (fittedSheetGallerySkus.has(product.sku)) return fittedSheetColourGalleryImages
+  if (extraDeepSheetGallerySkus.has(product.sku)) return fittedSheetColourGalleryImages
   return [product.imageUrl]
 }
 
