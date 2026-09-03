@@ -28,7 +28,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import heroImage from "@/assets/retail-hero.jpg"
+import heroImage from "@/assets/homeware-clearance-hero.jpg"
 
 const categoryGroups = [
   {
@@ -265,7 +265,7 @@ export default function Storefront() {
         <div className="absolute inset-0 z-0">
           <img 
             src={heroImage} 
-            alt="European Department Store" 
+            alt="Clearance homeware, bedding, kitchenware and home living collection"
             className="h-full w-full object-cover object-[68%_center] sm:object-[60%_center] md:object-[center_30%]"
             onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
