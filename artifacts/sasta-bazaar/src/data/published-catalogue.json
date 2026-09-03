@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-09-03T12:35:54.099Z",
+  "publishedAt": "2026-09-03T12:39:37.191Z",
   "settings": {
     "gbpPerEur": 0.86
   },
@@ -16,12 +16,12 @@
       "category": "Bedroom",
       "price": 15,
       "compareAtPrice": 18,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/c1e6cb74-3d5b-415a-b631-78dd0ac22138",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/97599001-1463-4f32-ae70-d1b7af251584",
       "badge": "17% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T12:33:05.774Z",
-      "updatedAt": "2026-09-03T12:35:50.649Z"
+      "updatedAt": "2026-09-03T12:39:35.447Z"
     },
     {
       "id": 93,
@@ -34,12 +34,12 @@
       "category": "Bedroom",
       "price": 12,
       "compareAtPrice": 15,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/c1e6cb74-3d5b-415a-b631-78dd0ac22138",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/97599001-1463-4f32-ae70-d1b7af251584",
       "badge": "20% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T12:33:05.562Z",
-      "updatedAt": "2026-09-03T12:35:50.878Z"
+      "updatedAt": "2026-09-03T12:39:35.647Z"
     },
     {
       "id": 92,
@@ -52,12 +52,12 @@
       "category": "Bedroom",
       "price": 10,
       "compareAtPrice": 12,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/c1e6cb74-3d5b-415a-b631-78dd0ac22138",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/97599001-1463-4f32-ae70-d1b7af251584",
       "badge": "17% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T12:33:05.355Z",
-      "updatedAt": "2026-09-03T12:35:51.084Z"
+      "updatedAt": "2026-09-03T12:39:35.856Z"
     },
     {
       "id": 91,
@@ -70,12 +70,12 @@
       "category": "Bedroom",
       "price": 8,
       "compareAtPrice": 10,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/c1e6cb74-3d5b-415a-b631-78dd0ac22138",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/97599001-1463-4f32-ae70-d1b7af251584",
       "badge": "20% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T12:33:05.143Z",
-      "updatedAt": "2026-09-03T12:35:51.327Z"
+      "updatedAt": "2026-09-03T12:39:36.053Z"
     },
     {
       "id": 90,
@@ -88,12 +88,12 @@
       "category": "Bedroom",
       "price": 5,
       "compareAtPrice": 10,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/8e6ec33e-567a-4a83-af0f-8ded9fd06d28",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/97599001-1463-4f32-ae70-d1b7af251584",
       "badge": "50% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T12:33:04.934Z",
-      "updatedAt": "2026-09-03T12:35:51.555Z"
+      "updatedAt": "2026-09-03T12:39:36.254Z"
     },
     {
       "id": 89,
@@ -106,12 +106,12 @@
       "category": "Bedroom",
       "price": 5,
       "compareAtPrice": 8,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/8e6ec33e-567a-4a83-af0f-8ded9fd06d28",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/97599001-1463-4f32-ae70-d1b7af251584",
       "badge": "38% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T12:33:04.727Z",
-      "updatedAt": "2026-09-03T12:35:51.750Z"
+      "updatedAt": "2026-09-03T12:39:36.452Z"
     },
     {
       "id": 88,
@@ -124,12 +124,12 @@
       "category": "Bedroom",
       "price": 5,
       "compareAtPrice": 7,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/8e6ec33e-567a-4a83-af0f-8ded9fd06d28",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/97599001-1463-4f32-ae70-d1b7af251584",
       "badge": "29% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T12:33:04.524Z",
-      "updatedAt": "2026-09-03T12:35:51.955Z"
+      "updatedAt": "2026-09-03T12:39:36.664Z"
     },
     {
       "id": 87,
