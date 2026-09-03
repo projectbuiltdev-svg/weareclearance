@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-09-03T11:43:29.001Z",
+  "publishedAt": "2026-09-03T11:51:54.555Z",
   "settings": {
     "gbpPerEur": 0.86
   },
@@ -68,14 +68,14 @@
       "longDescription": "40oz insulated travel tumbler with carry handle, straw lid and stainless steel double-wall insulation. 6 Highland cow designs available.",
       "description": "40oz insulated travel tumbler with carry handle, straw lid and stainless steel double-wall insulation. 6 Highland cow designs available.",
       "category": "Drinkware",
-      "price": 9.99,
-      "compareAtPrice": 49,
+      "price": 15,
+      "compareAtPrice": 25,
       "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/699f2b3a-7044-4da5-a0d9-be23ce83a44b",
-      "badge": "80% OFF",
+      "badge": "40% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T11:37:51.880Z",
-      "updatedAt": "2026-09-03T11:37:51.880Z"
+      "updatedAt": "2026-09-03T11:51:52.349Z"
     },
     {
       "id": 72,
@@ -86,32 +86,32 @@
       "longDescription": "High-quality microfibre cleaning cloths for any surface. Reusable and machine washable. Available in Orange, Green and Blue.",
       "description": "High-quality microfibre cleaning cloths for any surface. Reusable and machine washable. Available in Orange, Green and Blue.",
       "category": "Household",
-      "price": 9.99,
-      "compareAtPrice": 49,
+      "price": 2,
+      "compareAtPrice": 10,
       "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/ede28168-348b-4494-a163-f027ede6b936",
       "badge": "80% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T11:37:51.813Z",
-      "updatedAt": "2026-09-03T11:37:51.813Z"
+      "updatedAt": "2026-09-03T11:45:34.766Z"
     },
     {
       "id": 71,
       "sku": "SKU-2009",
       "name": "Cotton King Luxury Pillow Pair",
       "slug": "cotton-king-luxury-pillow-pair-1788435471149",
-      "shortDescription": "Comfort pillows in Copper, Aloe Vera, Bamboo, Cool Touch or Charcoal.",
-      "longDescription": "2-pack plush comfort pillows in a smart carry case. Choose from Copper (rejuvenating), Aloe Vera (soothing), Bamboo (cooling), Cool Touch (instantly cool) or Charcoal (purifying).",
-      "description": "2-pack plush comfort pillows in a smart carry case. Choose from Copper (rejuvenating), Aloe Vera (soothing), Bamboo (cooling), Cool Touch (instantly cool) or Charcoal (purifying).",
+      "shortDescription": "memory foam Comfort pillows in Copper, Aloe Vera, Bamboo, Cool Touch or Charcoal.",
+      "longDescription": "memory foam 2-pack plush comfort pillows in a smart carry case. Choose from Copper (rejuvenating), Aloe Vera (soothing), Bamboo (cooling), Cool Touch (instantly cool) or Charcoal (purifying).",
+      "description": "memory foam 2-pack plush comfort pillows in a smart carry case. Choose from Copper (rejuvenating), Aloe Vera (soothing), Bamboo (cooling), Cool Touch (instantly cool) or Charcoal (purifying).",
       "category": "Bedding",
-      "price": 9.99,
+      "price": 15,
       "compareAtPrice": 49,
       "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/91e3cbac-ecfb-4f0d-a146-ab5610cf1c94",
-      "badge": "80% OFF",
+      "badge": "69% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T11:37:51.745Z",
-      "updatedAt": "2026-09-03T11:37:51.745Z"
+      "updatedAt": "2026-09-03T11:51:52.597Z"
     },
     {
       "id": 70,
@@ -122,14 +122,14 @@
       "longDescription": "Foldable laptop tray table with built-in cup holder, tablet slot and sturdy folding legs. Easy-wipe surface. Available in Black and Natural Wood.",
       "description": "Foldable laptop tray table with built-in cup holder, tablet slot and sturdy folding legs. Easy-wipe surface. Available in Black and Natural Wood.",
       "category": "Furniture",
-      "price": 9.99,
-      "compareAtPrice": 49,
+      "price": 8,
+      "compareAtPrice": 15,
       "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/2f3aa30e-44e3-4358-8df4-598559e2780a",
-      "badge": "80% OFF",
+      "badge": "47% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T11:37:51.678Z",
-      "updatedAt": "2026-09-03T11:37:51.678Z"
+      "updatedAt": "2026-09-03T11:51:52.812Z"
     },
     {
       "id": 69,
@@ -140,14 +140,14 @@
       "longDescription": "Soft faux-fur donut pet bed with raised bolster sides for head and neck support. Machine washable. Available in Ivory, Charcoal, Slate, Grey and Blue-Grey.",
       "description": "Soft faux-fur donut pet bed with raised bolster sides for head and neck support. Machine washable. Available in Ivory, Charcoal, Slate, Grey and Blue-Grey.",
       "category": "Pet Supplies",
-      "price": 9.99,
-      "compareAtPrice": 49,
+      "price": 10,
+      "compareAtPrice": 29,
       "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/9c1a6b66-ff32-44e5-8522-c580370fd32f",
-      "badge": "80% OFF",
+      "badge": "66% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T11:37:51.610Z",
-      "updatedAt": "2026-09-03T11:37:51.610Z"
+      "updatedAt": "2026-09-03T11:51:53.031Z"
     },
     {
       "id": 68,
