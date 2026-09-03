@@ -55,8 +55,8 @@ const routes = [
   {
     path: "/",
     output: clientHtmlPath,
-    title: "Clearance Homeware, Gifts & Everyday Deals | We Are Clearance",
-    description: "Shop clearance homeware, kitchen essentials, affordable gifts and everyday deals at We Are Clearance, with delivery across the UK and Ireland.",
+    title: "We Are Clearance | Everyday Home & Kitchen Essentials Up to 80% Off",
+    description: "Shop everyday home, kitchen and lifestyle essentials at clearance prices. Save up to 80% on bedding, towels, kitchenware and more — quality products, honest prices.",
     robots: "index, follow",
     structuredData: [faqSchema],
   },

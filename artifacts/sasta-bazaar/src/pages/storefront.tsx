@@ -278,11 +278,11 @@ export default function Storefront() {
             We Are Clearance
           </p>
           <h1 className="font-display mb-6 text-4xl leading-[1.03] !text-white sm:text-5xl md:mb-8 md:text-7xl">
-            Elevated living,<br />
-            <span className="font-light italic !text-white">accessible elegance.</span>
+            Everyday essentials.<br />
+            <span className="font-light italic !text-white">Clearance prices.</span>
           </h1>
           <p className="mb-8 max-w-lg text-base font-light leading-relaxed text-white/90 sm:text-lg md:mb-10">
-            Discover our curated collection of premium home, kitchen, and lifestyle essentials. Distinctive design without the typical premium price tag.
+            Quality home, kitchen and lifestyle products at up to 80% off — because everyday items shouldn't cost a fortune.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-5">
             <Button asChild size="lg" className="h-13 w-full rounded-none bg-white px-7 text-xs font-semibold uppercase tracking-widest text-black hover:bg-gray-100 sm:h-14 sm:w-auto sm:px-10">
