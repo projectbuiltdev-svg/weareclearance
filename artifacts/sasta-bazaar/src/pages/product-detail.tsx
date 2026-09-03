@@ -32,10 +32,42 @@ const beddingGalleryImages = [
   productImageUrl("74c4af5c-9f4c-4c92-84b4-8fbdada3d233"),
 ]
 
+const mattressProtectorGallerySkus = new Set(["SKU-2014-S", "SKU-2014-D", "SKU-2014-K", "SKU-2014-SK"])
+const mattressProtectorGalleryImages = [
+  productImageUrl("e7be354f-e9f8-45f9-8402-dced7c6cd484"),
+  productImageUrl("0dcc5ce7-8cd6-40bc-b52b-c391ee7e6a6c"),
+  productImageUrl("c7ce5fca-5caf-4d7a-ba17-8f1b5e4933f0"),
+]
+
+const mattressTopperGallerySkus = new Set(["SKU-2015-S", "SKU-2015-D", "SKU-2015-K", "SKU-2015-SK"])
+const mattressTopperGalleryImages = [
+  productImageUrl("f5d83ac5-ebfe-462d-970b-879e0731b8ae"),
+  productImageUrl("58a80e58-f263-43e9-b386-e57298f244a9"),
+  productImageUrl("4735ad9a-51f7-4491-a7b9-195d858d6399"),
+]
+
+const fittedSheetGallerySkus = new Set(["SKU-2016-S", "SKU-2016-D", "SKU-2016-K"])
+const fittedSheetGalleryImages = [
+  productImageUrl("8e6ec33e-567a-4a83-af0f-8ded9fd06d28"),
+  productImageUrl("69500ab6-0d90-44fd-b49f-a6675bba7cf1"),
+  productImageUrl("f4e3cdb1-bc76-4d6d-8964-872227065633"),
+]
+
+const extraDeepSheetGallerySkus = new Set(["SKU-2017-S", "SKU-2017-D", "SKU-2017-K", "SKU-2017-SK"])
+const extraDeepSheetGalleryImages = [
+  productImageUrl("c1e6cb74-3d5b-415a-b631-78dd0ac22138"),
+  productImageUrl("aee2d709-fd1b-41d3-a248-7a79554beb9a"),
+  productImageUrl("fc3bb0dd-92c8-43c7-8488-82e9376abe8e"),
+]
+
 function getProductImages(product: { sku: string; imageUrl: string } | undefined): string[] {
   if (!product) return []
   if (towelGallerySkus.has(product.sku)) return towelGalleryImages
   if (beddingGallerySkus.has(product.sku)) return beddingGalleryImages
+  if (mattressProtectorGallerySkus.has(product.sku)) return mattressProtectorGalleryImages
+  if (mattressTopperGallerySkus.has(product.sku)) return mattressTopperGalleryImages
+  if (fittedSheetGallerySkus.has(product.sku)) return fittedSheetGalleryImages
+  if (extraDeepSheetGallerySkus.has(product.sku)) return extraDeepSheetGalleryImages
   return [product.imageUrl]
 }
 
