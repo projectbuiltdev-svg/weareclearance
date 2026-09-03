@@ -208,6 +208,27 @@ function AdminContent({
   }
   const [form, setForm] = useState(defaultForm)
 
+  const calculateDiscount = (salePrice: string, originalPrice: string) => {
+    if (salePrice.trim() === "" || originalPrice.trim() === "") return null
+    const sale = Number(salePrice)
+    const original = Number(originalPrice)
+    if (!Number.isFinite(sale) || !Number.isFinite(original) || sale < 0 || original <= sale) return null
+    return Math.round(((original - sale) / original) * 100)
+  }
+
+  const discountPercent = calculateDiscount(form.price, form.compareAtPrice)
+
+  const updatePrice = (field: "price" | "compareAtPrice", value: string) => {
+    setForm((current) => {
+      const next = { ...current, [field]: value }
+      const calculated = calculateDiscount(next.price, next.compareAtPrice)
+      return {
+        ...next,
+        badge: calculated == null ? "" : `${calculated}% OFF`,
+      }
+    })
+  }
+
   const handleOpenDialog = (product: Product | null = null) => {
     if (product) {
       setEditingProduct(product)
@@ -632,12 +653,12 @@ function AdminContent({
 
               <div className="space-y-3">
                  <Label className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Sale Price (EUR)</Label>
-                <Input type="number" required min="0" step="0.01" value={form.price} onChange={e => setForm({...form, price: e.target.value})} className="h-11 bg-transparent border-b border-0 border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base" />
+                <Input type="number" required min="0" step="0.01" value={form.price} onChange={e => updatePrice("price", e.target.value)} className="h-11 bg-transparent border-b border-0 border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base" />
               </div>
               
               <div className="space-y-3">
                   <Label className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Original Price (EUR) <span className="font-normal opacity-50">(Optional)</span></Label>
-                <Input type="number" min="0" step="0.01" value={form.compareAtPrice} onChange={e => setForm({...form, compareAtPrice: e.target.value})} className="h-11 bg-transparent border-b border-0 border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base placeholder:text-muted-foreground/30" />
+                <Input type="number" min="0" step="0.01" value={form.compareAtPrice} onChange={e => updatePrice("compareAtPrice", e.target.value)} className="h-11 bg-transparent border-b border-0 border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base placeholder:text-muted-foreground/30" />
               </div>
 
               <div className="col-span-2 space-y-3">
@@ -656,8 +677,14 @@ function AdminContent({
               </div>
 
               <div className="space-y-3">
-                <Label className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Badge Text <span className="font-normal opacity-50">(Optional)</span></Label>
-                <Input value={form.badge} onChange={e => setForm({...form, badge: e.target.value})} placeholder="e.g. 50% OFF" className="h-11 bg-transparent border-b border-0 border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base placeholder:text-muted-foreground/30" />
+                <Label className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Automatic Discount</Label>
+                <div className="flex h-11 items-center border-b border-border text-base font-semibold text-blue-700">
+                  {discountPercent == null ? (
+                    <span className="text-sm font-normal text-muted-foreground">Enter an original price above the sale price</span>
+                  ) : (
+                    `${discountPercent}% OFF`
+                  )}
+                </div>
               </div>
 
               <div className="col-span-2 md:col-span-1 flex items-start gap-4 p-5 border border-border bg-muted/10">
