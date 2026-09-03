@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-09-03T12:06:37.355Z",
+  "publishedAt": "2026-09-03T12:07:57.155Z",
   "settings": {
     "gbpPerEur": 0.86
   },
@@ -256,24 +256,6 @@
       "inventory": 20,
       "createdAt": "2026-09-03T11:37:51.339Z",
       "updatedAt": "2026-09-03T11:59:14.185Z"
-    },
-    {
-      "id": 64,
-      "sku": "SKU-2002",
-      "name": "Bath Sheet owel Bale (1pc)",
-      "slug": "jacquard-border-bath-towel-bale-4pc-1788435471142",
-      "shortDescription": "Luxury cotton towel set with woven jacquard border.",
-      "longDescription": "100% cotton bath towel bale finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
-      "description": "100% cotton bath towel bale finished with a woven Greek-key jacquard border. Highly absorbent, soft and quick-drying. Available in Grey, Blush Pink, Turquoise, Ivory, Sage Green, Charcoal and Denim Blue.",
-      "category": "Towels",
-      "price": 9.99,
-      "compareAtPrice": 49,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/815a86c6-6c2f-462c-88fe-cdbcb75087b2",
-      "badge": "80% OFF",
-      "featured": false,
-      "inventory": 20,
-      "createdAt": "2026-09-03T11:37:51.272Z",
-      "updatedAt": "2026-09-03T12:00:05.771Z"
     },
     {
       "id": 63,
