@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "publishedAt": "2026-09-03T12:24:39.683Z",
+  "publishedAt": "2026-09-03T12:27:27.301Z",
   "settings": {
     "gbpPerEur": 0.86
   },
@@ -70,12 +70,12 @@
       "category": "Bedding",
       "price": 10,
       "compareAtPrice": 40,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/acc919ec-b90c-4d2f-91ec-cb546546386a",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/61bcd4ff-8658-4cb2-927b-beaba904ea27",
       "badge": "75% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T11:37:52.084Z",
-      "updatedAt": "2026-09-03T11:37:52.084Z"
+      "updatedAt": "2026-09-03T12:27:25.055Z"
     },
     {
       "id": 75,
@@ -88,12 +88,12 @@
       "category": "Bedding",
       "price": 10,
       "compareAtPrice": 35,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/acc919ec-b90c-4d2f-91ec-cb546546386a",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/61bcd4ff-8658-4cb2-927b-beaba904ea27",
       "badge": "71% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T11:37:52.016Z",
-      "updatedAt": "2026-09-03T11:37:52.016Z"
+      "updatedAt": "2026-09-03T12:27:24.852Z"
     },
     {
       "id": 74,
@@ -106,12 +106,12 @@
       "category": "Bedding",
       "price": 8,
       "compareAtPrice": 30,
-      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/acc919ec-b90c-4d2f-91ec-cb546546386a",
+      "imageUrl": "https://weareclearance.replit.app/api/storage/objects/uploads/61bcd4ff-8658-4cb2-927b-beaba904ea27",
       "badge": "73% OFF",
       "featured": false,
       "inventory": 20,
       "createdAt": "2026-09-03T11:37:51.948Z",
-      "updatedAt": "2026-09-03T11:37:51.948Z"
+      "updatedAt": "2026-09-03T12:27:24.653Z"
     },
     {
       "id": 73,
